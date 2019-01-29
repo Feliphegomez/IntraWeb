@@ -12,6 +12,8 @@ class Route {
 	var $section = 'index';
 	var $id = 0;
 	var $action = null;
+	var $id_route = 0;
+	var $enable = false;
 	 
 	function __construct($get_params = false) {
 		$this->get_params = $get_params;
@@ -59,22 +61,16 @@ class Route {
 		};
 		
 		$temp = array();
-		foreach($this->routes as $k=>$v){
-			if($v !== ''){
-				$temp[$k] = $v;
-			}
-		}
-		if(isset($temp[1]) && $temp[1] == $this->module){ unset($temp[1]); }
-		if(isset($temp[2]) && $temp[2] == $this->section){ unset($temp[2]); }
+		foreach($this->routes as $k=>$v){ if($v !== ''){ $temp[$k] = $v; } };
+		if(isset($temp[1]) && $temp[1] == $this->module){ unset($temp[1]); };
+		if(isset($temp[2]) && $temp[2] == $this->section){ unset($temp[2]); };
 		$temp = array_values($temp);
-		echo json_encode($temp); //
 		
 		$arrayTotal = count($temp) - 1;
-		if(count($temp) > 0 && $this->id > 0){
-			unset($temp[$arrayTotal]);
-		}
+		if(count($temp) > 0 && $this->id > 0){ unset($temp[$arrayTotal]); }
 		
 		$this->routes = $temp;
+		$this->validateRoute();
 		return $this->routes;
 	}
 	 
@@ -104,6 +100,49 @@ class Route {
 			$this->routes[0] = $this->params;
 			array_pop($this->routes);
 		}
+	}
+
+	function validateRoute()
+	{
+		try {
+			$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$stmt = $pdo->prepare("SELECT * FROM `url_redirects` 
+			WHERE `url` IN ('{$this->path}') 
+			AND `module` IN ('{$this->module}') 
+			AND `section` IN ('{$this->section}') 
+			LIMIT 1");
+			$stmt->execute();
+			$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+			if(isset($result[0])){
+				$resultOne = (object) $result[0];
+				$this->enable = true;
+				$this->id_route = $resultOne->id;
+				# ($resultOne);
+				# echo json_encode($resultOne);
+			}else{
+				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$stmt = $pdo->prepare("SELECT * FROM `url_redirects` 
+				WHERE `url` IN ('{$this->path}') 
+				LIMIT 1");
+				$stmt->execute();
+				$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+				if(isset($result[0])){
+					$resultOne = (object) $result[0];
+					$this->enable = true;
+					$this->id_route = $resultOne->id;
+					$this->module = $resultOne->module;
+					$this->section = $resultOne->section;
+					# ($resultOne);
+					# echo json_encode($resultOne);
+				}
+			}
+		}
+		catch(PDOException $e) {
+			// $this->result = "Error: " . $e->getMessage();
+		}
+		$this->conn = null;
 	}
 }
 
