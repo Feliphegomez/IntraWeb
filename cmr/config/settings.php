@@ -7,6 +7,16 @@ setlocale(LC_ALL,"es_CO");
 setlocale(LC_MONETARY,"es_CO");
 
 
+
 $list_months = new stdClass();
 $list_months->en = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 $list_months->es = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+
+
+
+define('title_sm', 'IW');
+define('title_md', 'IntraWeb');
+define('title_lg', 'IntraWeb Corporativa');
+
+
+define('path_home', '/');
