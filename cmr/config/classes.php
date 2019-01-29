@@ -15,7 +15,8 @@ class Route {
 	var $id_route = 0;
 	var $enable = false;
 	 
-	function __construct($get_params = false) {
+	function __construct($get_params = false)
+	{
 		$this->get_params = $get_params;
 		
 		$method = $_SERVER['REQUEST_METHOD'];
@@ -25,19 +26,19 @@ class Route {
 		switch($method){
 			case 'POST':
 				$this->method = $method;
-				$this->action = 'Edit';
+				$this->action = 'change';
 				break;
 			case 'PUT':
 				$this->method = $method;
-				$this->action = 'Create';
+				$this->action = 'create';
 				break;
 			case 'DELETE':
 				$this->method = $method;
-				$this->action = 'Delete';
+				$this->action = 'delete';
 				break;
 			case 'GET':
 				$this->method = $method;
-				$this->action = 'View';
+				$this->action = 'view';
 				break;
 			default:
 				header('HTTP/1.1 405 Method not allowed');
@@ -144,86 +145,12 @@ class Route {
 		}
 		$this->conn = null;
 	}
+	
 }
 
-class DataBase
+class User
 {
-	var $conn = null;
-	var $query = null;
-	var $result = null;
-	
-	function __construct()
-	{
-	}
-	
-	function setQuery($query)
-	{
-		$this->query = $query;
-		$this->Run();
-		
-	}
-	
-	function getResult()
-	{
-		return ($this->result);
-	}
-	function getResultJSON()
-	{
-		return json_encode($this->result);
-	}
-	
-	function Run()
-	{
-		try {
-			$this->conn = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
-			$this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$stmt = $this->conn->prepare($this->query);
-			$stmt->execute();
-			// set the resulting array to associative
-			$result = $stmt->setFetchMode(PDO::FETCH_OBJECT); 
-			$this->result = new RecursiveArrayIterator($stmt->fetchAll());
-		}
-		catch(PDOException $e) {
-			$this->result = "Error: " . $e->getMessage();
-		}
-		$this->conn = null;
-	}
-}
-
-class Session
-{
-	var $isLogin = null;
-	var $id = null;
-	var $username = null;
-	var $token = null;
-	var $infoUser = null;
-	
-	function __construct()
-	{
-		$this->isLogin = false;
-		$this->id = 0;
-		$this->username = 'guest';
-	}
-}
-
-class UrlRedirects {
-  var $id, $short, $url, $created_at;
-   
-   function __construct()
-   {}
-
-   function load_by_id($id)
-   {
-		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
-		#$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $pdo->prepare('SELECT * FROM `url_redirects` WHERE id=?');
-		$stmt->execute([$id]);
-		return $stmt->fetchObject(__CLASS__);
-   }
-}
-
-class User {
-  var $id, $username, $permissions;
+  var $id, $username, $permissions, $names, $surname, $second_surname;
    
    function __construct()
    {}
@@ -266,7 +193,8 @@ class User {
 		}
    }
    
-   function setData($data){
+   function setData($data)
+   {
 	   /*
 		if(isset($data->permissions)){
 			$data->permissions = json_decode($data->permissions);
@@ -288,3 +216,35 @@ class User {
 	   return ($this);
    }
 }
+
+class Session extends User
+{
+	var $countRefresh = null;
+	var $Route = null;
+	var $id = 0;
+	var $Routes2 = null;
+	
+	function __construct()
+	{
+		if (!isset($_SESSION['countRefresh'])) { $_SESSION['countRefresh'] = 0; } else { $_SESSION['countRefresh']++; }
+		if (isset($_SESSION['id']) && $_SESSION['id'] > 0) { $_SESSION['id'] = (int) $_SESSION['id']; } else { $_SESSION['id'] = 0; }
+		$this->countRefresh = $_SESSION['countRefresh'];
+		$this->id = $_SESSION['id'];
+		$this->Route = new Route();
+		$this->Routes2 = $this->Route->getRoutes();
+		
+		if($this->id > 0){
+			$this->load_by_id($this->id);
+		}else{
+		}
+	}
+	
+	function destroySession()
+	{
+		// remove all session variables
+		session_unset();
+		// destroy the session 
+		session_destroy();
+	}
+}
+

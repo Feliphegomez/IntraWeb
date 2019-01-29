@@ -12,6 +12,24 @@ $list_months = new stdClass();
 $list_months->en = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 $list_months->es = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
 
+$languaje = new stdClass();
+$languaje->es = new stdClass();
+$languaje->es->mounts = array('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+$languaje->es->actions = new stdClass();
+$languaje->es->actions->change = 'Modificando';
+$languaje->es->actions->create = 'Creando';
+$languaje->es->actions->delete = 'Eliminando';
+$languaje->es->actions->view = 'Viendo';
+
+$languaje = new stdClass();
+$languaje->en = new stdClass();
+$languaje->en->mounts = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+$languaje->en->actions = new stdClass();
+$languaje->en->actions->change = 'Modificando';
+$languaje->en->actions->create = 'Creando';
+$languaje->en->actions->delete = 'Eliminando';
+$languaje->en->actions->view = 'Viendo';
+
 
 
 define('title_sm', 'IW');

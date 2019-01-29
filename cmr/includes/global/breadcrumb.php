@@ -1,6 +1,8 @@
 <?php
-$site = new Route();
-$routes = $site->getRoutes();
+global $site;
+global $session;
+$routes = $session->Routes2;
+#$routes = $site->Routes2;
 ?>
 <!-- Breadcrumbs-->
 <ol class="breadcrumb">
@@ -9,13 +11,15 @@ $routes = $site->getRoutes();
 	<li class="breadcrumb-item"><a href="#"><?php echo $site->module; ?></a></li>
 	<li class="breadcrumb-item"><a href="#"><?php echo $site->section; ?></a></li>
 	<?php 
+		#echo json_encode($routes);
+		
 		foreach($routes as $k=>$v){
 			if($v !== ''){
 				echo "<li class=\"breadcrumb-item\"><a href=\"#\">{$v}</a></li>";
 			}
 		}
+		if($site->id > 0){
+			echo "<li class=\"breadcrumb-item active\">{$site->id}</li>";
+		}
 	?>
-	<?php if($site->id > 0){
-		echo "<li class=\"breadcrumb-item active\">{$site->id}</li>";
-	} ?>
 </ol>
