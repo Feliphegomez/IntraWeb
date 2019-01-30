@@ -5,7 +5,7 @@
 		<?php require('cmr/includes/global/head.php'); ?>
 		<?php require('cmr/content/themes/default/includes/head.php'); ?>
 	</head>
-	<body id="page-top">
+	<body id="page-top" class="sidebar-toggled">
 		<?php require('cmr/includes/global/navbar.php'); ?>
 		<div id="wrapper">
 			<?php require('cmr/includes/global/sidebar.php'); ?>

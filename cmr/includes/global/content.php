@@ -6,4 +6,5 @@
 		?>
 	</div>
 	<?php require('cmr/includes/global/footer.php'); ?>
+	<?php require('cmr/includes/global/modals.php'); ?>
 </div>

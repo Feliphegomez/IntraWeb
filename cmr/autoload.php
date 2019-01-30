@@ -9,13 +9,14 @@ include('config/settings.php');
 $session = new Session();
 $site = $session->Route;
 
-if($site->module !== 'login')
+if($site->module !== 'login' && $session->id == 0)
 {
 	#header("Location: /login");
 	$site->module = 'login';
 	$site->section = 'index';
 	
-	#exit('Redireccion Al Modulo: '.$site->module);
+	
 }else{
-	#exit('Session Correcta');
+	# echo ('Session Encontrada');
+	# echo json_encode($session);
 }

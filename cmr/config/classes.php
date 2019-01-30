@@ -14,6 +14,7 @@ class Route {
 	var $action = null;
 	var $id_route = 0;
 	var $enable = false;
+	var $fields = null;
 	 
 	function __construct($get_params = false)
 	{
@@ -27,10 +28,12 @@ class Route {
 			case 'POST':
 				$this->method = $method;
 				$this->action = 'change';
+				$this->fields = $this->repairFields();
 				break;
 			case 'PUT':
 				$this->method = $method;
 				$this->action = 'create';
+				$this->fields = $this->repairFields();
 				break;
 			case 'DELETE':
 				$this->method = $method;
@@ -43,6 +46,40 @@ class Route {
 			default:
 				header('HTTP/1.1 405 Method not allowed');
 				header('Allow: GET, PUT, POST, DELETE');
+				break;
+		}
+	}
+	
+	public function repairFields()
+	{
+		$r = array();
+		switch($this->method){
+			case 'POST':
+				if(isset($_POST['url'])){ unset($_POST['url']); }
+				$r = ($_POST);
+				$_POST = null;
+				return $r;
+				break;
+			case 'PUT':
+				if(isset($_PUT['url'])){ unset($_PUT['url']); }
+				$r = ($_PUT);
+				$_PUT = null;
+				return $r;
+				break;
+			case 'DELETE':
+				if(isset($_DELETE['url'])){ unset($_DELETE['url']); }
+				$r = ($_DELETE);
+				$_DELETE = null;
+				return $r;
+				break;
+			case 'GET':
+				if(isset($_GET['url'])){ unset($_GET['url']); }
+				$r = ($_GET);
+				$_GET = null;
+				return $r;
+				break;
+			default:
+				return $r;
 				break;
 		}
 	}
@@ -236,7 +273,35 @@ class Session extends User
 		if($this->id > 0){
 			$this->load_by_id($this->id);
 		}else{
+			if(isset($this->Route->fields['inputNickLogin']) && isset($this->Route->fields['inputPasswordLogin']))
+			{
+				
+				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions` 
+				FROM `users` 
+				LEFT JOIN `permissions` ON `permissions`.`id` = `users`.`permissions`
+				WHERE `users`.`username`=? AND `users`.`hash`=?');
+				$stmt->execute([$this->Route->fields['inputNickLogin'],$this->Route->fields['inputPasswordLogin']]);
+				$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+				if(isset($result[0])){
+					$resultOne = (object) $result[0];
+					$this->setData($resultOne);
+					$this->saveSession();
+				}
+			}
 		}
+	}
+	
+	function saveSession()
+	{
+		$_SESSION['id'] = $this->id;
+		$_SESSION['username'] = $this->username;
+		$_SESSION['permissions'] = $this->permissions;
+		$_SESSION['names'] = $this->names;
+		$_SESSION['surname'] = $this->surname;
+		$_SESSION['second_surname'] = $this->second_surname;
+		$_SESSION['hash'] = $this->hash;
 	}
 	
 	function destroySession()
@@ -245,6 +310,7 @@ class Session extends User
 		session_unset();
 		// destroy the session 
 		session_destroy();
+		echo '<meta http-equiv="refresh" content="0; url='.path_home.'" />';
 	}
 }
 
