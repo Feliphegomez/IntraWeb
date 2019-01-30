@@ -34,3 +34,6 @@ define('pageDescription', 'IntraWeb Corporativa desarrollada por FelipheGomez.')
 
 define('path_home', '/');
 define('theme_active', 'default');
+
+
+define('demo_debug', true);

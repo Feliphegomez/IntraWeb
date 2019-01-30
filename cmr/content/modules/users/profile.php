@@ -12,135 +12,6 @@ $userInfo = new User();
 $userInfo->load_by_username($username);
 ?>
 
-	
-	
-<style>
-  .border{
-    border-bottom:1px solid #F1F1F1;
-    margin-bottom:10px;
-  }
-  .main-secction{
-    box-shadow: 10px 10px 10px;
-  }
-  .image-section{
-    padding: 0px;
-    width: 100%;
-    height: 333px;
-    position: relative;
-    background-size: cover;
-    background-image: url(http://hashtag-bg.com/wp-content/uploads/2018/08/whit-ebackground-resume-white-background-photos-and-wallpaper-for-free-download-5b78ba2d6c563.jpg);
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  .image-section img{
-	  /*
-    width: 100%;
-    height:250px;
-    position: relative; */
-  }
-  .user-image{
-    position: absolute;
-    margin-top:-50px;
-  }
-  .user-left-part{
-    margin: 0px;
-  }
-  .user-image img{
-    width:100px;
-    height:100px;
-  }
-  .user-profil-part{
-    padding-bottom:30px;
-    background-color:#FAFAFA;
-  }
-  .follow{    
-    margin-top:70px;   
-  }
-  .user-detail-row{
-    margin:0px; 
-  }
-  .user-detail-section2 p{
-    font-size:12px;
-    padding: 0px;
-    margin: 0px;
-  }
-  .user-detail-section2{
-    margin-top:10px;
-  }
-  .user-detail-section2 span{
-    color:#7CBBC3;
-    font-size: 20px;
-  }
-  .user-detail-section2 small{
-    font-size:12px;
-    color:#D3A86A;
-  }
-  .profile-right-section{
-    padding: 20px 0px 10px 15px;
-    background-color: #FFFFFF;  
-  }
-  .profile-right-section-row{
-    margin: 0px;
-  }
-  .profile-header-section1 h1{
-    font-size: 25px;
-    margin: 0px;
-  }
-  .profile-header-section1 h5{
-    color: #0062cc;
-  }
-  .req-btn{
-    height:30px;
-    font-size:12px;
-  }
-  .profile-tag{
-    padding: 10px;
-    border:1px solid #F6F6F6;
-  }
-  .profile-tag p{
-    font-size: 12px;
-    color:black;
-  }
-  .profile-tag i{
-    color:#ADADAD;
-    font-size: 20px;
-  }
-  .image-right-part{
-    background-color: #FCFCFC;
-    margin: 0px;
-    padding: 5px;
-  }
-  .img-main-rightPart{
-    background-color: #FCFCFC;
-    margin-top: auto;
-  }
-  .image-right-detail{
-    padding: 0px;
-  }
-  .image-right-detail p{
-    font-size: 12px;
-  }
-  .image-right-detail a:hover{
-    text-decoration: none;
-  }
-  .image-right img{
-    width: 100%;
-  }
-  .image-right-detail-section2{
-    margin: 0px;
-  }
-  .image-right-detail-section2 p{
-    color:#38ACDF;
-    margin:0px;
-  }
-  .image-right-detail-section2 span{
-    color:#7F7F7F;
-  }
-  .nav-link{
-    font-size: 1.2em;    
-  }
-</style>
-
 <div class="">
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12 image-section">
@@ -164,13 +35,14 @@ $userInfo->load_by_username($username);
 						</div>                           
 					</div>
 				   
+				   <!--
 					<div class="row user-detail-row">
 						<div class="col-md-12 col-sm-12 user-detail-section2 pull-left">
 							<div class="border"></div>
 							<p>JSON</p>
 							<span><?php echo json_encode($userInfo); ?></span>
 						</div>                           
-					</div>
+					</div>-->
 				   
 				</div>
 			</div>
@@ -284,28 +156,71 @@ $userInfo->load_by_username($username);
 														<tbody>
 															<?php foreach($userInfo->permissions as $namePermission => $permissions){ ?>
 																<tr>
-																  <th><?php echo "{$namePermission}"; ?></th>
-																	<?php foreach($permissions as $k => $v){ ?>
-																		<td>
-																			<a class="btn btn-sm btn-primary text-white">
-																				<?php if($k == 'create'){ ?>
-																					<i class="fa fa-plus-circle"></i>
-																				<?php } else if($k == 'change'){ ?>
-																					<i class="fa fa-wrench"></i>
-																				<?php } else if($k == 'delete'){ ?>
-																					<i class="fa fa-trash"></i>
-																				<?php } else if($k == 'view'){ ?>
-																					<i class="fa fa-eye"></i>
-																				<?php } ?>
-																				
-																				<?php if($v == true){ ?>
-																					<i class="fa fa-check"></i>
-																				<?php }else{ ?>
-																					<i class="fa fa-trash"></i>
-																				<?php } ?>
-																			</a>
-																		</td>
-																	<?php } ?>
+																	<td><?php echo "{$namePermission}"; ?></td>
+																	<td>
+																		<?php
+																			if(isset($permissions->create) && $permissions->create == true)
+																			{
+																				echo "<a class=\"btn btn-sm btn-success text-white\">";
+																					echo "<i class=\"fa fa-plus-circle\"></i> ";
+																					echo "<i class=\"fa fa-check\"></i>";
+																				echo "</a>";
+																			}else{
+																				echo "<a class=\"btn btn-sm btn-danger text-white\">";
+																					echo "<i class=\"fa fa-plus-circle\"></i> ";
+																					echo "<i class=\"fa fa-ban\"></i>";
+																				echo "</a>";
+																			}
+																		?>
+																	</td>
+																	<td>
+																		<?php
+																			if(isset($permissions->change) && $permissions->change == true)
+																			{
+																				echo "<a class=\"btn btn-sm btn-success text-white\">";
+																					echo "<i class=\"fa fa-wrench\"></i> ";
+																					echo "<i class=\"fa fa-check\"></i>";
+																				echo "</a>";
+																			}else{
+																				echo "<a class=\"btn btn-sm btn-danger text-white\">";
+																					echo "<i class=\"fa fa-wrench\"></i> ";
+																					echo "<i class=\"fa fa-ban\"></i>";
+																				echo "</a>";
+																			}
+																		?>
+																	</td>
+																	<td>
+																		<?php
+																			if(isset($permissions->delete) && $permissions->delete == true)
+																			{
+																				echo "<a class=\"btn btn-sm btn-success text-white\">";
+																					echo "<i class=\"fa fa-trash\"></i> ";
+																					echo "<i class=\"fa fa-check\"></i>";
+																				echo "</a>";
+																			}else{
+																				echo "<a class=\"btn btn-sm btn-danger text-white\">";
+																					echo "<i class=\"fa fa-trash\"></i> ";
+																					echo "<i class=\"fa fa-ban\"></i>";
+																				echo "</a>";
+																			}
+																		?>
+																	</td>
+																	<td>
+																		<?php
+																			if(isset($permissions->view) && $permissions->view == true)
+																			{
+																				echo "<a class=\"btn btn-sm btn-success text-white\">";
+																					echo "<i class=\"far fa-eye\"></i> ";
+																					echo "<i class=\"fa fa-check\"></i>";
+																				echo "</a>";
+																			}else{
+																				echo "<a class=\"btn btn-sm btn-danger text-white\">";
+																					echo "<i class=\"far fa-eye\"></i> ";
+																					echo "<i class=\"fa fa-ban\"></i>";
+																				echo "</a>";
+																			}
+																		?>
+																	</td>
 																</tr>
 															<?php } ?>
 													  </tbody>

@@ -6,8 +6,8 @@ $routes = $session->Routes2;
 ?>
 <!-- Breadcrumbs-->
 <ol class="breadcrumb">
-	<li class="breadcrumb-item active"><?php echo $site->path; ?></li>
-	<li class="breadcrumb-item active"><?php echo $site->action; ?></li>
+	<!-- // <li class="breadcrumb-item active"><?php echo $site->path; ?></li> -->
+	<li class="breadcrumb-item"><a href="<?php echo path_home; ?>"><?php echo title_md; ?></a></li>
 	<li class="breadcrumb-item"><a href="#"><?php echo $site->module; ?></a></li>
 	<li class="breadcrumb-item"><a href="#"><?php echo $site->section; ?></a></li>
 	<?php 
@@ -22,4 +22,5 @@ $routes = $session->Routes2;
 			echo "<li class=\"breadcrumb-item active\">{$site->id}</li>";
 		}
 	?>
+	<li class="breadcrumb-item active"><?php echo $site->action; ?></li>
 </ol>

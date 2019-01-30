@@ -46,11 +46,14 @@ $listUsers = $Users->list;
 						<td><?php echo $user->surname; ?></td>
 						<td><?php echo $user->second_surname; ?></td>
 						<td>
-							<a class="btn btn-info btn-sm" href="/users/profile/<?php echo $user->username; ?>">
-								<i class="fa fa-eye"></i> 
+							<a class="btn btn-success btn-sm" href="/users/profile/<?php echo $user->username; ?>">
+								<i class="far fa-eye"></i> 
+							</a>
+							<a class="btn btn-warning btn-sm text-white" href="#">
+								<i class="fas fa-edit"></i> 
 							</a>
 							<a class="btn btn-danger btn-sm" href="#">
-								<i class="fa fa-trash"></i> 
+								<i class="fas fa-trash-alt"></i> 
 							</a>
 						</td>
 					</tr>
