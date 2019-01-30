@@ -49,8 +49,7 @@
 				</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					<!-- // <h6 class="dropdown-header">Usuarios:</h6> -->
-					<a class="dropdown-item" href="/admin-users.html">Usuarios</a>
-					<a class="dropdown-item" href="/forgot-password.html">Forgot Password</a>
+					<a class="dropdown-item" href="/users/admin.html">Usuarios</a>
 					<div class="dropdown-divider"></div>
 					<h6 class="dropdown-header">Other Pages:</h6>
 					<a class="dropdown-item" href="/blank.html">Blank Page</a>

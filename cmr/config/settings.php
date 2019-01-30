@@ -1,12 +1,9 @@
 <?php
-
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 setlocale(LC_ALL,"es_CO");
 setlocale(LC_MONETARY,"es_CO");
-
-
 
 $list_months = new stdClass();
 $list_months->en = array('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
@@ -30,12 +27,10 @@ $languaje->en->actions->create = 'Creando';
 $languaje->en->actions->delete = 'Eliminando';
 $languaje->en->actions->view = 'Viendo';
 
-
-
 define('title_sm', 'IW');
 define('title_md', 'IntraWeb');
 define('title_lg', 'IntraWeb Corporativa');
-
+define('pageDescription', 'IntraWeb Corporativa desarrollada por FelipheGomez.');
 
 define('path_home', '/');
 define('theme_active', 'default');

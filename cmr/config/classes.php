@@ -38,10 +38,12 @@ class Route {
 				break;
 			case 'DELETE':
 				$this->method = $method;
+				$this->fields = $this->repairFields();
 				$this->action = 'delete';
 				break;
 			case 'GET':
 				$this->method = $method;
+				$this->fields = $this->repairFields();
 				$this->action = 'view';
 				break;
 			default:
@@ -229,11 +231,6 @@ class Route {
 		require('cmr/includes/global/scripts.php');
 	}
 	
-	function getContentRoute()
-	{
-		require('cmr/includes/global/content.php');
-	}
-	
 }
 
 class User
@@ -363,78 +360,87 @@ class Session extends User
 	
 	function dropdownUserNavbar()
 	{
-		if($this->id > 0){ ?>
+		?>
+		<li class="nav-item dropdown no-arrow mx-1">
+			<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-bell fa-fw"></i>
+				<span class="badge badge-danger">9+</span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+				<a class="dropdown-item" href="#">Action</a>
+				<a class="dropdown-item" href="#">Another action</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="#">Something else here</a>
+			</div>
+		</li>
+		<li class="nav-item dropdown no-arrow mx-1">
+			<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-envelope fa-fw"></i>
+				<span class="badge badge-danger">7</span>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+				<a class="dropdown-item" href="#">Action</a>
+				<a class="dropdown-item" href="#">Another action</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="#">Something else here</a>
+			</div>
+		</li>
+		<li class="nav-item dropdown no-arrow">
+			<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				<i class="fas fa-user-circle fa-fw"></i>
+			</a>
+			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+				<a class="dropdown-item" href="/users/profile/<?php echo $this->username; ?>">Mi Cuenta</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="#">Opciones</a>
+				<a class="dropdown-item" href="#">Historico de actividades</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar sesión</a>
+			</div>
+		</li>
+		<?php 
+	}
+	
+	function itemsNavbarTheme()
+	{
+		 ?>
 		<!-- Navbar Search -->
-		<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+		<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="/search" method="search">
 			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+				<input type="text" name="q" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
 				<div class="input-group-append">
-					<button class="btn btn-primary" type="button">
+					<button class="btn btn-primary" type="submit">
 						<i class="fas fa-search"></i>
 					</button>
 				</div>
 			</div>
 		</form>
-
 		<!-- Navbar USER LOGGIN -->
 		<ul class="navbar-nav ml-auto ml-md-0">
-			<li class="nav-item dropdown no-arrow mx-1">
-				<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fas fa-bell fa-fw"></i>
-					<span class="badge badge-danger">9+</span>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-					<a class="dropdown-item" href="#">Action</a>
-					<a class="dropdown-item" href="#">Another action</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Something else here</a>
-				</div>
-			</li>
-			<li class="nav-item dropdown no-arrow mx-1">
-				<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fas fa-envelope fa-fw"></i>
-					<span class="badge badge-danger">7</span>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-					<a class="dropdown-item" href="#">Action</a>
-					<a class="dropdown-item" href="#">Another action</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Something else here</a>
-				</div>
-			</li>
-			<li class="nav-item dropdown no-arrow">
-				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="fas fa-user-circle fa-fw"></i>
-				</a>
-				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-					<a class="dropdown-item" href="/users/profile/<?php echo $this->username; ?>">Mi Cuenta</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#">Opciones</a>
-					<a class="dropdown-item" href="#">Historico de actividades</a>
-					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar sesión</a>
-				</div>
-			</li>
+			<?php $this->dropdownUserNavbar(); ?>
 		</ul>
-	<?php }
+		<?php 
 	}
 	
 	function getHeadTheme()
 	{
 		require('cmr/content/themes/'.theme_active.'/includes/head.php');
 	}
+	
 	function getSidebarTheme()
 	{
 		if($this->id > 0){
 			require('cmr/content/themes/'.theme_active.'/includes/sidebar.php');
 		}
 	}
+	
 	function getNavbarTheme()
 	{
 		if($this->id > 0){
 			require('cmr/content/themes/'.theme_active.'/includes/navbar.php');
 		}
 	}
+	
 	function getBreadcrumbTheme()
 	{
 		if($this->id > 0){
@@ -442,20 +448,29 @@ class Session extends User
 		}
 		
 	}
+	
 	function getBodyTheme()
 	{
 		require('cmr/content/themes/'.theme_active.'/includes/body.php');
 	}
+	
 	function getFooterTheme()
 	{
 		if($this->id > 0){
 			require('cmr/content/themes/'.theme_active.'/includes/footer.php');
 		}
 	}
+	
 	function getModalsTheme()
 	{
 		require('cmr/content/themes/'.theme_active.'/includes/modals.php');
 	}
+	
+	function getContentRoute()
+	{
+		require('cmr/content/themes/'.theme_active.'/includes/content.php');
+	}
+	
 }
 
 class Users

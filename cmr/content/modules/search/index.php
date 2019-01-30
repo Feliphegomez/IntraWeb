@@ -1,18 +1,41 @@
-
+<?php
+	global $session;
+	global $site;
+	
+	$searchQuery = '';
+	if(isset($site->fields['q']))
+	{
+		$searchQuery = "{$site->fields['q']}";
+	}
+?>
 <div class="container">
 	<div class="row">
-	    <div class="col-12"><h2>Text Box Search icon</h2></div>
+	    <div class="col-12"><h2>¿Que estas buscando?</h2></div>
 	    <div class="col-12">
-    	    <div id="custom-search-input">
-                <div class="input-group">
-                    <input type="text" class="search-query form-control" placeholder="Search" />
-                    <span class="input-group-btn">
-                        <button type="button" disabled>
-                            <span class="fa fa-search"></span>
-                        </button>
-                    </span>
-                </div>
-            </div>
+			<form action="/search" method="SEARCH">
+				<div id="custom-search-input">
+					<div class="input-group">
+						<input name="q" type="text" class="search-query form-control" placeholder="Buscar..." />
+						<span class="input-group-btn">
+							<button type="button" type="submit">
+								<span class="fa fa-search"></span>
+							</button>
+						</span>
+					</div>
+				</div>
+			</form>
+        </div>
+	    <div class="col-12">
+			<?php 
+				if($searchQuery !== '')
+				{
+					echo "Estas buscando: {$searchQuery} ";
+				}
+				else
+				{
+					echo "Escribe tu busqueda y pulsa Enter.";
+				}
+			?>
         </div>
 	</div>
 </div>
@@ -20,7 +43,8 @@
 
 <style>
 .container{
-    padding: 10%;
+	margin-top: calc(25vh);
+    padding: calc(-10vh);
     text-align: center;
 }
 #custom-search-input {

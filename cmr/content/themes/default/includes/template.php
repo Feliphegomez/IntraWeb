@@ -12,7 +12,7 @@
 		<?php $session->getNavbarTheme(); ?>
 		<div id="wrapper">
 			<?php $session->getSidebarTheme(); ?>
-			<?php $site->getContentRoute(); ?>
+			<?php $session->getContentRoute(); ?>
 		</div>
 		<?php $site->getScriptsGlobal(); ?>
 	</body>
