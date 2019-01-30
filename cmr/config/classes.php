@@ -15,6 +15,7 @@ class Route {
 	var $id_route = 0;
 	var $enable = false;
 	var $fields = null;
+	var $page_tite = null;
 	 
 	function __construct($get_params = false)
 	{
@@ -109,6 +110,8 @@ class Route {
 		
 		$this->routes = $temp;
 		$this->validateRoute();
+		$this->createTitlePage();
+		
 		return $this->routes;
 	}
 	 
@@ -212,17 +215,36 @@ class Route {
 		$this->conn = null;
 	}
 	
+	function createTitlePage()
+	{
+		$this->page_tite = "{$this->section} - {$this->module}";
+	}
+		
+	function getHeadGlobal()
+	{
+		require('cmr/includes/global/head.php');
+	}
+	function getScriptsGlobal()
+	{
+		require('cmr/includes/global/scripts.php');
+	}
+	
+	function getContentRoute()
+	{
+		require('cmr/includes/global/content.php');
+	}
+	
 }
 
 class User
 {
-  var $id, $username, $permissions, $names, $surname, $second_surname, $mail;
+  var $id, $username, $permissions, $names, $surname, $second_surname, $mail, $phone, $mobile, $avatar;
    
    function __construct($params=null)
    {
-	   if(isset($params->id) && $params->id > 0){
-		   $this->load_by_id($params->id);
-	   }
+		if(isset($params->id) && $params->id > 0){
+			$this->load_by_id($params->id);
+		}
    }
    
    function __toString()
@@ -235,9 +257,10 @@ class User
    {
 		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions` 
+		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions`, `pictures`.`data` as `avatar_data`
 		FROM `users` 
-		LEFT JOIN `permissions` ON `permissions`.id = `users`.`permissions`
+		LEFT JOIN `permissions` ON `permissions`.`id` = `users`.`permissions` 
+		LEFT JOIN `pictures` ON `pictures`.`id` = `users`.`avatar`
 		WHERE `users`.id=?');
 		$stmt->execute([$id]);
 		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
@@ -251,9 +274,10 @@ class User
    {
 		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions` 
+		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions`, `pictures`.`data` as `avatar_data`
 		FROM `users` 
-		LEFT JOIN `permissions` ON `permissions`.id = `users`.`permissions`
+		LEFT JOIN `permissions` ON `permissions`.id = `users`.`permissions` 
+		LEFT JOIN `pictures` ON `pictures`.`id` = `users`.`avatar`
 		WHERE `users`.username=?');
 		$stmt->execute([$username]);
 		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
@@ -336,6 +360,102 @@ class Session extends User
 		session_destroy();
 		echo '<meta http-equiv="refresh" content="0; url='.path_home.'" />';
 	}
+	
+	function dropdownUserNavbar()
+	{
+		if($this->id > 0){ ?>
+		<!-- Navbar Search -->
+		<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+				<div class="input-group-append">
+					<button class="btn btn-primary" type="button">
+						<i class="fas fa-search"></i>
+					</button>
+				</div>
+			</div>
+		</form>
+
+		<!-- Navbar USER LOGGIN -->
+		<ul class="navbar-nav ml-auto ml-md-0">
+			<li class="nav-item dropdown no-arrow mx-1">
+				<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-bell fa-fw"></i>
+					<span class="badge badge-danger">9+</span>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+					<a class="dropdown-item" href="#">Action</a>
+					<a class="dropdown-item" href="#">Another action</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Something else here</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown no-arrow mx-1">
+				<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-envelope fa-fw"></i>
+					<span class="badge badge-danger">7</span>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
+					<a class="dropdown-item" href="#">Action</a>
+					<a class="dropdown-item" href="#">Another action</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Something else here</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown no-arrow">
+				<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="fas fa-user-circle fa-fw"></i>
+				</a>
+				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+					<a class="dropdown-item" href="/users/profile/<?php echo $this->username; ?>">Mi Cuenta</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Opciones</a>
+					<a class="dropdown-item" href="#">Historico de actividades</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar sesión</a>
+				</div>
+			</li>
+		</ul>
+	<?php }
+	}
+	
+	function getHeadTheme()
+	{
+		require('cmr/content/themes/'.theme_active.'/includes/head.php');
+	}
+	function getSidebarTheme()
+	{
+		if($this->id > 0){
+			require('cmr/content/themes/'.theme_active.'/includes/sidebar.php');
+		}
+	}
+	function getNavbarTheme()
+	{
+		if($this->id > 0){
+			require('cmr/content/themes/'.theme_active.'/includes/navbar.php');
+		}
+	}
+	function getBreadcrumbTheme()
+	{
+		if($this->id > 0){
+			require('cmr/content/themes/'.theme_active.'/includes/breadcrumb.php');
+		}
+		
+	}
+	function getBodyTheme()
+	{
+		require('cmr/content/themes/'.theme_active.'/includes/body.php');
+	}
+	function getFooterTheme()
+	{
+		if($this->id > 0){
+			require('cmr/content/themes/'.theme_active.'/includes/footer.php');
+		}
+	}
+	function getModalsTheme()
+	{
+		require('cmr/content/themes/'.theme_active.'/includes/modals.php');
+	}
 }
 
 class Users
@@ -361,4 +481,48 @@ class Users
 		}
 		$this->list = $temp;
 	}
+}
+
+class Picture
+{
+  var $id, $data, $url_short, $url_large;
+   
+   function __construct($params=null)
+   {
+		if(isset($params->id) && $params->id > 0){
+			$this->load_by_id($params->id);
+		}
+   }
+   
+   function __toString()
+   {
+	   return "{$this->url_large}";
+   }
+
+   function load_by_id($id)
+   {
+		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare('SELECT `pictures`.*
+		FROM `pictures` 
+		WHERE `pictures`.`id` = ?');
+		$stmt->execute([$id]);
+		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+		if(isset($result[0])){
+			$resultOne = (object) $result[0];
+			$this->setData($resultOne);
+		}
+   }
+
+   function setData($data)
+   {
+		foreach($data as $k=>$v)
+		{
+			$this->{$k} = $v;
+		}
+   }
+   
+   function getPicture(){
+	   return ($this);
+   }
 }

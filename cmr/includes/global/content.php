@@ -1,10 +1,12 @@
+<?php
+	global $session;
+	global $site;
+?>
 <div id="content-wrapper">
 	<div class="container-fluid">
-		<?php require('cmr/includes/global/breadcrumb.php'); ?>
-		<?php require('cmr/includes/global/body.php'); ?>
-		<?php
-		?>
+		<?php $session->getBreadcrumbTheme(); ?>
+		<?php $session->getBodyTheme(); ?>
 	</div>
-	<?php require('cmr/includes/global/footer.php'); ?>
-	<?php require('cmr/includes/global/modals.php'); ?>
+	<?php $session->getFooterTheme(); ?>
+	<?php $session->getModalsTheme(); ?>
 </div>

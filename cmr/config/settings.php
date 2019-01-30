@@ -38,3 +38,4 @@ define('title_lg', 'IntraWeb Corporativa');
 
 
 define('path_home', '/');
+define('theme_active', 'default');

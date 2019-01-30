@@ -17,9 +17,6 @@
 <script src="<?php echo path_home; ?>vendor/datatables/jquery.dataTables.js"></script>
 <script src="<?php echo path_home; ?>vendor/datatables/dataTables.bootstrap4.js"></script>
 
-<!-- Custom scripts for all pages-->
-<script src="<?php echo path_home; ?>js/sb-admin.min.js"></script>
-
 <?php
 $site = new Route();
 $routes = $site->getRoutes();
@@ -32,3 +29,4 @@ if(file_exists($pageActiveScripts)){
 	include("Scripts no encontrados");
 }
 ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
