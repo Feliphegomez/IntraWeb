@@ -1,34 +1,23 @@
 <?php
 
-$site = new Route();
-$routes = $site->getRoutes();
-#echo json_encode($routes);
-
-$userInfo = new User();
-if($site->id > 0){
-	$userInfo->load_by_id($site->id);
-}
-else if($routes[3] != ''){
-	$userInfo->load_by_username($routes[3]);
+global $session;
+$username = $session->Route->id;
+/*
+if(isset($session->Routes2->id)){
 }else{
-	exit('Usuario no detectado.');
-}
-
-if($userInfo->username == null){
-	exit('Usuario no encontrado');
-}
-
-echo ($userInfo);
-echo json_encode($userInfo->getUser());
-
+	#echo '<meta http-equiv="refresh" content="0; url='.path_home.'out" />';
+	exit("Usuario no detectado.");
+}*/
+$userInfo = new User();
+$userInfo->load_by_username($username);
 ?>
 
-<div class="col-md-12">
+<div class="">
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12 image-section">
-			<img src="https://png.pngtree.com/thumb_back/fw800/back_pic/00/08/57/41562ad4a92b16a.jpg">
+			<!-- <img src="https://png.pngtree.com/thumb_back/fw800/back_pic/00/08/57/41562ad4a92b16a.jpg"> -->
 		</div>
-		<div class="row user-left-part">
+		<div class="col-md-12 row user-left-part">
 			<div class="col-md-3 col-sm-3 col-xs-12 user-profil-part pull-left">
 				<div class="row ">
 					<div class="col-md-12 col-md-12-sm-12 col-xs-12 user-image text-center">
@@ -43,6 +32,14 @@ echo json_encode($userInfo->getUser());
 							<div class="border"></div>
 							<p>FOLLOWER</p>
 							<span>320</span>
+						</div>                           
+					</div>
+				   
+					<div class="row user-detail-row">
+						<div class="col-md-12 col-sm-12 user-detail-section2 pull-left">
+							<div class="border"></div>
+							<p>JSON</p>
+							<span><?php echo json_encode($userInfo); ?></span>
 						</div>                           
 					</div>
 				   
@@ -66,105 +63,128 @@ echo json_encode($userInfo->getUser());
 							<div class="col-md-8">
 									<ul class="nav nav-tabs" role="tablist">
 											<li class="nav-item">
-											  <a class="nav-link active" href="#profile" role="tab" data-toggle="tab"><i class="fas fa-user-circle"></i> Perfil Profesional</a>
+											  <a class="nav-link active" href="#profile" role="tab" data-toggle="tab"><i class="fas fa-user-circle"></i> Información Personal</a>
 											</li>
 											<li class="nav-item">
-											  <a class="nav-link" href="#buzz" role="tab" data-toggle="tab"><i class="fas fa-info-circle"></i> Información Detallada</a>
+											  <a class="nav-link" href="#buzz" role="tab" data-toggle="tab"><i class="fas fa-info-circle"></i> Permisos</a>
 											</li>                                                
 										  </ul>
 										  
 										  <!-- Tab panes -->
 										  <div class="tab-content">
 											<div role="tabpanel" class="tab-pane fade show active" id="profile">
-													<div class="row">
-															<div class="col-md-2">
-																<label>ID</label>
-															</div>
-															<div class="col-md-6">
-																<p>509230671</p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-2">
-																<label>Nombre</label>
-															</div>
-															<div class="col-md-6">
-																<p>Juan Perez</p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-2">
-																<label>Email</label>
-															</div>
-															<div class="col-md-6">
-																<p>juanp@gmail.com</p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-2">
-																<label>Teléfono</label>
-															</div>
-															<div class="col-md-6">
-																<p>12345678</p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-2">
-																<label>Profesion</label>
-															</div>
-															<div class="col-md-6">
-																<p>Developer</p>
-															</div>
-														</div>
+												<div class="row">
+													<div class="col-md-2">
+														<label>ID</label>
+													</div>
+													<div class="col-md-6">
+														<p><?php echo "{$userInfo->id}"; ?></p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-2">
+														<label>Nombres</label>
+													</div>
+													<div class="col-md-6">
+														<p><?php echo "{$userInfo->names}"; ?></p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-2">
+														<label>Primer Apellido</label>
+													</div>
+													<div class="col-md-6">
+														<p><?php echo "{$userInfo->surname}"; ?></p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-2">
+														<label>Segundo Apellido</label>
+													</div>
+													<div class="col-md-6">
+														<p><?php echo "{$userInfo->second_surname}"; ?></p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-2">
+														<label>Email</label>
+													</div>
+													<div class="col-md-6">
+														<p><?php echo "{$userInfo->mail}"; ?></p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-2">
+														<label>Teléfono</label>
+													</div>
+													<div class="col-md-6">
+														<p>12345678</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-2">
+														<label>Profesion</label>
+													</div>
+													<div class="col-md-6">
+														<p>Developer</p>
+													</div>
+												</div>
 											</div>
 											<div role="tabpanel" class="tab-pane fade" id="buzz">
-													<div class="row">
-															<div class="col-md-6">
-																<label>Experience</label>
-															</div>
-															<div class="col-md-6">
-																<p>Expert</p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-6">
-																<label>Hourly Rate</label>
-															</div>
-															<div class="col-md-6">
-																<p>10$/hr</p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-6">
-																<label>Total Projects</label>
-															</div>
-															<div class="col-md-6">
-																<p>230</p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-6">
-																<label>English Level</label>
-															</div>
-															<div class="col-md-6">
-																<p>Expert</p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-6">
-																<label>Availability</label>
-															</div>
-															<div class="col-md-6">
-																<p>6 months</p>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-md-12">
-																<label>Your Bio</label>
-																<br/>
-																<p>Your detail description</p>
-															</div>
-														</div>
+												<div class="row">
+													<div class="col-md-12">
+														<div class="table-responsive">
+															<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+																<thead>
+																	<tr>
+																	  <th>Modulo</th>
+																	  <th>Crear</th>
+																	  <th>Editar</th>
+																	  <th>Borrar</th>
+																	  <th>Ver</th>
+																	</tr>
+																</thead>
+																<tfoot>
+																	<tr>
+																	  <th>Modulo</th>
+																	  <th>Crear</th>
+																	  <th>Editar</th>
+																	  <th>Borrar</th>
+																	  <th>Ver</th>
+																	</tr>
+																</tfoot>
+																<tbody>
+																	<?php foreach($userInfo->permissions as $namePermission => $permissions){ ?>
+																		<tr>
+																		  <th><?php echo "{$namePermission}"; ?></th>
+																			<?php foreach($permissions as $k => $v){ ?>
+																				<td>
+																					<a class="btn btn-sm btn-primary text-white">
+																						<?php if($k == 'create'){ ?>
+																							<i class="fa fa-plus-circle"></i>
+																						<?php } else if($k == 'change'){ ?>
+																							<i class="fa fa-wrench"></i>
+																						<?php } else if($k == 'delete'){ ?>
+																							<i class="fa fa-trash"></i>
+																						<?php } else if($k == 'view'){ ?>
+																							<i class="fa fa-eye"></i>
+																						<?php } ?>
+																						
+																						<?php if($v == true){ ?>
+																							<i class="fa fa-check"></i>
+																						<?php }else{ ?>
+																							<i class="fa fa-trash"></i>
+																						<?php } ?>
+																					</a>
+																				</td>
+																			<?php } ?>
+																		</tr>
+																	<?php } ?>
+															  </tbody>
+															</table>
+														</div>														
+													</div>
+												</div>
 											</div>
 											
 										  </div>
@@ -246,11 +266,19 @@ body{
   }
   .image-section{
     padding: 0px;
+    width: 100%;
+    height: 333px;
+    position: relative;
+    background-size: cover;
+    background-image: url(http://hashtag-bg.com/wp-content/uploads/2018/08/whit-ebackground-resume-white-background-photos-and-wallpaper-for-free-download-5b78ba2d6c563.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
   }
   .image-section img{
+	  /*
     width: 100%;
     height:250px;
-    position: relative;
+    position: relative; */
   }
   .user-image{
     position: absolute;

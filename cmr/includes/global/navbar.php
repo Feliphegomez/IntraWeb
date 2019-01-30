@@ -49,10 +49,12 @@
 					<i class="fas fa-user-circle fa-fw"></i>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-					<a class="dropdown-item" href="#">Settings</a>
-					<a class="dropdown-item" href="#">Activity Log</a>
+					<a class="dropdown-item" href="/users/profile/<?php echo $session->username; ?>">Mi Cuenta</a>
 					<div class="dropdown-divider"></div>
-					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
+					<a class="dropdown-item" href="#">Opciones</a>
+					<a class="dropdown-item" href="#">Historico de actividades</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Cerrar sesión</a>
 				</div>
 			</li>
 		</ul>

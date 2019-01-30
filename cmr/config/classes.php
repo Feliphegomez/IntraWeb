@@ -95,7 +95,7 @@ class Route {
 		if(isset($this->routes[2])){ $this->section = $this->routes[2]; };
 		if(isset($this->routes[3])){
 			$temp = array_reverse($this->routes);
-			$this->id = (int) $temp[0];
+			$this->id = $temp[0];
 		};
 		
 		$temp = array();
@@ -159,21 +159,50 @@ class Route {
 				# ($resultOne);
 				# echo json_encode($resultOne);
 			}else{
-				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
-				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				$stmt = $pdo->prepare("SELECT * FROM `url_redirects` 
-				WHERE `url` IN ('{$this->path}') 
-				LIMIT 1");
-				$stmt->execute();
-				$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
-				if(isset($result[0])){
-					$resultOne = (object) $result[0];
-					$this->enable = true;
-					$this->id_route = $resultOne->id;
-					$this->module = $resultOne->module;
-					$this->section = $resultOne->section;
-					# ($resultOne);
-					# echo json_encode($resultOne);
+				try {
+					$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+					$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+					$stmt = $pdo->prepare("SELECT * FROM `url_redirects` 
+					WHERE `url` IN ('{$this->path}') 
+					LIMIT 1");
+					$stmt->execute();
+					$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+					if(isset($result[0])){
+						$resultOne = (object) $result[0];
+						$this->enable = true;
+						$this->id_route = $resultOne->id;
+						$this->module = $resultOne->module;
+						$this->section = $resultOne->section;
+						# ($resultOne);
+						# echo json_encode($resultOne);
+					}else{
+						try {
+							$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+							$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+							$stmt = $pdo->prepare("SELECT * FROM `url_redirects` 
+							WHERE `module` IN ('{$this->module}') 
+							AND `section` IN ('{$this->section}') 
+							LIMIT 1");
+							$stmt->execute();
+							$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+							if(isset($result[0])){
+								$resultOne = (object) $result[0];
+								$this->enable = true;
+								$this->id_route = $resultOne->id;
+								$this->module = $resultOne->module;
+								$this->section = $resultOne->section;
+								# ($resultOne);
+								# echo json_encode($resultOne);
+							}
+						}
+						catch(PDOException $e) {
+							// $this->result = "Error: " . $e->getMessage();
+						}
+					}
+				}
+				catch(PDOException $e) {
+					// $this->result = "Error: " . $e->getMessage();
+					
 				}
 			}
 		}
@@ -187,10 +216,14 @@ class Route {
 
 class User
 {
-  var $id, $username, $permissions, $names, $surname, $second_surname;
+  var $id, $username, $permissions, $names, $surname, $second_surname, $mail;
    
-   function __construct()
-   {}
+   function __construct($params=null)
+   {
+	   if(isset($params->id) && $params->id > 0){
+		   $this->load_by_id($params->id);
+	   }
+   }
    
    function __toString()
    {
@@ -232,14 +265,6 @@ class User
    
    function setData($data)
    {
-	   /*
-		if(isset($data->permissions)){
-			$data->permissions = json_decode($data->permissions);
-		}
-		$this->id = (int) $data->id;
-		$this->username = $data->username;
-		$this->permissions = $data->permissions;
-		*/
 		if(isset($data->permissions)){
 			$data->permissions = json_decode($data->permissions);
 		}
@@ -275,7 +300,6 @@ class Session extends User
 		}else{
 			if(isset($this->Route->fields['inputNickLogin']) && isset($this->Route->fields['inputPasswordLogin']))
 			{
-				
 				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
 				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 				$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions` 
@@ -314,3 +338,27 @@ class Session extends User
 	}
 }
 
+class Users
+{
+	var $list = array();
+	var $total = 0;
+	
+	function __construct()
+	{
+		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions` 
+		FROM `users` 
+		LEFT JOIN `permissions` ON `permissions`.id = `users`.`permissions` 
+		LIMIT 1000
+		');
+		$stmt->execute();
+		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+		$temp =  array();
+		foreach($result as $item)
+		{
+			$temp[] = new User($item);
+		}
+		$this->list = $temp;
+	}
+}
