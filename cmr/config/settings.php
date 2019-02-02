@@ -1,7 +1,4 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 setlocale(LC_ALL,"es_CO");
 setlocale(LC_MONETARY,"es_CO");
 
@@ -37,5 +34,11 @@ define('theme_active', 'default');
 
 
 define('MODE_DEBUG', true);
-define('DEBUG_SESSION', false);
+define('DEBUG_SESSION', true);
 define('DEBUG_SITE', true);
+
+if(MODE_DEBUG == true)
+{
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);	
+}

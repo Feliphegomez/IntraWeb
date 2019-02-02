@@ -247,13 +247,83 @@ class BaseClass
    }
 }
 
+# ----------------- LOGS ROUTES -----------------
+class LogRoutes extends BaseClass 
+{
+	var $host, $real_ip, $forwarded_for, $user_agent, $accept, $referer, $cookie, $server_address, $server_name, $server_port, $remote_address, $script_filename, $redirect_url, $request_method, $request_uri, $time, $time_float;
+	private $array_healthy = array("host", "real_ip", "forwarded_for", "user_agent", "accept", "referer", "cookie", "server_address", "server_name", "server_port", "remote_address", "script_filename", "redirect_url", "request_method", "request_uri", "time", "time_float");
+	private $array_yummy = array("host", "real_ip", "forwarded_for", "user_agent", "accept", "referer", "cookie", "server_address", "server_name", "server_port", "remote_address", "script_filename", "redirect_url", "request_method", "request_uri", "time", "time_float");
+   
+	function __construct()
+	{		
+		$this->host = $_SERVER['HTTP_HOST'];
+		$this->real_ip = $_SERVER['HTTP_X_REAL_IP'];
+		$this->forwarded_for = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		$this->user_agent = $_SERVER['HTTP_USER_AGENT'];
+		$this->accept = $_SERVER['HTTP_ACCEPT'];
+		$this->referer = $_SERVER['HTTP_REFERER'];
+		$this->cookie = $_SERVER['HTTP_COOKIE'];
+		$this->server_address = $_SERVER['SERVER_ADDR'];
+		$this->server_name = $_SERVER['SERVER_NAME'];
+		$this->server_port = $_SERVER['SERVER_PORT'];
+		$this->remote_address = $_SERVER['REMOTE_ADDR'];
+		$this->script_filename = $_SERVER['SCRIPT_FILENAME'];
+		$this->redirect_url = $_SERVER['REDIRECT_URL'];
+		$this->request_method = $_SERVER['REQUEST_METHOD'];
+		$this->request_uri = $_SERVER['REQUEST_URI'];
+		$this->time = $_SERVER['REQUEST_TIME'];
+		$this->time_float = $_SERVER['REQUEST_TIME_FLOAT'];
+		
+		$this->create($this);
+	}
+		
+	function create($dataInput)
+	{
+		$dataRet = new stdClass();
+		$dataArray = array();
+		$dataFields = array();
+		$healthy   = $this->array_healthy;
+		$yummy   = $this->array_yummy;
+		
+		foreach($dataInput as $k => $v)
+		{
+			$newKey = str_replace($healthy, $yummy, $k);
+			if(in_array($newKey, $yummy) == true)
+			{
+				$dataRet->{$newKey} = $v;
+				$dataFields[] = " `{$newKey}` ";
+				$dataArray[] = " '{$v}' ";
+			}
+		}
+				
+		try {
+				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "INSERT INTO `log_auth` (".implode(',', $dataFields).")
+				VALUES (".implode(',', $dataArray).")";
+				$pdo->exec($sql);
+				echo "Nuevo registro creado exitosamente";
+			}
+		catch(PDOException $e)
+			{
+				#echo $sql . "<br>" . $e->getMessage();
+				echo "<br>" . json_encode($e);
+			}
+
+		$pdo = null;
+	}
+
+}
+
 # ----------------- SESSION -----------------
 class Session extends User 
 {
+	var $server = null;
 	var $countRefresh = null;
 	var $Route = null;
 	var $id = 0;
 	var $Routes2 = null;
+	var $user_ip = null;
 	
 	function __construct()
 	{
@@ -284,8 +354,42 @@ class Session extends User
 				}
 			}
 		}
+		
+				
+		$this->user_ip = $this->getUserIP();
+		$tempServ = new LogRoutes();
+		$this->server = $tempServ;
 	}
 	
+	
+	function getUserIP()
+	{
+		// Get real visitor IP behind CloudFlare network
+		if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+				  $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+				  $_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+		}
+		$client  = @$_SERVER['HTTP_CLIENT_IP'];
+		$forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+		$remote  = $_SERVER['REMOTE_ADDR'];
+
+		if(filter_var($client, FILTER_VALIDATE_IP))
+		{
+			$ip = $client;
+		}
+		elseif(filter_var($forward, FILTER_VALIDATE_IP))
+		{
+			$ip = $forward;
+		}
+		else
+		{
+			$ip = $remote;
+		}
+
+		return $ip;
+	}
+
+
 	function saveSession()
 	{
 		$_SESSION['id'] = $this->id;
@@ -343,7 +447,6 @@ class Session extends User
 		<!-- Navbar USER LOGGIN -->
 		<ul class="navbar-nav ml-auto ml-md-0">
 			<?php $this->dropdownUserNavbar(); ?>
-			
 			<?php if($this->id > 0){ ?>
 				<?php 
 					if(
@@ -358,11 +461,12 @@ class Session extends User
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
 							<a class="dropdown-item" href="/users/admin.html">Usuarios</a>
 							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="#">Something else here</a>
+							<a class="dropdown-item" href="/modules/admin.html">Modulos</a>
+							<a class="dropdown-item" href="/routes/admin.html">Routes</a>
 						</div>
 					</li>
 				<?php } ?>
-					<?php if(MODE_DEBUG == true){ ?>
+				<?php if(MODE_DEBUG == true){ ?>
 					<li class="nav-item dropdown no-arrow mx-1">
 						<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<i class="fas fa-fw fa-folder"></i>
@@ -493,8 +597,8 @@ class Users
 class User
 {
   var $id, $username, $permissions, $names, $surname, $second_surname, $mail, $phone, $mobile, $avatar;
-  var $array_healthy = array("userData-id", "userData-username", "userData-names", "userData-surname", "userData-second_surname", "userData-phone", "userData-mobile", "userData-avatar", "userData-mail", "userData-hash", "userData-permissions");
-  var $array_yummy = array("id", "username", "names", "surname", "second_surname", "phone", "mobile", "avatar", "mail", "hash", "permissions");
+  private $array_healthy = array("userData-id", "userData-username", "userData-names", "userData-surname", "userData-second_surname", "userData-phone", "userData-mobile", "userData-avatar", "userData-mail", "userData-hash", "userData-permissions");
+  private $array_yummy = array("id", "username", "names", "surname", "second_surname", "phone", "mobile", "avatar", "mail", "hash", "permissions");
    
    function __construct($params=null)
    {
@@ -650,6 +754,7 @@ class User
 
 		$pdo = null;
 	}
+
 }
 
 # ----------------- PICTURES -----------------
@@ -688,6 +793,7 @@ class Picture extends BaseClass
 	   return ($this);
    }
 }
+
 
 # ----------------- PERMISSIONS -----------------
 class Permission extends BaseClass
@@ -739,6 +845,235 @@ class Permissions
 		foreach($result as $item)
 		{
 			$temp[] = new Permission($item);
+		}
+		$this->list = $temp;
+	}
+	
+}
+
+# ----------------- MODULES -----------------
+class Modules
+{
+	var $list = array();
+	var $total = 0;
+	
+	function __construct()
+	{
+		$dirs = $this->getFileList('cmr/content/modules/');
+		$this->list = ($dirs);
+	}
+	
+	
+	function getFileList($dir) { 
+	   
+	   $result = array(); 
+
+	   $cdir = scandir($dir); 
+	   foreach ($cdir as $key => $value) 
+	   { 
+		  if (!in_array($value,array(".",".."))) 
+		  { 
+			 if (is_dir($dir . DIRECTORY_SEPARATOR . $value)) 
+			 { 
+				$result[$value] = $this->getFileList($dir . DIRECTORY_SEPARATOR . $value); 
+			 } 
+			 else 
+			 { 
+				$result[] = $value; 
+			 } 
+		  } 
+	   } 
+	   
+	   return $result; 
+	} 
+	/*
+	function getFileList($dir)
+	{
+		// array to hold return value
+		$retval = [];
+
+		// add trailing slash if missing
+		if(substr($dir, -1) != "/") {
+		  $dir .= "/";
+		}
+
+		// open pointer to directory and read list of files
+		$d = @dir($dir) or die("getFileList: Failed opening directory {$dir} for reading");
+		while(FALSE !== ($entry = $d->read())) {
+		  // skip hidden files
+		  if($entry{0} == ".") continue;
+		  if(is_dir("{$dir}{$entry}")) {
+			$retval[] = [
+			  'name' => "{$entry}",
+			  'path' => "{$dir}{$entry}/",
+			  'type' => filetype("{$dir}{$entry}"),
+			  'size' => 0,
+			  'lastmod' => filemtime("{$dir}{$entry}")
+			];
+		  } elseif(is_readable("{$dir}{$entry}")) {
+			$retval[] = [
+			  'name' => "{$entry}",
+			  'path' => "{$dir}{$entry}",
+			  'type' => mime_content_type("{$dir}{$entry}"),
+			  'size' => filesize("{$dir}{$entry}"),
+			  'lastmod' => filemtime("{$dir}{$entry}")
+			];
+		  }
+		}
+		$d->close();
+
+		return $retval;
+	}*/
+}
+
+
+# ----------------- ROUTES -----------------
+class Route_S extends BaseClass
+{
+  var $url, $module, $section, $created_at;
+  private $array_healthy = array("routeData-id", "routeData-url", "routeData-module", "routeData-section", "routeData-create_at", "routeData-update_at");
+  private $array_yummy = array("id", "url", "module", "section", "create_at", "update_at");
+   
+   
+   function __construct($params=null)
+   {
+		if(isset($params->id) && $params->id > 0){
+			$this->load_by_id($params->id);
+		}
+   }
+   
+   function __toString()
+   {
+	   return "{$this->url}";
+   }
+
+   function load_by_id($id)
+   {
+		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare('SELECT `url_redirects`.*
+		FROM `url_redirects` 
+		WHERE `url_redirects`.`id` = ?');
+		$stmt->execute([$id]);
+		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+		if(isset($result[0])){
+			$resultOne = (object) $result[0];
+			$this->setData($resultOne);
+		}
+   }
+	
+	function delete_by_id($id)
+	{
+		try {
+				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "DELETE FROM `url_redirects` WHERE `url_redirects`.`id` IN ('{$id}')";
+				$pdo->exec($sql);
+				return true;
+			}
+		catch(PDOException $e)
+			{
+				return false;
+			}
+		$pdo = null;
+	}
+	
+	function update_by_id($dataInput)
+	{
+		$dataRet = new stdClass();
+		$dataArray = array();
+		$healthy   = $this->array_healthy;
+		$yummy   = $this->array_yummy;
+		
+		foreach($dataInput as $k => $v)
+		{
+			$newKey = str_replace($healthy, $yummy, $k);
+			if(in_array($newKey, $yummy) == true)
+			{
+				$dataRet->{$newKey} = $v;
+				$dataArray[] = " `{$newKey}`='{$v}' ";
+			}
+		}
+		
+		try 
+		{
+			if(isset($dataRet->id))
+			{
+				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				
+				$sql = "UPDATE `url_redirects` SET ".implode(',', $dataArray)." WHERE `id`='{$dataRet->id}'";
+							
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+				echo "".$stmt->rowCount()." campos ACTUALIZADOS satisfactoriamente.";
+			}else{
+				echo "NO EXISTE ID DEL USUARIO";
+			}
+		}
+		catch(PDOException $e)
+		{
+			echo $sql . "<br>" . $e->getMessage();
+		}
+
+		$conn = null;
+	}
+	
+	function create($dataInput)
+	{
+		$dataRet = new stdClass();
+		$dataArray = array();
+		$dataFields = array();
+		$healthy   = $this->array_healthy;
+		$yummy   = $this->array_yummy;
+		
+		foreach($dataInput as $k => $v)
+		{
+			$newKey = str_replace($healthy, $yummy, $k);
+			if(in_array($newKey, $yummy) == true)
+			{
+				$dataRet->{$newKey} = $v;
+				$dataFields[] = " `{$newKey}` ";
+				$dataArray[] = " '{$v}' ";
+			}
+		}
+				
+		try {
+				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "INSERT INTO `url_redirects` (".implode(',', $dataFields).")
+				VALUES (".implode(',', $dataArray).")";
+				$pdo->exec($sql);
+				echo "Nuevo registro creado exitosamente";
+			}
+		catch(PDOException $e)
+			{
+				#echo $sql . "<br>" . $e->getMessage();
+				echo "<br>" . json_encode($e);
+			}
+
+		$pdo = null;
+	}
+
+}
+
+class Routes
+{	
+	var $list = array();
+	var $total = 0;
+	
+	function __construct()
+	{
+		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare('SELECT `url_redirects`.* FROM `url_redirects` LIMIT 1000');
+		$stmt->execute();
+		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+		$temp =  array();
+		$this->total = count($result);
+		foreach($result as $item)
+		{
+			$temp[] = new Route_S($item);
 		}
 		$this->list = $temp;
 	}
