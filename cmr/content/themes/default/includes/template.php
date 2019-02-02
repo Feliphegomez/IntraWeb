@@ -15,5 +15,6 @@
 			<?php $session->getContentRoute(); ?>
 		</div>
 		<?php $site->getScriptsGlobal(); ?>
+		<?php $session->getScriptsTheme(); ?>
 	</body>
 </html>

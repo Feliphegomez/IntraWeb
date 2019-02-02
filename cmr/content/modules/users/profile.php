@@ -21,18 +21,23 @@ $userInfo->load_by_username($username);
 			<div class="col-md-3 col-sm-3 col-xs-12 user-profil-part pull-left">
 				<div class="row ">
 					<div class="col-md-12 col-md-12-sm-12 col-xs-12 user-image text-center">
-						<img src="<?php echo "/media/images/{$userInfo->avatar}"; ?>" class="rounded-circle">
+						<!-- // <img src="" class=""> -->
+						<img class="rounded-circle" id="myImg" data-toggle="modal" data-target="#myModal" src="<?php echo "/media/images/{$userInfo->avatar}"; ?>" data-src="<?php echo "/media/images/{$userInfo->avatar}"; ?>" />
 					</div>
 					<div class="col-md-12 col-sm-12 col-xs-12 user-detail-section1 text-center">
+						<!--
 						<button id="btn-contact" (click)="clearModal()" data-toggle="modal" data-target="#contact" class="btn btn-success btn-block follow">Contactarme</button> 
-						<button class="btn btn-warning btn-block">Descargar Curriculum</button>                               
+						<button class="btn btn-warning btn-block">Descargar Curriculum</button>
+						-->
 					</div>
+					
 					<div class="row user-detail-row">
+						<!--
 						<div class="col-md-12 col-sm-12 user-detail-section2 pull-left">
 							<div class="border"></div>
 							<p>FOLLOWER</p>
 							<span>320</span>
-						</div>                           
+						</div>    -->                       
 					</div>
 				   
 				   <!--
@@ -162,12 +167,12 @@ $userInfo->load_by_username($username);
 																			if(isset($permissions->create) && $permissions->create == true)
 																			{
 																				echo "<a class=\"btn btn-sm btn-success text-white\">";
-																					echo "<i class=\"fa fa-plus-circle\"></i> ";
+																					//echo "<i class=\"fa fa-plus-circle\"></i> ";
 																					echo "<i class=\"fa fa-check\"></i>";
 																				echo "</a>";
 																			}else{
 																				echo "<a class=\"btn btn-sm btn-danger text-white\">";
-																					echo "<i class=\"fa fa-plus-circle\"></i> ";
+																					//echo "<i class=\"fa fa-plus-circle\"></i> ";
 																					echo "<i class=\"fa fa-ban\"></i>";
 																				echo "</a>";
 																			}
@@ -178,12 +183,12 @@ $userInfo->load_by_username($username);
 																			if(isset($permissions->change) && $permissions->change == true)
 																			{
 																				echo "<a class=\"btn btn-sm btn-success text-white\">";
-																					echo "<i class=\"fa fa-wrench\"></i> ";
+																					//echo "<i class=\"fa fa-wrench\"></i> ";
 																					echo "<i class=\"fa fa-check\"></i>";
 																				echo "</a>";
 																			}else{
 																				echo "<a class=\"btn btn-sm btn-danger text-white\">";
-																					echo "<i class=\"fa fa-wrench\"></i> ";
+																					//echo "<i class=\"fa fa-wrench\"></i> ";
 																					echo "<i class=\"fa fa-ban\"></i>";
 																				echo "</a>";
 																			}
@@ -194,12 +199,12 @@ $userInfo->load_by_username($username);
 																			if(isset($permissions->delete) && $permissions->delete == true)
 																			{
 																				echo "<a class=\"btn btn-sm btn-success text-white\">";
-																					echo "<i class=\"fa fa-trash\"></i> ";
+																					//echo "<i class=\"fa fa-trash\"></i> ";
 																					echo "<i class=\"fa fa-check\"></i>";
 																				echo "</a>";
 																			}else{
 																				echo "<a class=\"btn btn-sm btn-danger text-white\">";
-																					echo "<i class=\"fa fa-trash\"></i> ";
+																					//echo "<i class=\"fa fa-trash\"></i> ";
 																					echo "<i class=\"fa fa-ban\"></i>";
 																				echo "</a>";
 																			}
@@ -210,12 +215,12 @@ $userInfo->load_by_username($username);
 																			if(isset($permissions->view) && $permissions->view == true)
 																			{
 																				echo "<a class=\"btn btn-sm btn-success text-white\">";
-																					echo "<i class=\"far fa-eye\"></i> ";
+																					//echo "<i class=\"far fa-eye\"></i> ";
 																					echo "<i class=\"fa fa-check\"></i>";
 																				echo "</a>";
 																			}else{
 																				echo "<a class=\"btn btn-sm btn-danger text-white\">";
-																					echo "<i class=\"far fa-eye\"></i> ";
+																					//echo "<i class=\"far fa-eye\"></i> ";
 																					echo "<i class=\"fa fa-ban\"></i>";
 																				echo "</a>";
 																			}

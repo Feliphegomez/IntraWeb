@@ -36,4 +36,6 @@ define('path_home', '/');
 define('theme_active', 'default');
 
 
-define('demo_debug', true);
+define('MODE_DEBUG', true);
+define('DEBUG_SESSION', false);
+define('DEBUG_SITE', true);

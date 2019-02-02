@@ -1,5 +1,6 @@
 <?php
-class Route {
+class Route 
+{
 	private $basepath;
 	private $uri;
 	private $base_url;
@@ -233,74 +234,21 @@ class Route {
 	
 }
 
-class User
+class BaseClass 
 {
-  var $id, $username, $permissions, $names, $surname, $second_surname, $mail, $phone, $mobile, $avatar;
-   
-   function __construct($params=null)
-   {
-		if(isset($params->id) && $params->id > 0){
-			$this->load_by_id($params->id);
-		}
-   }
-   
-   function __toString()
-   {
-	   #return ($this->username);
-	   return "{$this->names} {$this->surname} {$this->second_surname}";
-   }
+	var $id;
 
-   function load_by_id($id)
-   {
-		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions`, `pictures`.`data` as `avatar_data`
-		FROM `users` 
-		LEFT JOIN `permissions` ON `permissions`.`id` = `users`.`permissions` 
-		LEFT JOIN `pictures` ON `pictures`.`id` = `users`.`avatar`
-		WHERE `users`.id=?');
-		$stmt->execute([$id]);
-		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
-		if(isset($result[0])){
-			$resultOne = (object) $result[0];
-			$this->setData($resultOne);
-		}
-   }
-
-   function load_by_username($username)
-   {
-		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
-		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions`, `pictures`.`data` as `avatar_data`
-		FROM `users` 
-		LEFT JOIN `permissions` ON `permissions`.id = `users`.`permissions` 
-		LEFT JOIN `pictures` ON `pictures`.`id` = `users`.`avatar`
-		WHERE `users`.username=?');
-		$stmt->execute([$username]);
-		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
-		if(isset($result[0])){
-			$resultOne = (object) $result[0];
-			$this->setData($resultOne);
-		}
-   }
-   
    function setData($data)
    {
-		if(isset($data->permissions)){
-			$data->permissions = json_decode($data->permissions);
-		}
 		foreach($data as $k=>$v)
 		{
 			$this->{$k} = $v;
 		}
    }
-   
-   function getUser(){
-	   return ($this);
-   }
 }
 
-class Session extends User
+# ----------------- SESSION -----------------
+class Session extends User 
 {
 	var $countRefresh = null;
 	var $Route = null;
@@ -361,30 +309,6 @@ class Session extends User
 	function dropdownUserNavbar()
 	{
 		?>
-		<li class="nav-item dropdown no-arrow mx-1">
-			<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fas fa-bell fa-fw"></i>
-				<span class="badge badge-danger">9+</span>
-			</a>
-			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-				<a class="dropdown-item" href="#">Action</a>
-				<a class="dropdown-item" href="#">Another action</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Something else here</a>
-			</div>
-		</li>
-		<li class="nav-item dropdown no-arrow mx-1">
-			<a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class="fas fa-envelope fa-fw"></i>
-				<span class="badge badge-danger">7</span>
-			</a>
-			<div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-				<a class="dropdown-item" href="#">Action</a>
-				<a class="dropdown-item" href="#">Another action</a>
-				<div class="dropdown-divider"></div>
-				<a class="dropdown-item" href="#">Something else here</a>
-			</div>
-		</li>
 		<li class="nav-item dropdown no-arrow">
 			<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 				<i class="fas fa-user-circle fa-fw"></i>
@@ -404,8 +328,8 @@ class Session extends User
 	function itemsNavbarTheme()
 	{
 		 ?>
-		<!-- Navbar Search -->
 		<form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0" action="/search" method="search">
+			<!-- // Navbar Search 
 			<div class="input-group">
 				<input type="text" name="q" class="form-control" placeholder="Buscar..." aria-label="Search" aria-describedby="basic-addon2">
 				<div class="input-group-append">
@@ -414,10 +338,52 @@ class Session extends User
 					</button>
 				</div>
 			</div>
+			-->
 		</form>
 		<!-- Navbar USER LOGGIN -->
 		<ul class="navbar-nav ml-auto ml-md-0">
 			<?php $this->dropdownUserNavbar(); ?>
+			
+			<?php if($this->id > 0){ ?>
+				<?php 
+					if(
+						isset($this->permissions->users)
+					){ 
+				?>
+					<li class="nav-item dropdown no-arrow mx-1">
+						<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-cogs"></i>
+							<span class="badge badge-danger">Config</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+							<a class="dropdown-item" href="/users/admin.html">Usuarios</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Something else here</a>
+						</div>
+					</li>
+				<?php } ?>
+					<?php if(MODE_DEBUG == true){ ?>
+					<li class="nav-item dropdown no-arrow mx-1">
+						<a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-folder"></i>
+							<span class="badge badge-danger">DEMO</span>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+							<a class="dropdown-item" href="/tables.html">
+								<i class="fas fa-fw fa-table"></i>
+								<span>Tables</span>
+							</a>
+							<a class="dropdown-item dropdown-menu-right" href="/charts.html">
+								<i class="fas fa-fw fa-chart-area"></i>
+								<span>Charts</span>
+							</a>
+							<a class="dropdown-item" href="#">Another action</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="#">Something else here</a>
+						</div>
+					</li>
+				<?php } ?>
+			<?php } ?>
 		</ul>
 		<?php 
 	}
@@ -425,6 +391,11 @@ class Session extends User
 	function getHeadTheme()
 	{
 		require('cmr/content/themes/'.theme_active.'/includes/head.php');
+	}
+	
+	function getScriptsTheme()
+	{
+		require('cmr/content/themes/'.theme_active.'/includes/scripts.php');
 	}
 	
 	function getSidebarTheme()
@@ -449,6 +420,13 @@ class Session extends User
 		
 	}
 	
+	function getDebugBlock()
+	{
+		if(MODE_DEBUG == true){
+			require('cmr/includes/global/debug.php');
+		}
+	}
+	
 	function getBodyTheme()
 	{
 		require('cmr/content/themes/'.theme_active.'/includes/body.php');
@@ -471,8 +449,21 @@ class Session extends User
 		require('cmr/content/themes/'.theme_active.'/includes/content.php');
 	}
 	
+	function validatePermission($module, $permission)
+	{
+		if(isset($this->permissions->{$module}->$permission))
+			{
+				return (boolean) $this->permissions->{$module}->$permission;
+			}
+		else
+			{
+				return false;
+			}
+	}
+	
 }
 
+# ----------------- USERS -----------------
 class Users
 {
 	var $list = array();
@@ -490,6 +481,7 @@ class Users
 		$stmt->execute();
 		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
 		$temp =  array();
+		$this->total = count($result);
 		foreach($result as $item)
 		{
 			$temp[] = new User($item);
@@ -498,7 +490,170 @@ class Users
 	}
 }
 
-class Picture
+class User
+{
+  var $id, $username, $permissions, $names, $surname, $second_surname, $mail, $phone, $mobile, $avatar;
+  var $array_healthy = array("userData-id", "userData-username", "userData-names", "userData-surname", "userData-second_surname", "userData-phone", "userData-mobile", "userData-avatar", "userData-mail", "userData-hash", "userData-permissions");
+  var $array_yummy = array("id", "username", "names", "surname", "second_surname", "phone", "mobile", "avatar", "mail", "hash", "permissions");
+   
+   function __construct($params=null)
+   {
+		if(isset($params->id) && $params->id > 0){
+			$this->load_by_id($params->id);
+		}
+   }
+   
+   function __toString()
+   {
+	   #return ($this->username);
+	   return "{$this->names} {$this->surname} {$this->second_surname}";
+   }
+
+   function load_by_id($id)
+   {
+		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions`, `pictures`.`data` as `avatar_data`
+		FROM `users` 
+		LEFT JOIN `permissions` ON `permissions`.`id` = `users`.`permissions` 
+		LEFT JOIN `pictures` ON `pictures`.`id` = `users`.`avatar`
+		WHERE `users`.id=?');
+		$stmt->execute([$id]);
+		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+		if(isset($result[0])){
+			$resultOne = (object) $result[0];
+			$this->setData($resultOne);
+		}
+   }
+
+   function load_by_username($username)
+   {
+		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions`, `pictures`.`data` as `avatar_data`
+		FROM `users` 
+		LEFT JOIN `permissions` ON `permissions`.id = `users`.`permissions` 
+		LEFT JOIN `pictures` ON `pictures`.`id` = `users`.`avatar`
+		WHERE `users`.username=?');
+		$stmt->execute([$username]);
+		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+		if(isset($result[0])){
+			$resultOne = (object) $result[0];
+			$this->setData($resultOne);
+		}
+   }
+   
+   function setData($data)
+   {
+		if(isset($data->permissions)){
+			$data->permissions = json_decode($data->permissions);
+		}
+		foreach($data as $k=>$v)
+		{
+			$this->{$k} = $v;
+		}
+   }
+   
+	function getUser(){
+	   return ($this);
+	}
+	
+	function delete_by_id($id)
+	{
+		try {
+				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "DELETE FROM `users` WHERE `users`.`id` IN ('{$id}')";
+				$pdo->exec($sql);
+				return true;
+			}
+		catch(PDOException $e)
+			{
+				return false;
+			}
+		$pdo = null;
+	}
+	
+	function update_by_id($dataInput)
+	{
+		$dataRet = new stdClass();
+		$dataArray = array();
+		$healthy   = $this->array_healthy;
+		$yummy   = $this->array_yummy;
+		
+		foreach($dataInput as $k => $v)
+		{
+			$newKey = str_replace($healthy, $yummy, $k);
+			if(in_array($newKey, $yummy) == true)
+			{
+				$dataRet->{$newKey} = $v;
+				$dataArray[] = " `{$newKey}`='{$v}' ";
+			}
+		}
+		
+		try 
+		{
+			if(isset($dataRet->id))
+			{
+				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				
+				$sql = "UPDATE `users` SET ".implode(',', $dataArray)." WHERE `id`='{$dataRet->id}'";
+							
+				$stmt = $pdo->prepare($sql);
+				$stmt->execute();
+				echo "".$stmt->rowCount()." campos ACTUALIZADOS satisfactoriamente.";
+			}else{
+				echo "NO EXISTE ID DEL USUARIO";
+			}
+		}
+		catch(PDOException $e)
+		{
+			echo $sql . "<br>" . $e->getMessage();
+		}
+
+		$conn = null;
+	}
+	
+	function create($dataInput)
+	{
+		$dataRet = new stdClass();
+		$dataArray = array();
+		$dataFields = array();
+		$healthy   = $this->array_healthy;
+		$yummy   = $this->array_yummy;
+		
+		foreach($dataInput as $k => $v)
+		{
+			$newKey = str_replace($healthy, $yummy, $k);
+			if(in_array($newKey, $yummy) == true)
+			{
+				$dataRet->{$newKey} = $v;
+				$dataFields[] = " `{$newKey}` ";
+				$dataArray[] = " '{$v}' ";
+			}
+		}
+				
+		try {
+				$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+				$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+				$sql = "INSERT INTO `users` (".implode(',', $dataFields).")
+				VALUES (".implode(',', $dataArray).")";
+				$pdo->exec($sql);
+				echo "Nuevo registro creado exitosamente";
+			}
+		catch(PDOException $e)
+			{
+				#echo $sql . "<br>" . $e->getMessage();
+				echo "<br>" . json_encode($e);
+			}
+
+		$pdo = null;
+	}
+}
+
+# ----------------- PICTURES -----------------
+class Picture extends BaseClass
 {
   var $id, $data, $url_short, $url_large;
    
@@ -528,16 +683,128 @@ class Picture
 			$this->setData($resultOne);
 		}
    }
-
-   function setData($data)
-   {
-		foreach($data as $k=>$v)
-		{
-			$this->{$k} = $v;
-		}
-   }
    
    function getPicture(){
 	   return ($this);
    }
+}
+
+# ----------------- PERMISSIONS -----------------
+class Permission extends BaseClass
+{
+  var $name, $data;
+   
+   function __construct($params=null)
+   {
+		if(isset($params->id) && $params->id > 0){
+			$this->load_by_id($params->id);
+		}
+   }
+   
+   function __toString()
+   {
+	   return "{$this->name}";
+   }
+
+   function load_by_id($id)
+   {
+		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare('SELECT `permissions`.*
+		FROM `permissions` 
+		WHERE `permissions`.`id` = ?');
+		$stmt->execute([$id]);
+		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+		if(isset($result[0])){
+			$resultOne = (object) $result[0];
+			$this->setData($resultOne);
+		}
+   }
+}
+
+class Permissions
+{
+	var $list = array();
+	var $total = 0;
+	
+	function __construct()
+	{
+		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$stmt = $pdo->prepare('SELECT `permissions`.* FROM `permissions` LIMIT 1000');
+		$stmt->execute();
+		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
+		$temp =  array();
+		$this->total = count($result);
+		foreach($result as $item)
+		{
+			$temp[] = new Permission($item);
+		}
+		$this->list = $temp;
+	}
+	
+}
+
+# PASAR -----------------------
+function transalateLabelPermissions($label)
+{
+	switch ($label) {
+		case 'view':
+			return 'Ver';
+			break;
+		case 'change':
+			return 'Modificar';
+			break;
+		case 'create':
+			return 'Crear';
+			break;
+		case 'delete':
+			return 'Eliminar';
+			break;
+		case 'users':
+			return 'Usuarios';
+			break;
+	}
+
+}
+# PASAR -----------------------
+function convertBooleanToIcon($valueBoolean)
+{
+	switch ($valueBoolean) {
+		case '1':
+			return '<i class="fa fa-check"></i>';
+			break;
+		case true:
+			return '<i class="fa fa-check"></i>';
+			break;
+		case 'true':
+			return '<i class="fa fa-check"></i>';
+			break;
+		case 'enabled':
+			return '<i class="fa fa-check"></i>';
+			break;
+		case 'enable':
+			return '<i class="fa fa-check"></i>';
+			break;
+			
+		case '0':
+			return '<i class="fa fa-ban"></i>';
+			break;
+		case 0:
+			return '<i class="fa fa-ban"></i>';
+			break;
+		case false:
+			return '<i class="fa fa-ban"></i>';
+			break;
+		case 'false':
+			return '<i class="fa fa-ban"></i>';
+			break;
+		case 'disabled':
+			return '<i class="fa fa-ban"></i>';
+			break;
+		case 'disable':
+			return '<i class="fa fa-ban"></i>';
+			break;
+	}
+
 }

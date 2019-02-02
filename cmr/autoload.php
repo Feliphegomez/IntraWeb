@@ -7,8 +7,6 @@ include('config/settings.php');
 $session = new Session();
 $site = $session->Route;
 
-
-
 # IMAGENES
 if($site->module == 'media' && $site->section == 'images' && isset($site->id))
 {
@@ -17,10 +15,6 @@ if($site->module == 'media' && $site->section == 'images' && isset($site->id))
 	
 	if($picture->id > 0)
 	{
-		#echo json_encode($picture);
-		#echo '<br>';
-		#exit('Cargando Imagen...');
-		
 		$Base64Img = $picture->data;
 		$Base64Img = @explode('data:image/', $Base64Img);
 		$Base64Img = @explode(';base64,',$Base64Img[1]);
