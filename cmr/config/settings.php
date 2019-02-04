@@ -34,7 +34,7 @@ define('theme_active', 'default');
 
 
 define('MODE_DEBUG', true);
-define('DEBUG_SESSION', true);
+define('DEBUG_SESSION', false);
 define('DEBUG_SITE', true);
 
 if(MODE_DEBUG == true)

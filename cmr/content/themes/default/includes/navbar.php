@@ -6,5 +6,4 @@
 		<i class="fas fa-bars"></i>
 	</button>
 	<?php $session->itemsNavbarTheme(); ?>
-	
 </nav>

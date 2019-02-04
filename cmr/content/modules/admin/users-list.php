@@ -145,16 +145,22 @@ $permissionsList = new Permissions();
 									<?php foreach($user->permissions as $k=>$v)
 										{
 											echo '<tr>';
-												echo '<th colspan="2">'.transalateLabelPermissions($k).'</th>';
+												echo '<th colspan="5" class="text-center">'.transalateLabelPermissions($k).'</th>';
 											echo '</tr>';
 											
+											
+											echo '<tr>';
+												foreach($v as $k2=>$v2)
+												{
+													echo '<td>'.transalateLabelPermissions($k2).'</td>';
+												}
+											echo '</tr>';
+											echo '<tr>';
 											foreach($v as $k2=>$v2)
 											{
-												echo '<tr>';
-													echo '<td>'.convertBooleanToIcon($v2).'</td>';
-													echo '<td>'.transalateLabelPermissions($k2).'</td>';
-												echo '</tr>';
+												echo '<td>'.convertBooleanToIcon($v2).'</td>';
 											}
+											echo '</tr>';
 										}
 									?>
 								</tbody>
@@ -242,76 +248,6 @@ $permissionsList = new Permissions();
 								} ?>
 							</select>
 							<small class="form-text text-muted"></small>
-						</div>
-						
-						<div class="form-group col-sm-6">
-							<ul class="nav nav-tabs" id="myTab" role="tablist">
-								<?php 
-									$i = 0;
-									foreach($permissionsList->list as $item2){
-											$class = '';
-											if($i==0){ $class = 'active'; };
-											#echo json_encode($item2);
-											echo "<li class=\"nav-item\"><a class=\"nav-link {$class}\" id=\"home-tab\" data-toggle=\"tab\" href=\"#home-{$item2->id}\" role=\"tab\" aria-controls=\"home\" aria-selected=\"true\">{$item2->name}</a></li>";
-										$i++;
-									}
-								?>
-							</ul>
-							<div class="tab-content" id="myTabContent">
-								<?php 
-									$i = 0;
-									foreach($permissionsList->list as $item2){
-											$class = '';
-											if($i==0){ $class = 'show active'; };
-											#echo json_encode($item2);
-											echo "<div class=\"tab-pane fade {$class}\" id=\"home-{$item2->id}\" role=\"tabpanel\" aria-labelledby=\"home-tab\">";
-												echo "<h4>{$item->name}</h4>";
-												echo "<table class=\"table table-hover table-striped table-dark\">";
-													foreach(json_decode($item->data) as $k=>$v)
-													{
-														echo '<tr>';
-															echo '<th colspan="2" class="text-center">'.transalateLabelPermissions($k).'</th>';
-														echo '</tr>';
-														
-														foreach(($v) as $k2=>$v2)
-														{
-															echo '<tr>';
-																echo '<td>'.convertBooleanToIcon($v2).'</td>';
-																echo '<td>'.transalateLabelPermissions($k2).'</td>';
-															echo '</tr>';
-														}
-													}
-												echo "</table>";
-											echo "</div>";
-										$i++;
-									}
-								?>
-							</div>
-						
-							<?php 
-								/*
-								
-								echo "<div class=\"tab-pane fade show {$class}\" id=\"tab-{$item->id}\" role=\"tabpanel\" aria-labelledby=\"tab-{$item->id}\">";
-									echo "<h4>{$item->name}</h4>";
-									echo "<table class=\"table table-hover table-striped table-dark\">";
-										foreach(json_decode($item->data) as $k=>$v)
-										{
-											echo '<tr>';
-												echo '<th colspan="2" class="text-center">'.transalateLabelPermissions($k).'</th>';
-											echo '</tr>';
-											
-											foreach(($v) as $k2=>$v2)
-											{
-												echo '<tr>';
-													echo '<td>'.convertBooleanToIcon($v2).'</td>';
-													echo '<td>'.transalateLabelPermissions($k2).'</td>';
-												echo '</tr>';
-											}
-										}
-									echo "</table>";
-								echo "</div>";
-							 */ ?>
-							
 						</div>
 					</div>
 			</div>
