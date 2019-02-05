@@ -18,15 +18,23 @@ $userInfo->load_by_username($username);
 			<!-- <img src="https://png.pngtree.com/thumb_back/fw800/back_pic/00/08/57/41562ad4a92b16a.jpg"> -->
 		</div>
 		<div class="col-md-12 row user-left-part">
-			<div class="col-md-3 col-sm-3 col-xs-12 user-profil-part pull-left">
+			<div class="col-md-4 col-sm-4 col-xs-12 user-profil-part pull-left">
 				<div class="row ">
 					<div class="col-md-12 col-md-12-sm-12 col-xs-12 user-image text-center">
 						<!-- // <img src="" class=""> -->
 						<img class="rounded-circle" id="myImg" data-toggle="modal" data-target="#myModal" src="<?php echo "/media/images/{$userInfo->avatar}"; ?>" data-src="<?php echo "/media/images/{$userInfo->avatar}"; ?>" />
 					</div>
 					<div class="col-md-12 col-sm-12 col-xs-12 user-detail-section1 text-center">
+						
+						<!-- // <button id="btn-contact" (click)="clearModal()" data-toggle="modal" data-target="#contact" class="btn btn-success btn-block follow">Contactarme</button>  -->
+						
+						<?php
+							if($userInfo->id == $session->id)
+							{
+								echo "<button id=\"btn-contact\" data-toggle=\"modal\" data-target=\"#avatarModal\" class=\"btn btn-default btn-block follow\">Cambiar Foto</button>";
+							}
+						?>
 						<!--
-						<button id="btn-contact" (click)="clearModal()" data-toggle="modal" data-target="#contact" class="btn btn-success btn-block follow">Contactarme</button> 
 						<button class="btn btn-warning btn-block">Descargar Curriculum</button>
 						-->
 					</div>
@@ -51,7 +59,7 @@ $userInfo->load_by_username($username);
 				   
 				</div>
 			</div>
-			<div class="col-md-9 col-sm-9 col-xs-12 pull-right profile-right-section">
+			<div class="col-md-8 col-sm-8 col-xs-12 pull-right profile-right-section">
 				<div class="row profile-right-section-row">
 					<div class="col-md-12 profile-header">
 						<div class="row">
@@ -60,7 +68,7 @@ $userInfo->load_by_username($username);
 								<h5>Developer</h5>
 							</div>
 							<div class="col-md-4 col-sm-6 col-xs-6 profile-header-section1 text-right pull-rigth">
-								<a href="/search" class="btn btn-primary btn-block">Seguir buscando</a>
+								<!-- // <a href="/search" class="btn btn-danger btn-block">Reportar Usuario</a> -->
 							</div>
 						</div>
 					</div>
@@ -247,7 +255,26 @@ $userInfo->load_by_username($username);
 									</div>
 									<a href="http://camaradecomerciozn.com/">
 										<div class="col-md-12 image-right">
-											<img src="http://pluspng.com/img-png/bootstrap-png-bootstrap-512.png">
+											<!-- // <img src="http://pluspng.com/img-png/bootstrap-png-bootstrap-512.png"> -->
+											
+											
+											<!-- Revive Adserver Tag de Javascript - Generated with Revive Adserver v4.1.4 -->
+											<script type='text/javascript'><!--//<![CDATA[
+											   var m3_u = (location.protocol=='https:'?'https://adserver.ltsolucion.com/www/delivery/ajs.php':'http://adserver.ltsolucion.com/www/delivery/ajs.php');
+											   var m3_r = Math.floor(Math.random()*99999999999);
+											   if (!document.MAX_used) document.MAX_used = ',';
+											   document.write ("<scr"+"ipt type='text/javascript' src='"+m3_u);
+											   document.write ("?zoneid=1");
+											   document.write ('&amp;cb=' + m3_r);
+											   if (document.MAX_used != ',') document.write ("&amp;exclude=" + document.MAX_used);
+											   document.write (document.charset ? '&amp;charset='+document.charset : (document.characterSet ? '&amp;charset='+document.characterSet : ''));
+											   document.write ("&amp;loc=" + escape(window.location));
+											   if (document.referrer) document.write ("&amp;referer=" + escape(document.referrer));
+											   if (document.context) document.write ("&context=" + escape(document.context));
+											   if (document.mmm_fo) document.write ("&amp;mmm_fo=1");
+											   document.write ("'><\/scr"+"ipt>");
+											//]]>--></script><noscript><a href='http://adserver.ltsolucion.com/www/delivery/ck.php?n=a89f8db8&amp;cb=INSERT_RANDOM_NUMBER_HERE' target='_blank'><img src='http://adserver.ltsolucion.com/www/delivery/avw.php?zoneid=1&amp;cb=INSERT_RANDOM_NUMBER_HERE&amp;n=a89f8db8' border='0' alt='' /></a></noscript>
+
 										</div>
 									</a>
 									<div class="col-md-12 image-right-detail-section2">
@@ -258,40 +285,6 @@ $userInfo->load_by_username($username);
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="modal fade" id="contact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="contact">Contactarme</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<p for="msj">Se enviará este mensaje a la persona que desea contactar, indicando que te quieres comunicar con el. Para esto debes de ingresar tu información personal.</p>
-				</div>
-				<div class="form-group">
-					<label for="txtFullname">Nombre completo</label>
-					<input type="text" id="txtFullname" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="txtEmail">Email</label>
-					<input type="text" id="txtEmail" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="txtPhone">Teléfono</label>
-					<input type="text" id="txtPhone" class="form-control">
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn btn-primary" (click)="openModal()" data-dismiss="modal">Guardar</button>
 			</div>
 		</div>
 	</div>
