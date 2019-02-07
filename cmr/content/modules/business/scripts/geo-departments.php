@@ -1,7 +1,7 @@
 <script>
-	// ------------ TIPOS - SANGRE INICIO ------------------------------------- 
-	var Types_Bloods_List = Vue.extend({
-	  template: '#page-TypesBloods',
+	// ------------ GEO - DEPARTAMENTOS INICIO ------------------------------------- 
+	var GEO_Departments_List = Vue.extend({
+	  template: '#page-GEO-Departments',
 	  data: function () {
 		return {
 			posts: [],
@@ -10,7 +10,14 @@
 	  },
 	  mounted: function () {
 		var self = this;
-		apiMV.get('/types_bloods').then(function (response) {
+		self.posts = [];
+		apiMV.get('/geo_departments', {
+			params: {
+				order: [
+					'name',
+				],
+			}
+		}).then(function (response) {
 			self.posts = response.data.records;
 			$(document).ready(function() { $('#dataTable').DataTable(); });
 		}).catch(function (error) {
@@ -26,8 +33,8 @@
 	  }
 	});
 
-	var Types_Bloods_View = Vue.extend({
-		template: '#view-TypesBloods',
+	var GEO_Departments_View = Vue.extend({
+		template: '#view-GEO-Departments',
 		data: function () {
 			return {
 				post: {
@@ -38,32 +45,24 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.findTypesBlood();
+			self.findDepartmentGEO();
 		},
 		methods: {
-			findTypesBlood: function(){
+			findDepartmentGEO: function(){
 				var self = this;
-				var idTypesBlood = self.$route.params.type_blood_id;
+				var idDepartmentGEO = self.$route.params.geo_department_id;
 				
-				apiMV.get('/types_bloods/' + idTypesBlood).then(function (response) {
-					if(!response.data.id || !response.data.name)
-					{
-						router.push('/');
-					}
-					else
-					{
-						self.post = response.data;
-					}
+				apiMV.get('/geo_departments/' + idDepartmentGEO).then(function (response) {
+					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
-					router.push('/');
 				});
 			}
 		}
 	});
-
-	var Types_Bloods_Add = Vue.extend({
-		template: '#add-TypesBloods',
+	
+	var GEO_Departments_Add = Vue.extend({
+		template: '#add-GEO-Departments',
 		data: function () {
 			return {
 				post: {
@@ -72,9 +71,9 @@
 			}
 		},
 		methods: {
-			createTypesBlood: function() {
+			createDepartmentGEO: function() {
 				var post = this.post;
-				apiMV.post('/types_bloods', post).then(function (response) {
+				apiMV.post('/geo_departments', post).then(function (response) {
 					post.id = response.data;
 					router.push('/');
 				}).catch(function (error) {
@@ -84,8 +83,8 @@
 		}
 	});
 
-	var Types_Bloods_Edit = Vue.extend({
-		template: '#edit-TypesBloods',
+	var GEO_Departments_Edit = Vue.extend({
+		template: '#edit-GEO-Departments',
 		data: function () {
 			return {
 				post: {
@@ -96,24 +95,23 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.findTypesBlood();
+			self.findDepartmentGEO();
 		},
 		methods: {
-			updateTypesBlood: function () {
+			updateDepartmentGEO: function () {
 				var post = this.post;
-				apiMV.put('/types_bloods/' + post.id, post).then(function (response) {
+				apiMV.put('/geo_departments/' + post.id, post).then(function (response) {
 					console.log(response.data);
 					router.push('/');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
-				
 			},
-			findTypesBlood: function(){
+			findDepartmentGEO: function(){
 				var self = this;
-				var idTypesBlood = self.$route.params.type_blood_id;
+				var idDepartmentGEO = self.$route.params.geo_department_id;
 				
-				apiMV.get('/types_bloods/' + idTypesBlood).then(function (response) {
+				apiMV.get('/geo_departments/' + idDepartmentGEO).then(function (response) {
 					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
@@ -122,8 +120,8 @@
 		}
 	});
 
-	var Types_Bloods_Delete = Vue.extend({
-		template: '#delete-TypesBloods',
+	var GEO_Departments_Delete = Vue.extend({
+		template: '#delete-GEO-Departments',
 		data: function () {
 			return {
 				post: {
@@ -134,24 +132,24 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.findTypesBlood();
+			self.findDepartmentGEO();
 		},
 		methods: {
-			deleteTypesBlood: function () {
+			deleteDepartmentGEO: function () {
 				var post = this.post;
 				
-				apiMV.delete('/types_bloods/' + post.id).then(function (response) {
+				apiMV.delete('/geo_departments/' + post.id).then(function (response) {
 					console.log(response.data);
 					router.push('/');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
 			},
-			findTypesBlood: function(){
+			findDepartmentGEO: function(){
 				var self = this;
-				var idTypesBlood = self.$route.params.type_blood_id;
+				var idDepartmentGEO = self.$route.params.geo_department_id;
 				
-				apiMV.get('/types_bloods/' + idTypesBlood).then(function (response) {
+				apiMV.get('/geo_departments/' + idDepartmentGEO).then(function (response) {
 					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
@@ -159,17 +157,15 @@
 			}
 		}
 	});
-	// ------------ TIPOS - SANGRE FIN ------------------------------------- 
-
+	// ------------ GEO - DEPARTAMENTOS FIN ------------------------------------- 
 
 	var router = new VueRouter({routes:[
-		
-		{ path: '/', component: Types_Bloods_List, name: 'TypesBloods-List'},
-		{ path: '/View/:type_blood_id', component: Types_Bloods_View, name: 'TypesBloods-View'},
-		{ path: '/Add', component: Types_Bloods_Add, name: 'TypesBloods-Add'},
-		{ path: '/Edit/:type_blood_id', component: Types_Bloods_Edit, name: 'TypesBloods-Edit'},
-		{ path: '/Delete/:type_blood_id', component: Types_Bloods_Delete, name: 'TypesBloods-Delete'},
-
+		{ path: '/', component: GEO_Departments_List, name: 'DepartmentsGEO-List'},
+		{ path: '/View/:geo_department_id', component: GEO_Departments_View, name: 'DepartmentsGEO-View'},
+		{ path: '/Add', component: GEO_Departments_Add, name: 'DepartmentsGEO-Add'},
+		{ path: '/Edit/:geo_department_id', component: GEO_Departments_Edit, name: 'DepartmentsGEO-Edit'},
+		{ path: '/Delete/:geo_department_id', component: GEO_Departments_Delete, name: 'DepartmentsGEO-Delete'},
+	
 	]});
 
 	var appRender = new Vue({

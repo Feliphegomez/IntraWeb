@@ -10,16 +10,16 @@
 		</div>
 	</div>
 </div>
-<!-- // ------------ TIPOS - SANGRE INICIO -------------------------------------  -->
-<template id="page-TypesBloods">
+<!-- // ------------ TIPOS - CARGOS INICIO -------------------------------------  -->
+<template id="page-TypesCharges">
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-success" v-bind:to="{ name: 'TypesBloods-Add' }">
+				<router-link class="btn btn-success" v-bind:to="{ name: 'TypesCharges-Add' }">
 					<span class="fa fa-plus"></span>
 					Nuevo
 				</router-link> 
-				Tipos de Sangre
+				Tipos de Cargos
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -38,9 +38,9 @@
 							<td>{{ post.id }}</td>
 							<td>{{ post.name }}</td>
 							<td>
-								<router-link class="btn btn-info btn-md" v-bind:to="{name: 'TypesBloods-View', params: { type_blood_id: post.id }}"><i class="fas fa-eye"></i> </router-link>
-								<router-link class="btn btn-warning btn-md" v-bind:to="{name: 'TypesBloods-Edit', params: { type_blood_id: post.id }}"><i class="fas fa-pencil-alt"></i> </router-link>
-								<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'TypesBloods-Delete', params: { type_blood_id: post.id }}"><i class="fa fa-trash"></i> </router-link>
+								<router-link class="btn btn-info btn-md" v-bind:to="{name: 'TypesCharges-View', params: { type_charge_id: post.id }}"><i class="fas fa-eye"></i> </router-link>
+								<router-link class="btn btn-warning btn-md" v-bind:to="{name: 'TypesCharges-Edit', params: { type_charge_id: post.id }}"><i class="fas fa-pencil-alt"></i> </router-link>
+								<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'TypesCharges-Delete', params: { type_charge_id: post.id }}"><i class="fa fa-trash"></i> </router-link>
 							</td>
 						</tr>
 					</tbody>
@@ -51,16 +51,16 @@
 	</div>
 </template>
 
-<template id="view-TypesBloods">
+<template id="view-TypesCharges">
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesCharges-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Tipos de Cargos
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered">
@@ -79,80 +79,75 @@
 	</div>		  
 </template>
 
-<template id="add-TypesBloods">
+<template id="add-TypesCharges">
 	<div>
-		
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesCharges-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Tipos de Cargos
 			</div>
 			<div class="card-body">
-		
-		
-				<form v-on:submit="createTypesBlood">
-					<div class="form-group">
-						<label for="add-content">NOMBRE</label>
-						<input class="form-control" type="text" v-model="post.name" />
-					</div>
-					<button type="submit" class="btn btn-primary">Crear</button>
-				</form>
+			<form v-on:submit="createTypesCharge">
+				<div class="form-group">
+					<label for="add-content">NOMBRE</label>
+					<input class="form-control" type="text" v-model="post.name" />
+				</div>
+				<button type="submit" class="btn btn-success">Crear</button>
+			</form>
 			</div>
 			<div class="card-footer small text-muted"></div>
 		</div>
 	</div>
 </template>
 
-<template id="edit-TypesBloods">
+<template id="edit-TypesCharges">
 	<div>
-		
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesCharges-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Tipos de Cargos
 			</div>
 			<div class="card-body">
-				<form v-on:submit="updateTypesBlood">
-					<div class="form-group">
-						<label for="edit-content">Nombre</label>
-						<input class="form-control" id="edit-content" v-model="post.name" />
-					</div>
-					<button type="submit" class="btn btn-primary">Guardar</button>
-				</form>
+			<form v-on:submit="updateTypesCharge">
+				<div class="form-group">
+					<label for="edit-content">Nombre</label>
+					<input class="form-control" id="edit-content" v-model="post.name" />
+				</div>
+				<button type="submit" class="btn btn-success">Guardar</button>
+			</form>
 			</div>
 			<div class="card-footer small text-muted"></div>
 		</div>
 	</div>
 </template>
 
-<template id="delete-TypesBloods">
+<template id="delete-TypesCharges">
 	<div>
-		
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesCharges-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Tipos de Cargos
 			</div>
 			<div class="card-body">
-				<form v-on:submit="deleteTypesBlood">
-					<p>The action cannot be undone.</p>
-					<button type="submit" class="btn btn-danger">Eliminar</button>
-				</form>
+			<form v-on:submit="deleteTypesCharge">
+				<p>The action cannot be undone.</p>
+				<button type="submit" class="btn btn-danger">Eliminar</button>
+			</form>
 			</div>
 			<div class="card-footer small text-muted"></div>
 		</div>
 	</div>
 </template>
-<!-- // ------------ TIPOS - SANGRE FIN -------------------------------------  -->
+<!-- // ------------ TIPOS - CARGOS FIN -------------------------------------  -->

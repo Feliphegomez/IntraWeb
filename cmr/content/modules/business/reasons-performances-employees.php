@@ -11,15 +11,15 @@
 	</div>
 </div>
 <!-- // ------------ TIPOS - SANGRE INICIO -------------------------------------  -->
-<template id="page-TypesBloods">
+<template id="page-ReasonsPerformancesEmployees">
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-success" v-bind:to="{ name: 'TypesBloods-Add' }">
+				<router-link class="btn btn-success" v-bind:to="{ name: 'ReasonsPerformancesEmployees-Add' }">
 					<span class="fa fa-plus"></span>
 					Nuevo
 				</router-link> 
-				Tipos de Sangre
+				Motivos de Desempeño
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -38,9 +38,9 @@
 							<td>{{ post.id }}</td>
 							<td>{{ post.name }}</td>
 							<td>
-								<router-link class="btn btn-info btn-md" v-bind:to="{name: 'TypesBloods-View', params: { type_blood_id: post.id }}"><i class="fas fa-eye"></i> </router-link>
-								<router-link class="btn btn-warning btn-md" v-bind:to="{name: 'TypesBloods-Edit', params: { type_blood_id: post.id }}"><i class="fas fa-pencil-alt"></i> </router-link>
-								<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'TypesBloods-Delete', params: { type_blood_id: post.id }}"><i class="fa fa-trash"></i> </router-link>
+								<router-link class="btn btn-info btn-md" v-bind:to="{name: 'ReasonsPerformancesEmployees-View', params: { reason_performance_employee_id: post.id }}"><i class="fas fa-eye"></i> </router-link>
+								<router-link class="btn btn-warning btn-md" v-bind:to="{name: 'ReasonsPerformancesEmployees-Edit', params: { reason_performance_employee_id: post.id }}"><i class="fas fa-pencil-alt"></i> </router-link>
+								<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'ReasonsPerformancesEmployees-Delete', params: { reason_performance_employee_id: post.id }}"><i class="fa fa-trash"></i> </router-link>
 							</td>
 						</tr>
 					</tbody>
@@ -51,16 +51,16 @@
 	</div>
 </template>
 
-<template id="view-TypesBloods">
+<template id="view-ReasonsPerformancesEmployees">
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'ReasonsPerformancesEmployees-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Motivos de Desempeño
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered">
@@ -79,17 +79,17 @@
 	</div>		  
 </template>
 
-<template id="add-TypesBloods">
+<template id="add-ReasonsPerformancesEmployees">
 	<div>
 		
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'ReasonsPerformancesEmployees-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Motivos de Desempeño
 			</div>
 			<div class="card-body">
 		
@@ -107,17 +107,17 @@
 	</div>
 </template>
 
-<template id="edit-TypesBloods">
+<template id="edit-ReasonsPerformancesEmployees">
 	<div>
 		
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'ReasonsPerformancesEmployees-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Motivos de Desempeño
 			</div>
 			<div class="card-body">
 				<form v-on:submit="updateTypesBlood">
@@ -133,17 +133,17 @@
 	</div>
 </template>
 
-<template id="delete-TypesBloods">
+<template id="delete-ReasonsPerformancesEmployees">
 	<div>
 		
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'ReasonsPerformancesEmployees-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Motivos de Desempeño
 			</div>
 			<div class="card-body">
 				<form v-on:submit="deleteTypesBlood">

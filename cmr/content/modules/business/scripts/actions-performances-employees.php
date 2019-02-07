@@ -1,7 +1,7 @@
 <script>
 	// ------------ TIPOS - SANGRE INICIO ------------------------------------- 
 	var Types_Bloods_List = Vue.extend({
-	  template: '#page-TypesBloods',
+	  template: '#page-ActionsPerformancesEmployees',
 	  data: function () {
 		return {
 			posts: [],
@@ -10,7 +10,7 @@
 	  },
 	  mounted: function () {
 		var self = this;
-		apiMV.get('/types_bloods').then(function (response) {
+		apiMV.get('/actions_performances_employees').then(function (response) {
 			self.posts = response.data.records;
 			$(document).ready(function() { $('#dataTable').DataTable(); });
 		}).catch(function (error) {
@@ -27,7 +27,7 @@
 	});
 
 	var Types_Bloods_View = Vue.extend({
-		template: '#view-TypesBloods',
+		template: '#view-ActionsPerformancesEmployees',
 		data: function () {
 			return {
 				post: {
@@ -38,14 +38,14 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.findTypesBlood();
+			self.find();
 		},
 		methods: {
-			findTypesBlood: function(){
+			find: function(){
 				var self = this;
-				var idTypesBlood = self.$route.params.type_blood_id;
+				var idActionPerformanceEmployee = self.$route.params.action_performance_employee_id;
 				
-				apiMV.get('/types_bloods/' + idTypesBlood).then(function (response) {
+				apiMV.get('/actions_performances_employees/' + idActionPerformanceEmployee).then(function (response) {
 					if(!response.data.id || !response.data.name)
 					{
 						router.push('/');
@@ -63,7 +63,7 @@
 	});
 
 	var Types_Bloods_Add = Vue.extend({
-		template: '#add-TypesBloods',
+		template: '#add-ActionsPerformancesEmployees',
 		data: function () {
 			return {
 				post: {
@@ -74,7 +74,7 @@
 		methods: {
 			createTypesBlood: function() {
 				var post = this.post;
-				apiMV.post('/types_bloods', post).then(function (response) {
+				apiMV.post('/actions_performances_employees', post).then(function (response) {
 					post.id = response.data;
 					router.push('/');
 				}).catch(function (error) {
@@ -85,7 +85,7 @@
 	});
 
 	var Types_Bloods_Edit = Vue.extend({
-		template: '#edit-TypesBloods',
+		template: '#edit-ActionsPerformancesEmployees',
 		data: function () {
 			return {
 				post: {
@@ -96,12 +96,12 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.findTypesBlood();
+			self.find();
 		},
 		methods: {
 			updateTypesBlood: function () {
 				var post = this.post;
-				apiMV.put('/types_bloods/' + post.id, post).then(function (response) {
+				apiMV.put('/actions_performances_employees/' + post.id, post).then(function (response) {
 					console.log(response.data);
 					router.push('/');
 				}).catch(function (error) {
@@ -109,11 +109,11 @@
 				});
 				
 			},
-			findTypesBlood: function(){
+			find: function(){
 				var self = this;
-				var idTypesBlood = self.$route.params.type_blood_id;
+				var idActionPerformanceEmployee = self.$route.params.action_performance_employee_id;
 				
-				apiMV.get('/types_bloods/' + idTypesBlood).then(function (response) {
+				apiMV.get('/actions_performances_employees/' + idActionPerformanceEmployee).then(function (response) {
 					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
@@ -123,7 +123,7 @@
 	});
 
 	var Types_Bloods_Delete = Vue.extend({
-		template: '#delete-TypesBloods',
+		template: '#delete-ActionsPerformancesEmployees',
 		data: function () {
 			return {
 				post: {
@@ -134,24 +134,24 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.findTypesBlood();
+			self.find();
 		},
 		methods: {
 			deleteTypesBlood: function () {
 				var post = this.post;
 				
-				apiMV.delete('/types_bloods/' + post.id).then(function (response) {
+				apiMV.delete('/actions_performances_employees/' + post.id).then(function (response) {
 					console.log(response.data);
 					router.push('/');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
 			},
-			findTypesBlood: function(){
+			find: function(){
 				var self = this;
-				var idTypesBlood = self.$route.params.type_blood_id;
+				var idActionPerformanceEmployee = self.$route.params.action_performance_employee_id;
 				
-				apiMV.get('/types_bloods/' + idTypesBlood).then(function (response) {
+				apiMV.get('/actions_performances_employees/' + idActionPerformanceEmployee).then(function (response) {
 					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
@@ -164,11 +164,11 @@
 
 	var router = new VueRouter({routes:[
 		
-		{ path: '/', component: Types_Bloods_List, name: 'TypesBloods-List'},
-		{ path: '/View/:type_blood_id', component: Types_Bloods_View, name: 'TypesBloods-View'},
-		{ path: '/Add', component: Types_Bloods_Add, name: 'TypesBloods-Add'},
-		{ path: '/Edit/:type_blood_id', component: Types_Bloods_Edit, name: 'TypesBloods-Edit'},
-		{ path: '/Delete/:type_blood_id', component: Types_Bloods_Delete, name: 'TypesBloods-Delete'},
+		{ path: '/', component: Types_Bloods_List, name: 'ActionsPerformancesEmployees-List'},
+		{ path: '/View/:action_performance_employee_id', component: Types_Bloods_View, name: 'ActionsPerformancesEmployees-View'},
+		{ path: '/Add', component: Types_Bloods_Add, name: 'ActionsPerformancesEmployees-Add'},
+		{ path: '/Edit/:action_performance_employee_id', component: Types_Bloods_Edit, name: 'ActionsPerformancesEmployees-Edit'},
+		{ path: '/Delete/:action_performance_employee_id', component: Types_Bloods_Delete, name: 'ActionsPerformancesEmployees-Delete'},
 
 	]});
 

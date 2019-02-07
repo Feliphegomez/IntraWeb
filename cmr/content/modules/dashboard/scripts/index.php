@@ -72,7 +72,6 @@
 		});
 
 		</script>
-		<script src="<?php echo path_home; ?>js/sb-admin.min.js"></script>
 		<?php
 	}
 ?>

@@ -10,16 +10,17 @@
 		</div>
 	</div>
 </div>
-<!-- // ------------ TIPOS - SANGRE INICIO -------------------------------------  -->
-<template id="page-TypesBloods">
+
+<!-- // ------------ TIPOS - CONTACTOS INICIO -------------------------------------  -->
+<template id="page-TypesContacts">
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-success" v-bind:to="{ name: 'TypesBloods-Add' }">
+				<router-link class="btn btn-success" v-bind:to="{ name: 'TypesContacts-Add' }">
 					<span class="fa fa-plus"></span>
 					Nuevo
 				</router-link> 
-				Tipos de Sangre
+				Tipos de Contactos
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -38,9 +39,9 @@
 							<td>{{ post.id }}</td>
 							<td>{{ post.name }}</td>
 							<td>
-								<router-link class="btn btn-info btn-md" v-bind:to="{name: 'TypesBloods-View', params: { type_blood_id: post.id }}"><i class="fas fa-eye"></i> </router-link>
-								<router-link class="btn btn-warning btn-md" v-bind:to="{name: 'TypesBloods-Edit', params: { type_blood_id: post.id }}"><i class="fas fa-pencil-alt"></i> </router-link>
-								<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'TypesBloods-Delete', params: { type_blood_id: post.id }}"><i class="fa fa-trash"></i> </router-link>
+								<router-link class="btn btn-info btn-md" v-bind:to="{name: 'TypesContacts-View', params: { type_contact_id: post.id }}"><i class="fas fa-eye"></i> </router-link>
+								<router-link class="btn btn-warning btn-md" v-bind:to="{name: 'TypesContacts-Edit', params: { type_contact_id: post.id }}"><i class="fas fa-pencil-alt"></i> </router-link>
+								<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'TypesContacts-Delete', params: { type_contact_id: post.id }}"><i class="fa fa-trash"></i> </router-link>
 							</td>
 						</tr>
 					</tbody>
@@ -51,16 +52,16 @@
 	</div>
 </template>
 
-<template id="view-TypesBloods">
+<template id="view-TypesContacts">
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesContacts-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Tipos de Contactos
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered">
@@ -79,27 +80,24 @@
 	</div>		  
 </template>
 
-<template id="add-TypesBloods">
+<template id="add-TypesContacts">
 	<div>
-		
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesContacts-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Tipos de Contactos
 			</div>
 			<div class="card-body">
-		
-		
-				<form v-on:submit="createTypesBlood">
+				<form v-on:submit="createTypesContact">
 					<div class="form-group">
 						<label for="add-content">NOMBRE</label>
 						<input class="form-control" type="text" v-model="post.name" />
 					</div>
-					<button type="submit" class="btn btn-primary">Crear</button>
+					<button type="submit" class="btn btn-success">Crear</button>
 				</form>
 			</div>
 			<div class="card-footer small text-muted"></div>
@@ -107,25 +105,24 @@
 	</div>
 </template>
 
-<template id="edit-TypesBloods">
+<template id="edit-TypesContacts">
 	<div>
-		
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesContacts-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Tipos de Contactos
 			</div>
 			<div class="card-body">
-				<form v-on:submit="updateTypesBlood">
+				<form v-on:submit="updateTypesContact">
 					<div class="form-group">
 						<label for="edit-content">Nombre</label>
 						<input class="form-control" id="edit-content" v-model="post.name" />
 					</div>
-					<button type="submit" class="btn btn-primary">Guardar</button>
+					<button type="submit" class="btn btn-success">Guardar</button>
 				</form>
 			</div>
 			<div class="card-footer small text-muted"></div>
@@ -133,20 +130,19 @@
 	</div>
 </template>
 
-<template id="delete-TypesBloods">
+<template id="delete-TypesContacts">
 	<div>
-		
 		<div class="card mb-3">
 			<div class="card-header">
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesContacts-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
 					Cerrar
 				</router-link>  
-				Tipos de Sangre
+				Tipos de Contactos
 			</div>
 			<div class="card-body">
-				<form v-on:submit="deleteTypesBlood">
+				<form v-on:submit="deleteTypesContact">
 					<p>The action cannot be undone.</p>
 					<button type="submit" class="btn btn-danger">Eliminar</button>
 				</form>
@@ -155,4 +151,4 @@
 		</div>
 	</div>
 </template>
-<!-- // ------------ TIPOS - SANGRE FIN -------------------------------------  -->
+<!-- // ------------ TIPOS - CONTACTOS FIN -------------------------------------  -->

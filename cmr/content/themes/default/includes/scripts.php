@@ -1,4 +1,5 @@
 
+		<script src="<?php echo path_home; ?>js/sb-admin.min.js"></script>
 <script>
 $('#myModal').on('show.bs.modal', function (event) {
 	var button = $(event.relatedTarget);

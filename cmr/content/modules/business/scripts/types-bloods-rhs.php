@@ -1,7 +1,8 @@
 <script>
+
 	// ------------ TIPOS - SANGRE INICIO ------------------------------------- 
-	var Types_Bloods_List = Vue.extend({
-	  template: '#page-TypesBloods',
+	var Types_BloodsRH_List = Vue.extend({
+	  template: '#page-TypesBloodsRH',
 	  data: function () {
 		return {
 			posts: [],
@@ -10,7 +11,14 @@
 	  },
 	  mounted: function () {
 		var self = this;
-		apiMV.get('/types_bloods').then(function (response) {
+		self.posts = [];
+		apiMV.get('/types_bloods_rhs', {
+			params: {
+				order: [
+					'name,asc',
+				],
+			}
+		}).then(function (response) {
 			self.posts = response.data.records;
 			$(document).ready(function() { $('#dataTable').DataTable(); });
 		}).catch(function (error) {
@@ -26,8 +34,8 @@
 	  }
 	});
 
-	var Types_Bloods_View = Vue.extend({
-		template: '#view-TypesBloods',
+	var Types_BloodsRH_View = Vue.extend({
+		template: '#view-TypesBloodsRH',
 		data: function () {
 			return {
 				post: {
@@ -38,22 +46,15 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.findTypesBlood();
+			self.findTypesBloodRH();
 		},
 		methods: {
-			findTypesBlood: function(){
+			findTypesBloodRH: function(){
 				var self = this;
-				var idTypesBlood = self.$route.params.type_blood_id;
+				var idTypesBloodRH = self.$route.params.type_blood_rh_id;
 				
-				apiMV.get('/types_bloods/' + idTypesBlood).then(function (response) {
-					if(!response.data.id || !response.data.name)
-					{
-						router.push('/');
-					}
-					else
-					{
-						self.post = response.data;
-					}
+				apiMV.get('/types_bloods_rhs/' + idTypesBloodRH).then(function (response) {
+					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 					router.push('/');
@@ -62,8 +63,8 @@
 		}
 	});
 
-	var Types_Bloods_Add = Vue.extend({
-		template: '#add-TypesBloods',
+	var Types_BloodsRH_Add = Vue.extend({
+		template: '#add-TypesBloodsRH',
 		data: function () {
 			return {
 				post: {
@@ -72,9 +73,9 @@
 			}
 		},
 		methods: {
-			createTypesBlood: function() {
+			createTypesBloodRH: function() {
 				var post = this.post;
-				apiMV.post('/types_bloods', post).then(function (response) {
+				apiMV.post('/types_bloods_rhs', post).then(function (response) {
 					post.id = response.data;
 					router.push('/');
 				}).catch(function (error) {
@@ -84,8 +85,8 @@
 		}
 	});
 
-	var Types_Bloods_Edit = Vue.extend({
-		template: '#edit-TypesBloods',
+	var Types_BloodsRH_Edit = Vue.extend({
+		template: '#edit-TypesBloodsRH',
 		data: function () {
 			return {
 				post: {
@@ -96,24 +97,23 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.findTypesBlood();
+			self.findTypesBloodRH();
 		},
 		methods: {
-			updateTypesBlood: function () {
+			updateTypesBloodRH: function () {
 				var post = this.post;
-				apiMV.put('/types_bloods/' + post.id, post).then(function (response) {
+				apiMV.put('/types_bloods_rhs/' + post.id, post).then(function (response) {
 					console.log(response.data);
 					router.push('/');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
-				
 			},
-			findTypesBlood: function(){
+			findTypesBloodRH: function(){
 				var self = this;
-				var idTypesBlood = self.$route.params.type_blood_id;
+				var idTypesBloodRH = self.$route.params.type_blood_rh_id;
 				
-				apiMV.get('/types_bloods/' + idTypesBlood).then(function (response) {
+				apiMV.get('/types_bloods_rhs/' + idTypesBloodRH).then(function (response) {
 					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
@@ -122,8 +122,8 @@
 		}
 	});
 
-	var Types_Bloods_Delete = Vue.extend({
-		template: '#delete-TypesBloods',
+	var Types_BloodsRH_Delete = Vue.extend({
+		template: '#delete-TypesBloodsRH',
 		data: function () {
 			return {
 				post: {
@@ -134,25 +134,26 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.findTypesBlood();
+			self.findTypesBloodRH();
 		},
 		methods: {
-			deleteTypesBlood: function () {
+			deleteTypesBloodRH: function () {
 				var post = this.post;
 				
-				apiMV.delete('/types_bloods/' + post.id).then(function (response) {
+				apiMV.delete('/types_bloods_rhs/' + post.id).then(function (response) {
 					console.log(response.data);
 					router.push('/');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
 			},
-			findTypesBlood: function(){
+			findTypesBloodRH: function(){
 				var self = this;
-				var idTypesBlood = self.$route.params.type_blood_id;
+				var idTypesBloodRH = self.$route.params.type_blood_rh_id;
 				
-				apiMV.get('/types_bloods/' + idTypesBlood).then(function (response) {
+				apiMV.get('/types_bloods_rhs/' + idTypesBloodRH).then(function (response) {
 					self.post = response.data;
+					router.push('/');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
@@ -163,13 +164,11 @@
 
 
 	var router = new VueRouter({routes:[
-		
-		{ path: '/', component: Types_Bloods_List, name: 'TypesBloods-List'},
-		{ path: '/View/:type_blood_id', component: Types_Bloods_View, name: 'TypesBloods-View'},
-		{ path: '/Add', component: Types_Bloods_Add, name: 'TypesBloods-Add'},
-		{ path: '/Edit/:type_blood_id', component: Types_Bloods_Edit, name: 'TypesBloods-Edit'},
-		{ path: '/Delete/:type_blood_id', component: Types_Bloods_Delete, name: 'TypesBloods-Delete'},
-
+		{ path: '/', component: Types_BloodsRH_List, name: 'TypesBloodsRH-List'},
+		{ path: '/View/:type_blood_rh_id', component: Types_BloodsRH_View, name: 'TypesBloodsRH-View'},
+		{ path: '/Add', component: Types_BloodsRH_Add, name: 'TypesBloodsRH-Add'},
+		{ path: '/Edit/:type_blood_rh_id', component: Types_BloodsRH_Edit, name: 'TypesBloodsRH-Edit'},
+		{ path: '/Delete/:type_blood_rh_id', component: Types_BloodsRH_Delete, name: 'TypesBloodsRH-Delete'},
 	]});
 
 	var appRender = new Vue({
