@@ -30,3 +30,11 @@ if(file_exists($pageActiveScripts)){
 }
 ?>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js"></script>
+
+
+<script src="<?php echo path_home; ?>js/TweenMax.min.js"></script>
+<script src="<?php echo path_home; ?>js/notify.min.js"></script>
+
+
+<script>
+</script>
