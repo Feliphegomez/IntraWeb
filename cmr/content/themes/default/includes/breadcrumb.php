@@ -22,5 +22,5 @@ $routes = $session->Routes2;
 			echo "<li class=\"breadcrumb-item active\">{$site->id}</li>";
 		}
 	?>
-	<li class="breadcrumb-item active"><?php echo $site->action; ?></li>
+	<!-- // <li class="breadcrumb-item active"><?php echo $site->action; ?></li> -->
 </ol>

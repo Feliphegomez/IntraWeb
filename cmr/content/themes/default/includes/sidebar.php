@@ -15,16 +15,18 @@
 			<span class="badge badge-danger">Business</span>
 		</a>
 		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="businessSubdropdown">
-			<a class="dropdown-item" href="/business/contacts/">Contactos</a>
-			<a class="dropdown-item" href="/business/services/">Servicios</a>
-			<a class="dropdown-item" href="/business/vehicles/">Vehículos</a>
+			<a class="dropdown-item" href="/business/contacts/"> Contactos</a>
+			<a class="dropdown-item" href="/business/services/"> Servicios</a>
+			<a class="dropdown-item" href="/business/vehicles/"> Vehículos</a>
+			<a class="dropdown-item" href="/business/employees/"> Colaboradores</a>
+			<a class="dropdown-item" href="/business/accounts/"> Cuentas</a>
 			<div class="dropdown-divider"></div>
 		</div>
 	</li>
 	
 	<li class="nav-item dropdown no-arrow mx-1">
 		<a class="nav-link dropdown-toggle" href="#" id="servicesSubdropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fas fa-cog"></i>
+			<i class="fas fa-concierge-bell"></i>
 			<span>Servicios</span>
 			<!-- // <span class="badge badge-danger"></span> -->
 		</a>
@@ -36,7 +38,7 @@
 	
 	<li class="nav-item dropdown no-arrow mx-1">
 		<a class="nav-link dropdown-toggle" href="#" id="locationsSubdropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fas fa-cog"></i>
+			<i class="fas fa-map-signs"></i>
 			<span>Geo-Referencias</span>
 			<!-- // <span class="badge badge-danger"></span> -->
 		</a>
@@ -50,7 +52,7 @@
 	
 	<li class="nav-item dropdown no-arrow mx-1">
 		<a class="nav-link dropdown-toggle" href="#" id="locationsSubdropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fas fa-cog"></i>
+			<i class="fas fa-user-astronaut"></i>
 			<span>Colaboradores</span>
 			<!-- // <span class="badge badge-danger"></span> -->
 		</a>
@@ -77,8 +79,8 @@
 	
 	<li class="nav-item dropdown no-arrow mx-1">
 		<a class="nav-link dropdown-toggle" href="#" id="locationsSubdropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fas fa-cog"></i>
-			<span>Clientes</span>
+			<i class="fas fa-briefcase"></i>
+			<span>Cuentas</span>
 			<!-- // <span class="badge badge-danger"></span> -->
 		</a>
 		<div class="dropdown-menu dropdown-menu-right" aria-labelledby="locationsSubdropdown">
@@ -91,7 +93,7 @@
 	
 	<li class="nav-item dropdown no-arrow mx-1">
 		<a class="nav-link dropdown-toggle" href="#" id="locationsSubdropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			<i class="fas fa-cog"></i>
+			<i class="fas fa-truck"></i>
 			<span>Vehículos</span>
 			<!-- // <span class="badge badge-danger"></span> -->
 		</a>

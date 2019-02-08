@@ -1,45 +1,4 @@
-
-var SettingsApp_Edit = Vue.extend({
-	template: '#page-SettingsApp-Edit',
-	data: function () {
-		return {
-			post: {
-				name: '',
-				result: '',
-			}
-		};
-	},
-	mounted: function () {
-		var self = this;
-		
-		self.find()
-	},
-	methods: {
-		updateCartaPropuestas: function(){
-			var post = this.post;
-			apiMV.put('/config_options/' + post.name, post).then(function (response) {
-				console.log(response.data);
-				$.notify("Guardado...", "success");
-			}).catch(function (error) {
-				$.notify(error.response.data.code + error.response.data.message, "error");
-			});
-		},
-		find: function(){
-			var self = this;
-			apiMV.get('/config_options/' + self.$route.params.setting_name).then(function (response) {
-				if(!response.data.name)
-				{
-				}
-				else
-				{
-					self.post = response.data;
-				}
-			}).catch(function (error) {
-				$.notify(error.response.data.code + error.response.data.message, "error");
-			});
-		}
-	}
-});
+<script>
 
 // ------------ CLIENTES - INICIO ------------------------------------- 
 var Clients_List = Vue.extend({
@@ -1255,7 +1214,6 @@ var Clients_Accounts_Edit = Vue.extend({
 			}).catch(function (error) {
 				$.notify(error.response.data.code + error.response.data.message, "error");
 			});
-			/**/
 		},
 		createNewAccount: function(){			
 			var self = this;
@@ -2444,37 +2402,40 @@ var Clients_Accounts_Delete = Vue.extend({
 		}
 	}
 });
-
 // ------------ CLIENTES - FIN ------------------------------------- 
 
-var router = new VueRouter({routes:[
-	
-	{ path: '/Clients', component: Clients_List, name: 'Clients-List'},
-	{ path: '/Clients/:client_id', component: Clients_View, name: 'Clients-View'},
-	{ path: '/Client/add', component: Clients_Add, name: 'Clients-Add'},
-	{ path: '/Clients/:client_id/Info/edit', component: Clients_Info_Edit, name: 'Clients-Info-Edit'},
-	{ path: '/Clients/:client_id/Contacts/edit', component: Clients_Contacts_Edit, name: 'Clients-Contacts-Edit'},
-	{ path: '/Clients/:client_id/Contracts/edit', component: Clients_Contracts_Edit, name: 'Clients-Contracts-Edit'},
-	{ path: '/Clients/:client_id/Auditors/edit', component: Clients_Auditors_Edit, name: 'Clients-Auditors-Edit'},
-	{ path: '/Clients/:client_id/Accounts/edit', component: Clients_Accounts_Edit, name: 'Clients-Accounts-Edit'},
-	{ path: '/Clients/:client_id/Invoices/edit', component: Clients_Invoices_Edit, name: 'Clients-Invoices-Edit'},
-	{ path: '/Clients/:client_id/Quotations/edit', component: Clients_Quotations_Edit, name: 'Clients-Quotations-Edit'},
-	{ path: '/Clients/:client_id/ContractsServices/edit', component: Clients_ContractsServices_Edit, name: 'Clients-ContractsServices-Edit'},
-	{ path: '/Clients/:client_id/delete', component: Clients_Delete, name: 'Clients-Delete'},
-	{ path: '/Clients/:client_id/Contact/:client_contact_id/delete', component: Clients_Contacts_Delete, name: 'ClientsContacts-Delete'},
-	{ path: '/Clients/:client_id/Redicated/:redicated_client_id/delete', component: Clients_Redicated_Delete, name: 'RedicatedClients-Delete'},
-	{ path: '/Clients/:client_id/Auditors/:auditor_client_id/delete', component: Clients_Auditors_Delete, name: 'ClientsAuditors-Delete'},
-	{ path: '/Clients/:client_id/Accounts/:account_client_id/Delete', component: Clients_Accounts_Delete, name: 'Clients-Accounts-Delete'},
+	var router = new VueRouter({routes:[
+		{ path: '/', component: Clients_List, name: 'Clients-List'},
+		{ path: '/Clients/:client_id', component: Clients_View, name: 'Clients-View'},
+		{ path: '/Client/add', component: Clients_Add, name: 'Clients-Add'},
+		{ path: '/Clients/:client_id/Info/edit', component: Clients_Info_Edit, name: 'Clients-Info-Edit'},
+		{ path: '/Clients/:client_id/Contacts/edit', component: Clients_Contacts_Edit, name: 'Clients-Contacts-Edit'},
+		{ path: '/Clients/:client_id/Contracts/edit', component: Clients_Contracts_Edit, name: 'Clients-Contracts-Edit'},
+		{ path: '/Clients/:client_id/Auditors/edit', component: Clients_Auditors_Edit, name: 'Clients-Auditors-Edit'},
+		{ path: '/Clients/:client_id/Accounts/edit', component: Clients_Accounts_Edit, name: 'Clients-Accounts-Edit'},
+		{ path: '/Clients/:client_id/Invoices/edit', component: Clients_Invoices_Edit, name: 'Clients-Invoices-Edit'},
+		{ path: '/Clients/:client_id/Quotations/edit', component: Clients_Quotations_Edit, name: 'Clients-Quotations-Edit'},
+		{ path: '/Clients/:client_id/ContractsServices/edit', component: Clients_ContractsServices_Edit, name: 'Clients-ContractsServices-Edit'},
+		{ path: '/Clients/:client_id/delete', component: Clients_Delete, name: 'Clients-Delete'},
+		{ path: '/Clients/:client_id/Contact/:client_contact_id/delete', component: Clients_Contacts_Delete, name: 'ClientsContacts-Delete'},
+		{ path: '/Clients/:client_id/Redicated/:redicated_client_id/delete', component: Clients_Redicated_Delete, name: 'RedicatedClients-Delete'},
+		{ path: '/Clients/:client_id/Auditors/:auditor_client_id/delete', component: Clients_Auditors_Delete, name: 'ClientsAuditors-Delete'},
+		{ path: '/Clients/:client_id/Accounts/:account_client_id/Delete', component: Clients_Accounts_Delete, name: 'Clients-Accounts-Delete'},
+		{ path: '/Clients/:client_id/Accounts/:account_client_id/Attributes/add', component: Clients_Attributes_Services_Add, name: 'AttributesServicesClients-Add'},
+		{ path: '/Clients/:client_id/Accounts/:account_client_id/Clients/:client_id/Attribute/:client_attribute_service_id/delete', component: Clients_Attributes_Services_Delete, name: 'AttributesServicesClients-Delete'},
+		{ path: '/Clients/:client_id/Accounts/:account_client_id/Clients/:client_id/Services/add', component: Clients_Services_Add, name: 'ServicesClients-Add'},
+		{ path: '/Clients/:client_id/Accounts/:account_client_id/Clients/:client_id/Service/:client_service_id/delete', component: Clients_Services_Delete, name: 'ServicesClients-Delete'},
+		
+	]});
 
-	{ path: '/Clients/:client_id/Accounts/:account_client_id/Attributes/add', component: Clients_Attributes_Services_Add, name: 'AttributesServicesClients-Add'},
-	{ path: '/Clients/:client_id/Accounts/:account_client_id/Clients/:client_id/Attribute/:client_attribute_service_id/delete', component: Clients_Attributes_Services_Delete, name: 'AttributesServicesClients-Delete'},
-	{ path: '/Clients/:client_id/Accounts/:account_client_id/Clients/:client_id/Services/add', component: Clients_Services_Add, name: 'ServicesClients-Add'},
-	{ path: '/Clients/:client_id/Accounts/:account_client_id/Clients/:client_id/Service/:client_service_id/delete', component: Clients_Services_Delete, name: 'ServicesClients-Delete'},
-	
-	{ path: '/Employees/Actions/Performances/', component: Actions_Performance_Employees_List, name: 'Actions_Performance_Employees-List'},
-	{ path: '/Employees/Actions/Performances/:action_performance_employee_id', component: Actions_Performance_Employees_View, name: 'Actions_Performance_Employees-View'},
-	{ path: '/Employees/Actions/Performances/add', component: Actions_Performance_Employees_Add, name: 'Actions_Performance_Employees-Add'},
-	{ path: '/Employees/Actions/Performances/:action_performance_employee_id/edit', component: Actions_Performance_Employees_Edit, name: 'Actions_Performance_Employees-Edit'},
-	{ path: '/Employees/Actions/Performances/:action_performance_employee_id/delete', component: Actions_Performance_Employees_Delete, name: 'Actions_Performance_Employees-Delete'},
-	
-]});
+	var appRender = new Vue({
+		data: function () {
+			return {
+			};
+		},
+		router:router,
+		mounted: function () {
+			var self = this;
+		},
+	}).$mount('#app');
+</script>
