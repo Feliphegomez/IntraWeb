@@ -1,0 +1,65 @@
+<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+$(document).ready(function() { $('#dataTable').DataTable(); });
+
+self.posts = [];
+
+<div>
+	<div id="app">
+		<div>
+			<div id="preload"></div>
+			<div class="container_not">
+				<main>
+					<router-view></router-view>
+				</main>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script>
+	var router = new VueRouter({routes:[
+	]});
+
+	var appRender = new Vue({
+		data: function () {
+			return {
+			};
+		},
+		router:router,
+		mounted: function () {
+			var self = this;
+		},
+	}).$mount('#app');
+</script>
+
+
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-success" v-bind:to="{ name: 'TypesBloods-Add' }">
+					<span class="fa fa-plus"></span>
+					Nuevo
+				</router-link> 
+				Tipos de Sangre
+			</div>
+			<div class="card-body">
+			</div>
+			<div class="card-footer small text-muted"></div>
+		</div>
+		
+		
+		
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'TypesBloods-List' }">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link>  
+				Tipos de Sangre
+			</div>
+			<div class="card-body">
+			</div>
+			<div class="card-footer small text-muted"></div>
+		</div>

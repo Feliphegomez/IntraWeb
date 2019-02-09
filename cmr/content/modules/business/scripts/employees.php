@@ -1,4 +1,9 @@
 <style>
+.tab-content>.active {
+    display: block;
+    margin-top: -15%;
+}
+
 .emp-profile{
     padding: 3%;
     margin-top: 3%;
@@ -67,7 +72,7 @@
 }
 .profile-work{
     padding: 14%;
-    margin-top: -15%;
+    margin-top: -10%;
 }
 .profile-work p{
     font-size: 12px;
@@ -105,6 +110,8 @@
 	  },
 	  mounted: function () {
 		var self = this;
+		
+		self.posts = [];
 		apiMV.get('/employees').then(function (response) {
 			self.posts = response.data.records;
 			$(document).ready(function() { $('#dataTable').DataTable(); });
@@ -158,7 +165,6 @@
 					company_mail: '',
 					company_number_phone: '',
 					company_number_mobile: '',
-					avatar: 0,
 					status: 0,
 					eps: 0,
 					arl: 0,
@@ -176,16 +182,20 @@
 		methods: {
 			createEmployee: function() {
 				var post = this.post;
+				
+				for (var key in post) {
+					if (!post.hasOwnProperty(key)) continue;
+					if(post[key] == "" || post[key] == null || post[key] == ' '){ delete post[key]; }
+				}
 				apiMV.post('/employees', post).then(function (response) {
-					post.id = response.data;
+					post.id = response.data;					
+					router.push('/Edit/' + post.id );
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
-				router.push('/');
 			},
 			loadSelects: function(){
 				var self = this;
-				
 				apiMV.get('/types_identifications', { params: { order: 'name,asc', } })
 					.then(function (response) { self.selectOptions.types_identifications = response.data.records; })
 					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
@@ -443,7 +453,6 @@
 			findEmployee: function(){
 				var self = this;
 				var idEmployee = self.$route.params.employee_id;
-				
 				
 				apiMV.get('/crew_employees', {
 					params: {
@@ -780,28 +789,19 @@
 				
 				apiMV.delete('/employees/' + post.id).then(function (response) {
 					console.log(response.data);
+					router.push('/');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
-				router.push('/');
-				location.reload();
 			},
 			findEmployee: function(){
 				var self = this;
 				var idEmployee = self.$route.params.employee_id;
 				
 				apiMV.get('/employees/' + idEmployee).then(function (response) {
-					if(!response.data.id || !response.data.first_name)
-					{
-						router.push('/');
-					}
-					else
-					{
-						self.post = response.data;
-					}
+					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
-					router.push('/');
 				});
 			}
 		}
@@ -829,23 +829,17 @@
 				
 				apiMV.delete('/crew_employees/' + self.$route.params.employee_contact_id).then(function (response) {
 					console.log(response.data);
+					router.push('/Edit/' + self.$route.params.employee_id + '/Contacts');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
-				router.push('//' + self.$route.params.employee_id + '/Edit');
 			},
 			findEmployeeContact: function(){
 				var self = this;
 				var idEmployeeContact = self.$route.params.employee_contact_id;
 				
 				apiMV.get('/crew_employees/' + idEmployeeContact).then(function (response) {
-					if(!response.data.id || !response.data.first_name)
-					{
-					}
-					else
-					{
-						self.post = response.data;
-					}
+					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
@@ -877,24 +871,17 @@
 				var post = this.post;
 				
 				apiMV.delete('/contracted_staff/' + self.$route.params.contracted_staff_id).then(function (response) {
-					console.log(response.data);
+					router.push('/Edit/' + self.$route.params.employee_id + '/Contracts');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
-				router.push('//' + self.$route.params.employee_id + '/Edit');
 			},
 			findContractedStaff: function(){
 				var self = this;
 				var idContractedStaff = self.$route.params.contracted_staff_id;
 				
 				apiMV.get('/contracted_staff/' + idContractedStaff).then(function (response) {
-					if(!response.data.id || !response.data.first_name)
-					{
-					}
-					else
-					{
-						self.post = response.data;
-					}
+					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
@@ -1034,19 +1021,11 @@
 				var idEmployee = self.$route.params.employee_id;
 				
 				apiMV.get('/employees/' + idEmployee).then(function (response) {
-					if(!response.data.id || !response.data.first_name)
-					{
-						router.push('/');
-					}
-					else
-					{
-						self.post = response.data;
-					}
+					self.post = response.data;
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
-					router.push('/');
+					
 				});
-				
 				
 				$('#includeCrewEmployee-Fast').hide();
 				$('#includeContractEmployee-Fast').hide();
@@ -1263,28 +1242,14 @@
 				var post = this.post;
 				apiMV.put('/employees/' + post.id, post).then(function (response) {
 					console.log(response.data);
+					router.push('/');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
-				router.push('/');
 			},
 			findEmployee: function(){
 				var self = this;
 				var idEmployee = self.$route.params.employee_id;
-				
-				apiMV.get('/employees/' + idEmployee).then(function (response) {
-					if(!response.data.id || !response.data.first_name)
-					{
-						router.push('/');
-					}
-					else
-					{
-						self.post = response.data;
-					}
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					router.push('/');
-				});
 				
 				apiMV.get('/crew_employees', {
 					params: {
@@ -1296,38 +1261,7 @@
 					}
 				}).then(function (response) {
 					self.post_contacts = response.data.records;
-					
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				
-				apiMV.get('/contracted_staff', {
-					params: {
-						filter: 'employee,eq,' + idEmployee,
-						join: [
-							'contracts_employees',
-							'types_charges',
-							'contracts_employees,terms_contrats_employees',
-						],
-					}
-				}).then(function (response) {
-					self.contracted_staff = response.data.records;
-					
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				
-				apiMV.get('/performances_employees', {
-					params: {
-						filter: 'employee,eq,' + idEmployee,
-						join: [
-							'reasons_performances_employees',
-							'actions_performances_employees',
-						],
-					}
-				}).then(function (response) {
-					self.performances_employees = response.data.records;
-					
+					$(document).ready(function() { $('#dataTable').DataTable(); });
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
@@ -1476,7 +1410,7 @@
 					actions_performances_employees: [],
 				},
 				post: {
-					id: 0,
+					id: this.$route.params.employee_id,
 					name: ''
 				},
 				post_contacts: [],
@@ -1511,46 +1445,19 @@
 		methods: {
 			includeContractEmployee: function () {
 				var self = this;
-				if(self.post_contracted_staff.date_end == '' || self.post_contracted_staff.date_end == 0){
-					delete self.post_contracted_staff.date_end;
-				}
+				var post = self.post_contracted_staff;
 				
-				apiMV.post('/contracted_staff', self.post_contracted_staff).then(function (response) {
-					// post.id = response.data;
-					$("#includeContractEmployee-Fast").hide();
-					self.findEmployee();
-					self.contract_employee.type_charge = 0;
-					self.contract_employee.date_start = '';
-					self.contract_employee.date_end = '';
-					self.contract_employee.contract_employee = 0;
+				if(post.date_end == '' || post.date_end == 0){ delete post.date_end; }
+				
+				console.log(post);
+				/*
+				*/
+				apiMV.post('/contracted_staff', post).then(function (response) {
+					location.reload();
 				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
+					console.log(error.response);
+					//$.notify(error.response.data.code + error.response.data.message, "error");
 				});
-				
-			},
-			includeCrewEmployee: function () {
-				var self = this;
-				
-				apiMV.post('/crew_employees', self.post_crew).then(function (response) {
-					// post.id = response.data;
-					$("#includeCrewEmployee-Fast").hide();
-					self.post_crew.contact = 0;
-					self.findEmployee();
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				
-			},
-			updateEmployee: function () {
-				var post = this.post;
-				apiMV.put('/employees/' + post.id, post).then(function (response) {
-					console.log(response.data);
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				router.push('/');
 			},
 			findEmployee: function(){
 				var self = this;
@@ -1653,42 +1560,7 @@
 					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
 				
 			},
-			loadCitys: function(){
-				var self = this;
-				
-				apiMV.get('/geo_citys', {
-					params: {
-						order: 'name,asc',
-						filter: 'department,eq,' + self.post.department,
-					}
-				}).then(function (response) {
-					self.selectOptions.geo_citys = response.data.records;
-					
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-			},
-			includePerformancesEmployee: function () {
-				var self = this;
-				if(self.post_performances_employees.date_end == '' || self.post_performances_employees.date_end == 0){
-					delete self.post_performances_employees.date_end;
-				}
-				
-				apiMV.post('/performances_employees', self.post_performances_employees).then(function (response) {
-					// post.id = response.data;
-					$("#includePerformancesEmployee-Fast").hide();
-					self.findEmployee();
-					self.post_performances_employees.reason = 0;
-					self.post_performances_employees.action_taken = 0;
-					self.post_performances_employees.date_start = '';
-					self.post_performances_employees.date_end = '';
-					self.post_performances_employees.notes = '';
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				
-			},
+			
 		}
 	});
 
@@ -1750,26 +1622,7 @@
 			self.findEmployee();
 		},
 		methods: {
-			includeContractEmployee: function () {
-				var self = this;
-				if(self.post_contracted_staff.date_end == '' || self.post_contracted_staff.date_end == 0){
-					delete self.post_contracted_staff.date_end;
-				}
-				
-				apiMV.post('/contracted_staff', self.post_contracted_staff).then(function (response) {
-					// post.id = response.data;
-					$("#includeContractEmployee-Fast").hide();
-					self.findEmployee();
-					self.contract_employee.type_charge = 0;
-					self.contract_employee.date_start = '';
-					self.contract_employee.date_end = '';
-					self.contract_employee.contract_employee = 0;
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				
-			},
+			
 			includeCrewEmployee: function () {
 				var self = this;
 				
@@ -1788,10 +1641,11 @@
 				var post = this.post;
 				apiMV.put('/employees/' + post.id, post).then(function (response) {
 					console.log(response.data);
+					router.push('/');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
-				router.push('/');
+				
 			},
 			findEmployee: function(){
 				var self = this;
@@ -1956,7 +1810,7 @@
 					actions_performances_employees: [],
 				},
 				post: {
-					id: 0,
+					id: this.$route.params.employee_id,
 					name: ''
 				},
 				post_contacts: [],
@@ -1985,170 +1839,8 @@
 		},
 		mounted: function () {
 			var self = this;
-			self.loadSelects();
-			self.findEmployee();
 		},
 		methods: {
-			includeContractEmployee: function () {
-				var self = this;
-				if(self.post_contracted_staff.date_end == '' || self.post_contracted_staff.date_end == 0){
-					delete self.post_contracted_staff.date_end;
-				}
-				
-				apiMV.post('/contracted_staff', self.post_contracted_staff).then(function (response) {
-					// post.id = response.data;
-					$("#includeContractEmployee-Fast").hide();
-					self.findEmployee();
-					self.contract_employee.type_charge = 0;
-					self.contract_employee.date_start = '';
-					self.contract_employee.date_end = '';
-					self.contract_employee.contract_employee = 0;
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				
-			},
-			includeCrewEmployee: function () {
-				var self = this;
-				
-				apiMV.post('/crew_employees', self.post_crew).then(function (response) {
-					// post.id = response.data;
-					$("#includeCrewEmployee-Fast").hide();
-					self.post_crew.contact = 0;
-					self.findEmployee();
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				
-			},
-			updateEmployee: function () {
-				var post = this.post;
-				apiMV.put('/employees/' + post.id, post).then(function (response) {
-					console.log(response.data);
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				router.push('/');
-			},
-			findEmployee: function(){
-				var self = this;
-				var idEmployee = self.$route.params.employee_id;
-				
-			},
-			loadSelects: function(){
-				var self = this;
-				
-				apiMV.get('/types_identifications', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.types_identifications = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-					
-				apiMV.get('/types_bloods', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.types_bloods = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/types_bloods_rhs', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.types_bloods_rhs = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/status_employees', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.status_employees = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/eps', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.eps = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/arls', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.arl = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/funds_pensions', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.funds_pensions = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-					
-				apiMV.get('/funds_compensations', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.funds_compensations = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/funds_severances', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.funds_severances = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-							
-				apiMV.get('/geo_departments', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.geo_departments = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/geo_citys', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.geo_citys = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/contacts', { params: { order: 'identification_number,asc', } })
-					.then(function (response) { self.selectOptions.contacts = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/types_contacts', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.types_contacts = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/contracted_staff', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.contracted_staff = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/types_charges', { params: { order: 'name,asc', } })
-					.then(function (response) { self.selectOptions.types_charges = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/contracts_employees', { params: { order: 'name,asc', join: 'terms_contrats_employees' } })
-					.then(function (response) { self.selectOptions.contracts_employees = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/reasons_performances_employees', { params: { order: 'name,asc', join: 'terms_contrats_employees' } })
-					.then(function (response) { self.selectOptions.reasons_performances_employees = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-				apiMV.get('/actions_performances_employees', { params: { order: 'name,asc', join: 'terms_contrats_employees' } })
-					.then(function (response) { self.selectOptions.actions_performances_employees = response.data.records; })
-					.catch(function (error) { $.notify(error.response.data.code + error.response.data.message, "error"); });
-				
-			},
-			loadCitys: function(){
-				var self = this;
-				
-				apiMV.get('/geo_citys', {
-					params: {
-						order: 'name,asc',
-						filter: 'department,eq,' + self.post.department,
-					}
-				}).then(function (response) {
-					self.selectOptions.geo_citys = response.data.records;
-					
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-			},
-			includePerformancesEmployee: function () {
-				var self = this;
-				if(self.post_performances_employees.date_end == '' || self.post_performances_employees.date_end == 0){
-					delete self.post_performances_employees.date_end;
-				}
-				
-				apiMV.post('/performances_employees', self.post_performances_employees).then(function (response) {
-					// post.id = response.data;
-					$("#includePerformancesEmployee-Fast").hide();
-					self.findEmployee();
-					self.post_performances_employees.reason = 0;
-					self.post_performances_employees.action_taken = 0;
-					self.post_performances_employees.date_start = '';
-					self.post_performances_employees.date_end = '';
-					self.post_performances_employees.notes = '';
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				
-			},
 		}
 	});
 
