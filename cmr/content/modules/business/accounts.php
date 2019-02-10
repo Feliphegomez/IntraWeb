@@ -23,36 +23,37 @@
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
-					<table class="table table-responsive">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>TIPO DE CLIENTE</th>
-							<th>TIPO DE IDENTIFICACION</th>
-							<th># IDENTIFICACION</th>
-							<th>RASON SOCIAL</th>
-							<th>NOMBRE COMERCIAL</th>
-							<th class="col-sm-2">Actions</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr v-if="posts===null">
-							<td colspan="4">Loading...</td>
-						</tr>
-						<tr v-else v-for="post in filteredposts">
-							<td>{{ post.id }}</td>
-							<td>{{ post.type.name }}</td>
-							<td>{{ post.identification_type.name }}</td>
-							<td>{{ post.social_reason }}</td>
-							<td>{{ post.tradename }}</td>
-							<td>
-								<router-link class="btn btn-info btn-md" v-bind:to="{name: 'Clients-View', params: { client_id: post.id }}"><i class="fas fa-eye"></i> </router-link>
-								<router-link class="btn btn-warning btn-md" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}"><i class="fas fa-pencil-alt"></i> </router-link>
-								<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'Clients-Delete', params: { client_id: post.id }}"><i class="fa fa-trash"></i> </router-link>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>TIPO DE CLIENTE</th>
+								<th>TIPO DE IDENTIFICACION</th>
+								<th># IDENTIFICACION</th>
+								<th>RASON SOCIAL</th>
+								<th>NOMBRE COMERCIAL</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-if="posts===null">
+								<td colspan="4">Loading...</td>
+							</tr>
+							<tr v-else v-for="post in filteredposts">
+								<td>{{ post.id }}</td>
+								<td>{{ post.type.name }}</td>
+								<td>{{ post.identification_type.name }}</td>
+								<td>{{ post.identification_number }}</td>
+								<td>{{ post.social_reason }}</td>
+								<td>{{ post.tradename }}</td>
+								<td>
+									<router-link class="btn btn-info btn-md" v-bind:to="{name: 'Clients-View', params: { client_id: post.id }}"><i class="fas fa-eye"></i> </router-link>
+									<router-link class="btn btn-warning btn-md" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}"><i class="fas fa-pencil-alt"></i> </router-link>
+									<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'Clients-Delete', params: { client_id: post.id }}"><i class="fa fa-trash"></i> </router-link>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div class="card-footer small text-muted"></div>
@@ -167,7 +168,7 @@
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solucitudes
+						Solicitudes
 					</router-link>  
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
@@ -297,7 +298,7 @@
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solucitudes
+						Solicitudes
 					</router-link>  
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
@@ -404,7 +405,7 @@
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solucitudes
+						Solicitudes
 					</router-link>  
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
@@ -536,7 +537,7 @@
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solucitudes
+						Solicitudes
 					</router-link>  
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
@@ -608,344 +609,6 @@
 	</div>
 </template>
 
-<template id="edit-Clients-Accounts">
-	<div>
-		<div class="card mb-3">
-			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solucitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
-			</div>
-			<div class="card-body">
-				<div class="vertical-tabs">
-					<ul class="nav nav-tabs" role="tablist">
-						<li class="nav-item"  v-for="account in accounts_clients">
-							<a class="nav-link" data-toggle="tab" v-bind:href="'#pag' + zfill(account.id, 11)" role="tab" aria-controls="settings">
-								{{ zfill(account.id, 11) }} - {{ account.name }}
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link " data-toggle="tab" href="#pagNew01" role="tab" aria-controls="settings">
-								<span class="fa fa-plus"></span>
-								Nueva
-							</a>
-						</li>
-					</ul>
-					
-					<div class="tab-content">
-						<div class="tab-pane" id="pagNew01" role="tabpanel">
-							<div class="sv-tab-panel">
-								<form class="row " v-on:submit="createNewAccount"> 
-									<div class="form-group col-md-6">
-										<label for="add-content">NOMBRE DEL PROYECTO</label>
-										<input class="form-control" type="text" v-model="post_account.name" />
-									</div>
-									<div class="form-group col-md-6">
-										<label for="add-content">PERSONA DE CONTACTO</label>
-										<select class="form-control" v-model="post_account.contact">
-											<option v-for="item in selectOptions.crew_clients" :value="item.contact.id">{{ item.contact.identification_number }} - {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.type_contact.name }}</option>
-										</select>
-									</div>
-									<div class="form-group col-md-6">
-										<label for="add-content">UBICACION DEL PROYECTO</label>
-										<input class="form-control" type="text" v-model="post_account.address" />
-									</div>
-									<div class="form-group col-md-6">
-										<label for="add-content">DIRECCION DE FACTURACION</label>
-										<input class="form-control" type="text" v-model="post_account.address_invoices" />
-									</div>
-									<div class="form-group col-md-12">
-										<label for="add-content">OBSERVACIONES</label>
-										<textarea class="form-control" v-model="post_account.observations"></textarea>
-									</div>
-									<button type="submit" class="btn btn-primary col-md-12">Agregar</button>
-								</form>
-							</div>
-						</div>
-						<div class="tab-pane" v-bind:id="'pag' + zfill(account.id, 11)" role="tabpanel" v-for="account in accounts_clients">
-							<div class="sv-tab-panel">
-								<ul class="nav nav-tabs" id="myTab" role="tablist">
-									<li class="nav-item">
-									<a class="nav-link " id="home-tab" data-toggle="tab" v-bind:href="'#home' + zfill(account.id, 11)" role="tab" aria-controls="home" aria-selected="true">Info</a>
-									</li>
-									<li class="nav-item">
-									<a class="nav-link" id="profile-tab" data-toggle="tab" v-bind:href="'#profile' + zfill(account.id, 11)" role="tab" aria-controls="profile" aria-selected="false">Gastos</a>
-									</li>
-									<li class="nav-item">
-									<a class="nav-link" id="contact-tab" data-toggle="tab" v-bind:href="'#contact' + zfill(account.id, 11)" role="tab" aria-controls="contact" aria-selected="false">Propuestas Generadas</a>
-									</li>
-								</ul>
-								<div class="tab-content" id="myTabContent">
-									<div class="tab-pane fade show active" v-bind:id="'home' + zfill(account.id, 11)" role="tabpanel" aria-labelledby="home-tab">
-										<div class="row">
-											<div class="col-md-2">
-												<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'Clients-Accounts-Delete', params: { client_id: account.client, account_client_id: account.id }}">
-													<i class="fa fa-trash text-write"></i>
-													Eliminar
-												</router-link>
-											</div>
-											<div class="col-md-12">
-												<form class="row" v-on:submit="updateAccountClient(account)">
-													<input class="form-control" type="hidden" v-model="account.id" />
-													<input class="form-control" type="hidden" v-model="account.client" />
-													<div class="form-group col-md-6">
-														<label for="add-content">NOMBRE DEL PROYECTO</label>
-														<input class="form-control" type="text" v-model="account.name" />
-													</div>
-													<div class="form-group col-md-6">
-														<label for="add-content">PERSONA DE CONTACTO</label>
-														<select class="form-control" v-model="account.contact">
-															<option v-for="item in selectOptions.crew_clients" :value="item.contact.id">{{ item.contact.identification_number }} - {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.type_contact.name }}</option>
-														</select>
-													</div>
-													<div class="form-group col-md-6">
-														<label for="add-content">UBICACION DEL PROYECTO</label>
-														<input class="form-control" type="text" v-model="account.address" />
-													</div>
-													<div class="form-group col-md-6">
-														<label for="add-content">DIRECCION DE FACTURACION</label>
-														<input class="form-control" type="text" v-model="account.address_invoices" />
-													</div>
-													<div class="form-group col-md-12">
-														<label for="add-content">OBSERVACIONES</label>
-														<textarea class="form-control" v-model="account.observations"></textarea>
-													</div>
-													<button type="submit" class="btn btn-success col-md-12">Guardar</button>
-												</form>
-												<hr>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" v-bind:id="'profile' + zfill(account.id, 11)" role="tabpanel" aria-labelledby="profile-tab">
-										<div class="row">
-											<div class="col-md-2">
-												
-												<router-link class="btn btn-success btn-md" v-bind:to="{name: 'ServicesClients-Add', params: { client_id: account.client, account_client_id: account.id }}">
-													<i class="fa fa-plus"></i>
-													Servicio
-												</router-link>
-											</div>
-											<div class="col-md-2">
-												<router-link class="btn btn-success btn-md" v-bind:to="{name: 'AttributesServicesClients-Add', params: { client_id: account.client, account_client_id: account.id }}">
-													<i class="fa fa-plus"></i>
-													Otro
-												</router-link>
-											</div>
-											<div class="col-md-12">
-												<h3></h3>
-												<hr>
-												<table class="table table-responsive">
-													<thead>
-														<tr>
-															<th>ID</th>
-															<th>NOMBRE</th>
-															<!-- // <th>DESCRIPCION</th> -->
-															<th>NOTAS DEL SERVICIO</th>
-															<th>TIPO DE MEDIDA</th>
-															<th>CANTIDAD</th>
-															<th>FRECUENCIA</th>
-															<th>PRECIO</th>
-															<th>SUBTOTAL</th>
-															<th>IVA</th>
-															<th>IVA TOTAL</th>
-															<th>TOTAL</th>
-															<th></th>
-														</tr>
-													</thead>
-													<tr v-for="item in account.services_clients">
-														<td>{{ item.id }}</td>
-														<td>{{ item.service.name }}</td>
-														<!-- // <td>{{ item.description }}</td> -->
-														<td>{{ item.service.type_medition.code }}</td>
-														<td>{{ item.quantity }}</td>
-														<td>{{ item.repeat.code }} - {{ item.repeat.name }}</td>
-														<td>{{ formatMoney(item.service.price) }}</td>
-														<td>{{ formatMoney((item.service.price * item.quantity)) }}</td>
-														<td>{{ item.iva }}</td>
-														<td>{{ ((item.service.price * item.quantity) * (item.iva / 100)) }}</td>
-														<td>{{ formatMoney((item.service.price * item.quantity) + ((item.service.price * item.quantity) * (item.iva / 100))) }}</td>
-														<td>
-															<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'ServicesClients-Delete', params: { client_id: post.id, client_service_id: item.id, account_client_id: account.id }}">
-																<i class="fa fa-trash"></i>
-															</router-link>
-														</td>
-													</tr>
-												</table>
-												<hr>
-												<h3>Otros</h3>
-												<table class="table table-responsive">
-													<tr>
-														<th>ID</th>
-														<th>NOMBRE</th>
-														<th>CANTIDAD</th>
-														<th>PRECIO</th>
-														<th>SUBTOTAL</th>
-														<th>IVA</th>
-														<th>IVA TOTAL</th>
-														<th>TOTAL</th>
-														<th></th>
-													</tr>
-													<tr v-for="attribute in account.attributes_services_clients">
-														<td>{{ attribute.id }}</td>
-														<td>{{ attribute.attribute.name }}</td>
-														<td>{{ attribute.quantity }}</td>
-														<td>{{ formatMoney(attribute.attribute.price) }}</td>
-														<td>{{ formatMoney(attribute.attribute.price * attribute.quantity) }}</td>
-														<td>{{ attribute.iva }}</td>
-														<td>{{ ((attribute.attribute.price * attribute.quantity) * (attribute.iva / 100)) }}</td>
-														<td>{{ formatMoney((attribute.attribute.price * attribute.quantity) + ((attribute.attribute.price * attribute.quantity) * (attribute.iva / 100))) }}</td>
-														<td>
-															<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'AttributesServicesClients-Delete', params: { client_id: post.id, client_attribute_service_id: attribute.id, account_client_id: account.id }}">
-																<i class="fa fa-trash"></i>
-															</router-link>
-														</td>
-													</tr>
-												</table>
-											</div>
-										</div>
-									</div>
-									<div class="tab-pane fade" v-bind:id="'contact' + zfill(account.id, 11)" role="tabpanel" aria-labelledby="contact-tab">
-										<div class="row">
-											<div class="col-md-2">
-												<div class="dropup">
-													<button class="btn btn-default btn-md dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-														Generar Propuesta
-														<span class="caret"></span>
-													</button>
-													<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-														<li>
-															<a @click="generateQuotation(account, 30)">
-																<i class="fa fa-plus"></i>
-																30 Días
-															</a>
-														</li>
-														<li>
-															<a @click="generateQuotation(account, 60)">
-																<i class="fa fa-plus"></i>
-																60 Días
-															</a>
-														</li>
-														<li>
-															<a @click="generateQuotation(account, 90)">
-																<i class="fa fa-plus"></i>
-																90 Días
-															</a>
-														</li>
-														<li role="separator" class="divider"></li>
-														<!-- <li><a href="#">Separated link</a></li> -->
-													</ul>
-												</div>											
-											</div>
-											<div class="col-md-12">
-												<h3>Propuestas Generadas</h3>
-												<table class="table table-responsive">
-													<tr>
-														<th>ID</th>
-														<th>FECHA DE CREACION</th>
-														<th>ESTADO ACTUAL</th>
-														<th>VIGENCIA</th>
-														<th></th>
-													</tr>
-													<tr v-for="quotation in account.quotations_clients">
-														<td>{{ zfill(quotation.id, 11) }}</td>
-														<td>{{ quotation.create }}</td>
-														<td>
-															 <span v-if="quotation.status == 0">Pdte. por Aprobación</span>
-															 <span v-if="quotation.status == 1">Rechazada</span>
-															 <span v-if="quotation.status == 2">Aprobada</span>
-														</td>
-														<td>{{ quotation.validity }}</td>
-														<td>														
-														<div class="dropup">
-															<button class="btn btn-default btn-md dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-																Ver PDF
-																<span class="caret"></span>
-															</button>
-															<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-																<li>
-																	<a target="_new" v-bind:href="'/api/genQ.php?refQuotations=' + zfill(quotation.id, 11) + '&wellcome=false'">
-																		<i class="fa fa-eye"></i>
-																		Solo Propuesta
-																	</a>
-																</li>
-																<li role="separator" class="divider"></li>
-																<li>
-																	<a target="_new" v-bind:href="'/api/genQ.php?refQuotations=' + zfill(quotation.id, 11)">
-																		<i class="fa fa-eye"></i>
-																		Completa
-																	</a>
-																</li>
-																<!-- <li><a href="#">Separated link</a></li> -->
-															</ul>
-														</div>	
-														
-														</td>
-														<!-- 
-														<td>
-															<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'AttributesServicesClients-Delete', params: { client_id: post.id, client_attribute_service_id: attribute.id, account_client_id: account.id }}">
-																<i class="fa fa-trash"></i>
-															</router-link>
-														</td> -->
-													</tr>
-												</table>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>				
-			</div>
-			<div class="card-footer small text-muted">
-			</div>
-		</div>
-	</div>
-</template>
-
 <template id="edit-Clients-Invoices">
 	<div>
 		<div class="card mb-3">
@@ -974,7 +637,7 @@
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solucitudes
+						Solicitudes
 					</router-link>  
 					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
@@ -1032,7 +695,7 @@
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solucitudes
+						Solicitudes
 					</router-link>  
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
@@ -1119,7 +782,7 @@
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solucitudes
+						Solicitudes
 					</router-link>  
 					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
@@ -1146,6 +809,8 @@
 				<table class="table table-responsive">
 					<tr>
 						<th>ID PROPUESTA</th>
+						<th>SOLICITUD</th>
+						<th>NOMBRE DEL PROYECTO</th>
 						<th>ESTADO ACTUAL</th>
 						<th>FECHA DE CREACION</th>
 						<th>FECHA DE APROBACION</th>
@@ -1159,6 +824,12 @@
 								{{ zfill(quotation.id, 11) }}
 							</a>
 						</td>
+						<td>
+							<a target="_new" v-bind:href="'/business/accounts/#/Edit/' + quotation.account.client + '/Accounts/' + quotation.account.id + '/Info'">
+								{{ zfill(quotation.account.id, 11) }}
+							</a>
+						</td>
+						<td>{{ quotation.account.name }}</td>
 						<td>
 							 <span v-if="quotation.status == 0">Pdte. por Aprobación</span>
 							 <span v-if="quotation.status == 1">Rechazada</span>
@@ -1220,24 +891,45 @@
 
 <template id="delete-Clients">
 	<div>
-		<h2>CLIENTES - Eliminar</h2>
-		<form v-on:submit="deleteClient">
-			<p>The action cannot be undone.</p>
-			<button type="submit" class="btn btn-danger">Eliminar</button>
-			<router-link class="btn btn-primary" v-bind:to="{ name: 'Clients-List' }">Cancelar</router-link>
-		</form>
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'ARL-List' }">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<form v-on:submit="deleteClient">
+					<p>The action cannot be undone.</p>
+					<button type="submit" class="btn btn-danger">Eliminar</button>
+					<router-link class="btn btn-primary" v-bind:to="{ name: 'Clients-List' }">Cancelar</router-link>
+				</form>
+			</div>
+			<div class="card-footer small text-muted"></div>
+		</div>
 	</div>
 </template>
 
 <template id="delete-ClientsContacts">
 	<div>
-		<h2>CONTACTOS - Eliminar</h2>
-		<form v-on:submit="deleteClientsContacts">
-			<p>The action cannot be undone.</p>
-			<button type="submit" class="btn btn-danger">Eliminar</button>
-			<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: $route.params.client_id }}">Cancelar</router-link>
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: $route.params.client_id }}">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<form v-on:submit="deleteClientsContacts">
+					<p>The action cannot be undone.</p>
+					<button type="submit" class="btn btn-danger">Eliminar</button>
+				</form>
 
-		</form>
+			</div>
+			<div class="card-footer small text-muted"></div>
+		</div>
 	</div>
 </template>
 
@@ -1254,45 +946,87 @@
 
 <template id="delete-ClientsAuditors">
 	<div>
-		<h2>CONTACTOS - Eliminar</h2>
-		<form v-on:submit="deleteClientsAuditors">
-			<p>The action cannot be undone.</p>
-			<button type="submit" class="btn btn-danger">Eliminar</button>
-			<router-link class="btn btn-primary" v-bind:to="{ name: 'Clients-List' }">Cancelar</router-link>
-		</form>
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Invoices', params: { client_id: $route.params.client_id, account_id: $route.params.account_client_id }}">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<form v-on:submit="deleteClientsAuditors">
+					<p>The action cannot be undone.</p>
+					<button type="submit" class="btn btn-danger">Eliminar</button>
+					<router-link class="btn btn-primary" v-bind:to="{ name: 'Clients-List' }">Cancelar</router-link>
+				</form>
+			</div>
+			<div class="card-footer small text-muted"></div>
+		</div>
 	</div>
 </template>
 
 <template id="delete-AttributesServicesClients">
 	<div>
-		<h2>ATRIBUTOS DEL SERVICIO - Eliminar</h2>
-		<form v-on:submit="deleteClientsAttributesServices">
-			<p>The action cannot be undone.</p>
-			<button type="submit" class="btn btn-danger">Eliminar</button>
-			<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Info', params: { client_id: $route.params.client_id }}">Cancelar</router-link>
-		</form>
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Invoices', params: { client_id: $route.params.client_id, account_id: $route.params.account_client_id }}">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<form v-on:submit="deleteClientsAttributesServices">
+					<p>The action cannot be undone.</p>
+					<button type="submit" class="btn btn-danger">Eliminar</button>
+				</form>
+			</div>
+			<div class="card-footer small text-muted"></div>
+		</div>
 	</div>
 </template>
 
 <template id="delete-ServicesClients">
 	<div>
-		<h2>ATRIBUTOS DEL SERVICIO - Eliminar</h2>
-		<form v-on:submit="deleteClientsServices">
-			<p>The action cannot be undone.</p>
-			<button type="submit" class="btn btn-danger">Eliminar</button>
-			<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Info', params: { client_id: $route.params.client_id }}">Cancelar</router-link>
-		</form>
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Invoices', params: { client_id: $route.params.client_id, account_id: $route.params.account_client_id }}">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<form v-on:submit="deleteClientsServices">
+					<p>The action cannot be undone.</p>
+					<button type="submit" class="btn btn-danger">Eliminar</button>
+				</form>
+			</div>
+			<div class="card-footer small text-muted"></div>
+		</div>
 	</div>
 </template>
 
 <template id="delete-AccountsClients">
 	<div>
-		<h2>CUENTA DE CLIENTE - Eliminar</h2>
-		<form v-on:submit="deleteAccountsClients">
-			<p>The action cannot be undone.</p>
-			<button type="submit" class="btn btn-danger">Eliminar</button>
-			<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: $route.params.client_id }}">Cancelar</router-link>
-		</form>
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Invoices', params: { client_id: $route.params.client_id, account_id: $route.params.account_client_id }}">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<form v-on:submit="deleteAccountsClients">
+					<p>The action cannot be undone.</p>
+					<button type="submit" class="btn btn-danger">Eliminar</button>
+					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: $route.params.client_id }}">Cancelar</router-link>
+				</form>
+			</div>
+			<div class="card-footer small text-muted"></div>
+		</div>
 	</div>
 </template>
 <!-- // ------------ CLIENTES - FIN -------------------------------------  -->
@@ -1300,59 +1034,79 @@
 <!-- // ------------ SERVICIO CLIENTE - INICIO ------------ // -->		
 <template id="add-AttributesServicesClients">
 	<div>
-		<h2>ATRRIBUTOS DE SERVICIO - Crear</h2>
-		<form v-on:submit="createAttributesServicesClients">
-			<div class="form-group">
-				<label for="add-content">ATRIBUTO</label>
-				<select class="form-control" v-model="post.attribute">
-					<option v-for="item in selectOptions.attributes" :value="item.id">{{ item.id }} - {{ item.name }} - {{ formatMoney(item.price) }} </option>
-				</select>
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Invoices', params: { client_id: $route.params.client_id, account_id: $route.params.account_client_id }}">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
 			</div>
-			<div class="form-group">
-				<label for="add-content">CANTIDAD</label>
-				<input class="form-control" type="number" v-model="post.quantity" />
+			<div class="card-body">
+				<form v-on:submit="createAttributesServicesClients">
+					<div class="form-group">
+						<label for="add-content">ATRIBUTO</label>
+						<select class="form-control" v-model="post.attribute">
+							<option v-for="item in selectOptions.attributes" :value="item.id">{{ item.id }} - {{ item.name }} - {{ formatMoney(item.price) }} </option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="add-content">CANTIDAD</label>
+						<input class="form-control" type="number" v-model="post.quantity" />
+					</div>
+					<div class="form-group">
+						<label for="add-content">IVA</label>
+						<input class="form-control" type="number" v-model="post.iva" />
+					</div>
+					<button type="submit" class="btn btn-primary">Crear</button>
+				</form>
 			</div>
-			<div class="form-group">
-				<label for="add-content">IVA</label>
-				<input class="form-control" type="number" v-model="post.iva" />
-			</div>
-			<button type="submit" class="btn btn-primary">Crear</button>
-			<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: $route.params.client_id }}">Cancelar</router-link>
-		</form>
+			<div class="card-footer small text-muted"></div>
+		</div>
 	</div>
 </template>
 
 <template id="add-ServicesClients">
 	<div>
-		<h2>SERVICIO - Crear</h2>
-		<form v-on:submit="createServicesClients">
-			<div class="form-group">
-				<label for="add-content">SERVICIO</label>
-				<select class="form-control" v-model="post.service">
-					<option v-for="item in selectOptions.services" :value="item.id">{{ item.type_medition.code }} - {{ item.name }} - {{ formatMoney(item.price) }} </option>
-				</select>
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Invoices', params: { client_id: $route.params.client_id, account_id: $route.params.account_client_id }}">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
 			</div>
-			<div class="form-group">
-				<label for="add-content">CANTIDAD</label>
-				<input class="form-control" type="number" v-model="post.quantity" />
+			<div class="card-body">
+				<form v-on:submit="createServicesClients">
+					<div class="form-group">
+						<label for="add-content">SERVICIO</label>
+						<select class="form-control" v-model="post.service">
+							<option v-for="item in selectOptions.services" :value="item.id">{{ item.type_medition.code }} - {{ item.name }} - {{ formatMoney(item.price) }} </option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="add-content">CANTIDAD</label>
+						<input class="form-control" type="number" v-model="post.quantity" />
+					</div>
+					<div class="form-group">
+						<label for="add-content">FRECUENCIA</label>
+						<select class="form-control" v-model="post.repeat">
+							<option v-for="item in selectOptions.types_repeats_services_clients" :value="item.id">{{ item.code }} - {{ item.name }} </option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="add-content">IVA</label>
+						<input class="form-control" type="number" v-model="post.iva" />
+					</div>
+					<div class="form-group">
+						<label for="add-content">NOTAS DEL SERVICIO	 </label>
+						<textarea class="form-control" v-model="post.observations"></textarea>
+					</div>
+					<button type="submit" class="btn btn-primary">Crear</button>
+				</form>
 			</div>
-			<div class="form-group">
-				<label for="add-content">FRECUENCIA</label>
-				<select class="form-control" v-model="post.repeat">
-					<option v-for="item in selectOptions.types_repeats_services_clients" :value="item.id">{{ item.code }} - {{ item.name }} </option>
-				</select>
-			</div>
-			<div class="form-group">
-				<label for="add-content">IVA</label>
-				<input class="form-control" type="number" v-model="post.iva" />
-			</div>
-			<div class="form-group">
-				<label for="add-content">NOTAS DEL SERVICIO	 </label>
-				<textarea class="form-control" v-model="post.observations"></textarea>
-			</div>
-			<button type="submit" class="btn btn-primary">Crear</button>
-			<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: $route.params.client_id }}">Cancelar</router-link>
-		</form>
+			<div class="card-footer small text-muted"></div>
+		</div>
 	</div>
 </template>
 <!-- // ------------ SERVICIO CLIENTE - FIN ------------ // -->
@@ -1892,6 +1646,666 @@
 	</div>		  
 </template>
 
+
+<template id="edit-Clients-Accounts">
+	<div>
+		<div class="card mb-3">
+			<div class="card-header">
+				Cuentas
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Infomacion Basica
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contactos
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Radicados
+					</router-link>  
+					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Interventores
+					</router-link>  
+					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Solicitudes
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Facturas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Propuestas Aprobadas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contratos
+					</router-link>  
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<div class="card mb-3">
+					<div class="card-header">
+						<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'Clients-Accounts-Edit-Add', params: { client_id: this.$route.params.client_id }}">
+							<span class="fa fa-plus"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Nueva
+						</router-link> 
+					</div>
+					<div class="card-body">
+						<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+								<tr>
+									<td>ID</td>
+									<td>Nombre del Proyecto</td>
+									<td></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="account in accounts_clients">
+									<td>{{ zfill(account.id, 11) }}</td>
+									<td>{{ account.name }}</td>
+									<td>
+										<router-link class="btn btn-info btn-md" v-bind:to="{name: 'Clients-Accounts-Edit-Info', params: { account_id: account.id }}">
+											<span class="fas fa-eye"></span>
+											<!-- <span class="badge badge-default">Cerrar </span> -->
+										</router-link> 
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="card-footer small text-muted"></div>
+				</div>
+			</div>
+			<div class="card-footer small text-muted">
+			</div>
+		</div>
+	</div>
+</template>
+
+<template id="edit-Clients-Accounts-Info">
+	<div>
+		<div class="card mb-3">
+			<div class="card-header">
+				Cuentas
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Infomacion Basica
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contactos
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Radicados
+					</router-link>  
+					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Interventores
+					</router-link>  
+					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Solicitudes
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Facturas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Propuestas Aprobadas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contratos
+					</router-link>  
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<div class="card mb-3">
+					<div class="card-header">
+						<router-link class="btn btn-primary	" v-bind:to="{name: 'Clients-Accounts-Edit-Info', params: { client_id: post.id }}">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Informacion Basica
+						</router-link> 
+						<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Invoices', params: { client_id: post.id }}">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Gastos
+						</router-link> 
+						<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Requests', params: { client_id: post.id }}">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Propuestas
+						</router-link>
+							<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id, account_id: this.$route.params.account_id }}">
+								<span class="fa fa-window-close"></span>
+								<!-- <span class="badge badge-default">Cerrar </span> -->
+								Cerrar
+							</router-link> 
+					</div>
+					<div class="card-body">
+						<div v-for="account in accounts_clients">
+							<div class="row">
+								<div class="col-md-2">
+									<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'Clients-Accounts-Delete', params: { client_id: account.client, account_client_id: account.id }}">
+										<i class="fa fa-trash text-write"></i>
+										Eliminar
+									</router-link>
+								</div>
+								<div class="col-md-12">
+									<form class="row" v-on:submit="updateAccountClient(account)">
+										<input class="form-control" type="hidden" v-model="account.id" />
+										<input class="form-control" type="hidden" v-model="account.client" />
+										<div class="form-group col-md-6">
+											<label for="add-content">NOMBRE DEL PROYECTO</label>
+											<input class="form-control" type="text" v-model="account.name" />
+										</div>
+										<div class="form-group col-md-6">
+											<label for="add-content">PERSONA DE CONTACTO</label>
+											<select class="form-control" v-model="account.contact">
+												<option v-for="item in selectOptions.crew_clients" :value="item.contact.id">{{ item.contact.identification_number }} - {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.type_contact.name }}</option>
+											</select>
+										</div>
+										<div class="form-group col-md-6">
+											<label for="add-content">UBICACION DEL PROYECTO</label>
+											<input class="form-control" type="text" v-model="account.address" />
+										</div>
+										<div class="form-group col-md-6">
+											<label for="add-content">DIRECCION DE FACTURACION</label>
+											<input class="form-control" type="text" v-model="account.address_invoices" />
+										</div>
+										<div class="form-group col-md-12">
+											<label for="add-content">OBSERVACIONES</label>
+											<textarea class="form-control" v-model="account.observations"></textarea>
+										</div>
+										<button type="submit" class="btn btn-success col-md-12">Guardar</button>
+									</form>
+									<hr>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer small text-muted"></div>
+				</div>	
+			</div>
+			<div class="card-footer small text-muted">
+			</div>
+		</div>
+	</div>
+</template>
+
+<template id="edit-Clients-Accounts-Invoices">
+	<div>
+		<div class="card mb-3">
+			<div class="card-header">
+				Cuentas
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Infomacion Basica
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contactos
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Radicados
+					</router-link>  
+					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Interventores
+					</router-link>  
+					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Solicitudes
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Facturas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Propuestas Aprobadas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contratos
+					</router-link>  
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<div class="card mb-3">
+					<div class="card-header">
+						<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Info', params: { client_id: post.id }}">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Informacion Basica
+						</router-link> 
+						<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit-Invoices', params: { client_id: post.id }}">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Gastos
+						</router-link> 
+						<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Requests', params: { client_id: post.id }}">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Propuestas
+						</router-link>
+							<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id, account_id: this.$route.params.account_id }}">
+								<span class="fa fa-window-close"></span>
+								<!-- <span class="badge badge-default">Cerrar </span> -->
+								Cerrar
+							</router-link> 
+					</div>
+					<div class="card-body">
+						<div v-for="account in accounts_clients">
+							<div class="row">
+								<div class="col-md-2">
+									
+									<router-link class="btn btn-success btn-md" v-bind:to="{name: 'ServicesClients-Add', params: { client_id: account.client, account_client_id: account.id }}">
+										<i class="fa fa-plus"></i>
+										Servicio
+									</router-link>
+								</div>
+								<div class="col-md-2">
+									<router-link class="btn btn-success btn-md" v-bind:to="{name: 'AttributesServicesClients-Add', params: { client_id: account.client, account_client_id: account.id }}">
+										<i class="fa fa-plus"></i>
+										Otro
+									</router-link>
+								</div>
+								<div class="col-md-12">
+									<h3></h3>
+									<hr>
+									<table class="table table-responsive">
+										<thead>
+											<tr>
+												<th>ID</th>
+												<th>NOMBRE</th>
+												<!-- // <th>DESCRIPCION</th> -->
+												<th>NOTAS DEL SERVICIO</th>
+												<th>TIPO DE MEDIDA</th>
+												<th>CANTIDAD</th>
+												<th>FRECUENCIA</th>
+												<th>PRECIO</th>
+												<th>SUBTOTAL</th>
+												<th>IVA</th>
+												<th>IVA TOTAL</th>
+												<th>TOTAL</th>
+												<th></th>
+											</tr>
+										</thead>
+										<tr v-for="item in account.services_clients">
+											<td>{{ item.id }}</td>
+											<td>{{ item.service.name }}</td>
+											<!-- // <td>{{ item.description }}</td> -->
+											<td>{{ item.service.type_medition.code }}</td>
+											<td>{{ item.quantity }}</td>
+											<td>{{ item.repeat.code }} - {{ item.repeat.name }}</td>
+											<td>{{ formatMoney(item.service.price) }}</td>
+											<td>{{ formatMoney((item.service.price * item.quantity)) }}</td>
+											<td>{{ item.iva }}</td>
+											<td>{{ ((item.service.price * item.quantity) * (item.iva / 100)) }}</td>
+											<td>{{ formatMoney((item.service.price * item.quantity) + ((item.service.price * item.quantity) * (item.iva / 100))) }}</td>
+											<td>
+												<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'ServicesClients-Delete', params: { client_id: post.id, client_service_id: item.id, account_client_id: account.id }}">
+													<i class="fa fa-trash"></i>
+												</router-link>
+											</td>
+										</tr>
+									</table>
+									<hr>
+									<h3>Otros</h3>
+									<table class="table table-responsive">
+										<tr>
+											<th>ID</th>
+											<th>NOMBRE</th>
+											<th>CANTIDAD</th>
+											<th>PRECIO</th>
+											<th>SUBTOTAL</th>
+											<th>IVA</th>
+											<th>IVA TOTAL</th>
+											<th>TOTAL</th>
+											<th></th>
+										</tr>
+										<tr v-for="attribute in account.attributes_services_clients">
+											<td>{{ attribute.id }}</td>
+											<td>{{ attribute.attribute.name }}</td>
+											<td>{{ attribute.quantity }}</td>
+											<td>{{ formatMoney(attribute.attribute.price) }}</td>
+											<td>{{ formatMoney(attribute.attribute.price * attribute.quantity) }}</td>
+											<td>{{ attribute.iva }}</td>
+											<td>{{ ((attribute.attribute.price * attribute.quantity) * (attribute.iva / 100)) }}</td>
+											<td>{{ formatMoney((attribute.attribute.price * attribute.quantity) + ((attribute.attribute.price * attribute.quantity) * (attribute.iva / 100))) }}</td>
+											<td>
+												<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'AttributesServicesClients-Delete', params: { client_id: post.id, client_attribute_service_id: attribute.id, account_client_id: account.id }}">
+													<i class="fa fa-trash"></i>
+												</router-link>
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer small text-muted"></div>
+				</div>	
+			</div>
+			<div class="card-footer small text-muted">
+			</div>
+		</div>
+	</div>
+</template>
+
+<template id="edit-Clients-Accounts-Requests">
+	<div>
+		<div class="card mb-3">
+			<div class="card-header">
+				Cuentas
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Infomacion Basica
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contactos
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Radicados
+					</router-link>  
+					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Interventores
+					</router-link>  
+					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Solicitudes
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Facturas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Propuestas Aprobadas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contratos
+					</router-link>  
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<div class="card mb-3">
+					<div class="card-header">
+						<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Info', params: { client_id: post.id }}">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Informacion Basica
+						</router-link> 
+						<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit-Invoices', params: { client_id: post.id }}">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Gastos
+						</router-link> 
+						<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit-Requests', params: { client_id: post.id }}">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Propuestas
+						</router-link>
+							<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id, account_id: this.$route.params.account_id }}">
+								<span class="fa fa-window-close"></span>
+								<!-- <span class="badge badge-default">Cerrar </span> -->
+								Cerrar
+							</router-link> 
+					</div>
+					<div class="card-body">
+						<div v-for="account in accounts_clients">
+							<div class="row">
+								<div class="col-md-2">
+									<div class="dropup">
+										<button class="btn btn-default btn-md dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Generar Propuesta
+											<span class="caret"></span>
+										</button>
+										<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+											<li>
+												<a @click="generateQuotation(account, 30)">
+													<i class="fa fa-plus"></i>
+													30 Días
+												</a>
+											</li>
+											<li>
+												<a @click="generateQuotation(account, 60)">
+													<i class="fa fa-plus"></i>
+													60 Días
+												</a>
+											</li>
+											<li>
+												<a @click="generateQuotation(account, 90)">
+													<i class="fa fa-plus"></i>
+													90 Días
+												</a>
+											</li>
+											<li role="separator" class="divider"></li>
+											<!-- <li><a href="#">Separated link</a></li> -->
+										</ul>
+									</div>											
+								</div>
+								<div class="col-md-12">
+									<h3>Propuestas Generadas</h3>
+									<table class="table table-responsive">
+										<tr>
+											<th>ID</th>
+											<th>FECHA DE CREACION</th>
+											<th>ESTADO ACTUAL</th>
+											<th>VIGENCIA</th>
+											<th></th>
+										</tr>
+										<tr v-for="quotation in account.quotations_clients">
+											<td>{{ zfill(quotation.id, 11) }}</td>
+											<td>{{ quotation.create }}</td>
+											<td>
+												 <span v-if="quotation.status == 0">Pdte. por Aprobación</span>
+												 <span v-if="quotation.status == 1">Rechazada</span>
+												 <span v-if="quotation.status == 2">Aprobada</span>
+											</td>
+											<td>{{ quotation.validity }}</td>
+											<td>														
+												<div class="dropup">
+													<button class="btn btn-default btn-md dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														Ver PDF
+														<span class="caret"></span>
+													</button>
+													<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+														<li>
+															<a target="_new" v-bind:href="'/api/genQ.php?refQuotations=' + zfill(quotation.id, 11) + '&wellcome=false'">
+																<i class="fa fa-eye"></i>
+																Solo Propuesta
+															</a>
+														</li>
+														<li role="separator" class="divider"></li>
+														<li>
+															<a target="_new" v-bind:href="'/api/genQ.php?refQuotations=' + zfill(quotation.id, 11)">
+																<i class="fa fa-eye"></i>
+																Completa
+															</a>
+														</li>
+														<!-- <li><a href="#">Separated link</a></li> -->
+													</ul>
+												</div>
+											</td>
+											<!-- 
+											<td>
+												<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'AttributesServicesClients-Delete', params: { client_id: post.id, client_attribute_service_id: attribute.id, account_client_id: account.id }}">
+													<i class="fa fa-trash"></i>
+												</router-link>
+											</td> -->
+										</tr>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="card-footer small text-muted"></div>
+				</div>	
+			</div>
+			<div class="card-footer small text-muted">
+			</div>
+		</div>
+	</div>
+</template>
+
+<template id="edit-Clients-Accounts-Add">
+	<div>
+		<div class="card mb-3">
+			<div class="card-header">
+				Cuentas
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Infomacion Basica
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contactos
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Radicados
+					</router-link>  
+					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Interventores
+					</router-link>  
+					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Solicitudes
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Facturas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Propuestas Aprobadas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contratos
+					</router-link>  
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<div class="card mb-3">
+					<div class="card-header">
+						<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-Accounts-Edit', params: { client_id: post.id } }">
+							<span class="fa fa-window-close"></span>
+							<!-- <span class="badge badge-default">Cerrar </span> -->
+							Cerrar
+						</router-link> 
+					</div>
+					<div class="card-body">
+						<form class="row " v-on:submit="createNewAccount"> 
+							<div class="form-group col-md-6">
+								<label for="add-content">NOMBRE DEL PROYECTO</label>
+								<input class="form-control" type="text" v-model="post_account.name" />
+							</div>
+							<div class="form-group col-md-6">
+								<label for="add-content">PERSONA DE CONTACTO</label>
+								<select class="form-control" v-model="post_account.contact">
+									<option v-for="item in selectOptions.crew_clients" :value="item.contact.id">{{ item.contact.identification_number }} - {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.type_contact.name }}</option>
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label for="add-content">UBICACION DEL PROYECTO</label>
+								<input class="form-control" type="text" v-model="post_account.address" />
+							</div>
+							<div class="form-group col-md-6">
+								<label for="add-content">DIRECCION DE FACTURACION</label>
+								<input class="form-control" type="text" v-model="post_account.address_invoices" />
+							</div>
+							<div class="form-group col-md-12">
+								<label for="add-content">OBSERVACIONES</label>
+								<textarea class="form-control" v-model="post_account.observations"></textarea>
+							</div>
+							<button type="submit" class="btn btn-primary col-md-12">Agregar</button>
+						</form>
+					</div>
+					<div class="card-footer small text-muted"></div>
+				</div>		
+			</div>
+			<div class="card-footer small text-muted">
+			</div>
+		</div>
+	</div>
+</template>
 
 
 
