@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 class Route 
 {
 	private $basepath;
@@ -401,13 +401,12 @@ class Session extends User
 		$_SESSION['hash'] = $this->hash;
 	}
 	
-	function destroySession()
+	function destroySession($url=null)
 	{
-		// remove all session variables
-		session_unset();
-		// destroy the session 
-		session_destroy();
-		echo '<meta http-equiv="refresh" content="0; url='.path_home.'" />';
+		if($url == null){ $url = path_home; }
+		session_unset(); // remove all session variables
+		session_destroy(); // destroy the session 
+		echo "<meta http-equiv=\"refresh\" content=\"0; url={$url}\" />";
 	}
 	
 	function dropdownUserNavbar()
@@ -763,7 +762,7 @@ class User
 # ----------------- PICTURES -----------------
 class Picture extends BaseClass
 {
-  var $id, $data, $url_short, $url_large;
+  var $id, $name,$size, $data, $url_short, $url_large, $type, $create;
    
    function __construct($params=null)
    {
@@ -784,10 +783,11 @@ class Picture extends BaseClass
 		$stmt = $pdo->prepare('SELECT `pictures`.*
 		FROM `pictures` 
 		WHERE `pictures`.`id` = ?');
+		#$pdo->exec("SET CHARACTER SET utf8; SET COLLATION SET utf8_unicode_ci");
 		$stmt->execute([$id]);
 		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
 		if(isset($result[0])){
-			$resultOne = (object) $result[0];
+			$resultOne = $result[0];
 			$this->setData($resultOne);
 		}
    }
@@ -1325,6 +1325,8 @@ class Settings
 }
 
 
+
+
 # PASAR -----------------------
 function transalateLabelPermissions($label)
 {
@@ -1394,3 +1396,4 @@ function convertBooleanToIcon($valueBoolean)
 	}
 
 }
+

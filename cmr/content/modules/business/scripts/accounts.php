@@ -112,10 +112,61 @@
 		mounted: function(){
 			var self = this;
 			self.loadSelects();
+			$(document).ready(function() { $('.search-select2-basic-single').select2(); });
 		},
 		methods: {
 			loadSelects: function(){
 				var self = this;
+				
+				apiMV.get('/types_clients', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.types_clients = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/types_identifications', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.types_identifications = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/types_societys', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.types_societys = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/geo_departments', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.geo_departments = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/geo_citys', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.geo_citys = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/contacts', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.contacts = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/types_contacts', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.types_contacts = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
 			},
 			loadCitys: function(){
 				var self = this;
@@ -324,6 +375,7 @@
 				
 				apiMV.get('/clients/' + idClient).then(function (response) {
 					self.post = response.data;
+					$(document).ready(function() { $('.search-select2-basic-single').select2(); });
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
@@ -397,7 +449,7 @@
 					types_repeats_services_clients: this.$parent.selectOptions.types_repeats_services_clients,
 				},
 				post: {
-					id: 0,
+					id: this.$route.params.client_id,
 					type: 0,
 					identification_type: 0,
 					identification_number: '',
@@ -480,6 +532,54 @@
 			loadSelects: function(){
 				var self = this;
 				
+				apiMV.get('/types_clients', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.types_clients = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/types_identifications', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.types_identifications = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/types_societys', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.types_societys = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/geo_departments', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.geo_departments = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/geo_citys', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.geo_citys = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/contacts', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.contacts = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
+					
+				apiMV.get('/types_contacts', { params: { order: 'name,asc', } })
+					.then(function (response) {
+						self.selectOptions.types_contacts = response.data.records;
+					}).catch(function (error) {
+						$.notify(error.response.data.code + error.response.data.message, "error");
+					});
 			},
 			loadCitys: function(){
 				var self = this;
@@ -525,7 +625,7 @@
 					}
 				}).then(function (response) {
 					self.crew_clients = response.data.records;
-					
+					$(document).ready(function() { $('.search-select2-basic-single').select2(); });
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
@@ -537,6 +637,8 @@
 			},
 			includeContactClient: function(){
 				var self = this;
+				
+				console.log(self.post_crew_clients);
 				
 				apiMV.post('/crew_clients', self.post_crew_clients).then(function (response) {
 					// post.id = response.data;
@@ -584,8 +686,8 @@
 		}
 	});
 
-	var Clients_Contracts_Edit = Vue.extend({
-		template: '#edit-Clients-Contracts',
+	var Clients_Redicateds_Edit = Vue.extend({
+		template: '#edit-Clients-Redicateds',
 		data: function () {
 			return {
 				selectOptions: {
@@ -599,7 +701,7 @@
 					types_repeats_services_clients: this.$parent.selectOptions.types_repeats_services_clients,
 				},
 				post: {
-					id: 0,
+					id: this.$route.params.client_id,
 					type: 0,
 					identification_type: 0,
 					identification_number: '',
@@ -730,7 +832,7 @@
 				var post = this.post;
 				apiMV.put('/clients/' + post.id, post).then(function (response) {
 					console.log(response.data);
-					router.push('//' + self.$route.params.client_id + '/Contracts/Edit');
+					router.push('//' + self.$route.params.client_id + '/Redicateds/Edit');
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
@@ -751,7 +853,7 @@
 					}
 				}).then(function (response) {
 					self.redicated_clients = response.data.records;
-					
+					$(document).ready(function() { $('#dataTable').DataTable(); });
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
@@ -1053,7 +1155,7 @@
 					types_repeats_services_clients: [],
 				},
 				post: {
-					id: 0,
+					id: this.$route.params.client_id,
 					type: 0,
 					identification_type: 0,
 					identification_number: '',
@@ -1181,73 +1283,12 @@
 				});
 			},
 			updateClient: function () {
-				var post = this.post;
-				apiMV.put('/clients/' + post.id, post).then(function (response) {
-					console.log(response.data);
-					router.push('//' + self.$route.params.client_id + '/Invoices/Edit');
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
+				
 			},
 			findClients: function(){
 				var self = this;
 				var idClient = self.$route.params.client_id;
 				
-				apiMV.get('/clients/' + idClient).then(function (response) {
-					self.post = response.data;
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-				
-				$("#includeContactClient-Fast").hide();
-				$("#includeRedicatedClient-Fast").hide();
-				$("#includeAuditorClient-Fast").hide();
-			},
-			includeContactClient: function(){
-				var self = this;
-				
-				apiMV.post('/crew_clients', self.post_crew_clients).then(function (response) {
-					// post.id = response.data;
-					$("#includeContactClient-Fast").hide();
-					self.findClients();
-					self.post_crew_clients.contact = 0;
-					self.post_crew_clients.type_contact = 0;
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-			},
-			includeRedicatedClient: function(){
-				var self = this;
-				
-				apiMV.post('/redicated_clients', self.post_redicated_clients).then(function (response) {
-					// post.id = response.data;
-					$("#includeRedicatedClient-Fast").hide();
-					self.findClients();
-					self.post_redicated_clients.consecutive = '';
-					self.post_redicated_clients.name = '';
-					self.post_redicated_clients.object = '';
-					self.post_redicated_clients.description_service = '';
-					self.post_redicated_clients.date_start = '';
-					self.post_redicated_clients.date_end = '';
-					self.post_redicated_clients.additional_notes = '';
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
-			},
-			includeAuditorClient: function(){
-				var self = this;
-				
-				apiMV.post('/auditors_clients', self.post_auditors_clients).then(function (response) {
-					// post.id = response.data;
-					$("#includeAuditorClient-Fast").hide();
-					self.findClients();
-					self.post_auditors_clients.contact = 0;
-				}).catch(function (error) {
-					$.notify(error.response.data.code + error.response.data.message, "error");
-					$.notify(error.response.data.code + error.response.data.message, "error");
-				});
 			},
 		}
 	});
@@ -1892,8 +1933,8 @@
 			}
 		}
 	});
+	
 	// ------------ CLIENTES - FIN ------------------------------------- 
-
 	var Clients_View = Vue.extend({
 		template: '#view-Clients',
 		data: function () {
@@ -4213,6 +4254,187 @@
 		}
 	});
 
+	var Clients_Accounts_Edit_Users = Vue.extend({
+		template: '#edit-Clients-Users',
+		data: function () {
+			return {
+				selectOptions: {
+					crew_clients: [],
+				},
+				post: {
+					id: Number(this.$route.params.client_id),
+					type: 0,
+					identification_type: 0,
+					identification_number: '',
+					social_reason: '',
+					tradename: '',
+					society_type: 0,
+					department: 0,
+					city: 0,
+					address: '',
+					geo_address: '',
+					legal_representative: 0,
+					contact_principal: 0,
+					contact_alternative: 0,
+					enable_audit: 0,
+				},
+				crew_clients: [],
+				redicated_clients: [],
+				auditors_clients: [],
+				accounts_clients: [],
+				post_crew_clients: {
+					client: this.$route.params.client_id,
+					contact: 0,
+					type_contact: 0,
+				},
+				post_redicated_clients: {
+					client: this.$route.params.client_id,
+					consecutive: '',
+					name: '',
+					object: '',
+					description_service: '',
+					date_start: '',
+					date_end: '',
+					additional_notes: '',
+				},
+				post_auditors_clients: {
+					contact: 0,
+					client: this.$route.params.client_id,
+				},
+				calc: {
+					subService: 0,
+					subTotalAttributes: 0,
+				},
+				post_account: {
+					client: Number(this.$route.params.client_id),
+					name: '',
+					contact: 0,
+					address: '',
+					address_invoices: '',
+				},
+				posts: [],
+				searchKey: ''
+			};
+		},
+		mounted: function () {
+			var self = this;
+			//self.loadSelects();
+			self.findClients();
+		},
+		computed: {
+			filteredposts: function () {
+			  return this.posts.filter(function (post) {
+				return this.searchKey=='' || post.social_reason.indexOf(this.searchKey) !== -1;
+			  },this);
+			}
+		},
+		methods: {
+			findClients: function (){
+				var self = this;
+				console.log('client,eq,' + self.$route.params.client_id);
+				
+				self.posts = [];
+				apiMV.get('/users_clients', {
+					params: {
+						filter: [
+							'client,eq,' + self.$route.params.client_id
+						],
+						join: [
+							'users',
+							'permissions',
+						]
+					}
+				}).then(function (response) {
+					console.log(response);
+					self.posts = response.data.records;
+					$(document).ready(function() { $('#dataTable').DataTable(); });
+				}).catch(function (error) {
+					$.notify(error.response.data.code + error.response.data.message, "error");
+				});
+			},
+			createNewUser: function(){			
+				var self = this;
+				
+				console.log(self.post_account);
+				
+				apiMV.post('/accounts_clients', self.post_account).then(function (response) {
+					post.id = response.data;	
+					router.push('//' + self.$route.params.client_id + '/Accounts/Edit');
+				}).catch(function (error) {
+					$.notify(error.response.data.code + error.response.data.message, "error");
+				});
+				
+			},
+			zfill: function(number, width) {
+				var numberOutput = Math.abs(number); /* Valor absoluto del número */
+				var length = number.toString().length; /* Largo del número */ 
+				var zero = "0"; /* String de cero */  
+				
+				if (width <= length) {
+					if (number < 0) {
+						 return ("-" + numberOutput.toString()); 
+					} else {
+						 return numberOutput.toString(); 
+					}
+				} else {
+					if (number < 0) {
+						return ("-" + (zero.repeat(width - length)) + numberOutput.toString()); 
+					} else {
+						return ((zero.repeat(width - length)) + numberOutput.toString()); 
+					}
+				}
+			},
+			formatMoney: function(n, c, d, t){
+				var c = isNaN(c = Math.abs(c)) ? 2 : c,
+					d = d == undefined ? "." : d,
+					t = t == undefined ? "," : t,
+					s = n < 0 ? "-" : "",
+					i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+					j = (j = i.length) > 3 ? j % 3 : 0;
+
+				return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+			},
+			loadSelects: function(){
+				var self = this;
+				var idClient = self.$route.params.client_id;
+				
+				apiMV.get('/crew_clients', {
+					params: {
+						filter: 'client,eq,' + idClient,
+						join: [
+							'contacts',
+							'types_contacts',
+						],
+					}
+				}).then(function (response) {
+					self.selectOptions.crew_clients = response.data.records;
+					
+				}).catch(function (error) {
+					$.notify(error.response.data.code + error.response.data.message, "error");
+				});
+				
+			},
+			includeRedicatedClient: function(){
+				var self = this;
+				
+				apiMV.post('/redicated_clients', self.post_redicated_clients).then(function (response) {
+					// post.id = response.data;
+					$("#includeRedicatedClient-Fast").hide();
+					self.findClients();
+					self.post_redicated_clients.consecutive = '';
+					self.post_redicated_clients.name = '';
+					self.post_redicated_clients.object = '';
+					self.post_redicated_clients.description_service = '';
+					self.post_redicated_clients.date_start = '';
+					self.post_redicated_clients.date_end = '';
+					self.post_redicated_clients.additional_notes = '';
+				}).catch(function (error) {
+					$.notify(error.response.data.code + error.response.data.message, "error");
+					$.notify(error.response.data.code + error.response.data.message, "error");
+				});
+			},
+		}
+	});
 
 	var router = new VueRouter({routes:[
 		{ path: '/', component: Clients_List, name: 'Clients-List'},
@@ -4229,11 +4451,12 @@
 		{ path: '/Edit/:client_id/Accounts/:account_id/Info', component: Clients_Accounts_Edit_Info, name: 'Clients-Accounts-Edit-Info'},
 		{ path: '/Edit/:client_id/Accounts/:account_id/Invoices', component: Clients_Accounts_Edit_Invoices, name: 'Clients-Accounts-Edit-Invoices'},
 		{ path: '/Edit/:client_id/Accounts/:account_id/Requests', component: Clients_Accounts_Edit_Requests, name: 'Clients-Accounts-Edit-Requests'},
+		{ path: '/Edit/:client_id/Users', component: Clients_Accounts_Edit_Users, name: 'Clients-Users-Edit'},
 		
 		{ path: '/Add', component: Clients_Add, name: 'Clients-Add'},
 		{ path: '/Edit/:client_id', component: Clients_Info_Edit, name: 'Clients-Info'},
 		{ path: '/Edit/:client_id/Contacts', component: Clients_Contacts_Edit, name: 'Clients-Contacts-Edit'},
-		{ path: '/Edit/:client_id/Contracts', component: Clients_Contracts_Edit, name: 'Clients-Contracts-Edit'},
+		{ path: '/Edit/:client_id/Redicateds', component: Clients_Redicateds_Edit, name: 'Clients-Redicateds-Edit'},
 		{ path: '/Edit/:client_id/Auditors', component: Clients_Auditors_Edit, name: 'Clients-Auditors-Edit'},
 		{ path: '/Edit/:client_id/Invoices', component: Clients_Invoices_Edit, name: 'Clients-Invoices-Edit'},
 		{ path: '/Edit/:client_id/Quotations', component: Clients_Quotations_Edit, name: 'Clients-Quotations-Edit'},
@@ -4323,7 +4546,6 @@
 					}).catch(function (error) {
 						$.notify(error.response.data.code + error.response.data.message, "error");
 					});
-					
 			},
 		},
 	}).$mount('#app');

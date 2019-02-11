@@ -10,7 +10,7 @@
 		</div>
 	</div>
 </div>
-<!-- // ------------ CLIENTES - INICIO -------------------------------------  -->
+
 <template id="page-Clients">
 	<div>
 		<div class="card mb-3">
@@ -63,80 +63,92 @@
 
 <template id="add-Clients">
 	<div>
-		<h2>CLIENTES - Crear</h2>
-		<form v-on:submit="createClient">
-			<div class="form-group col-md-4">
-				<label for="add-content">TIPO DE CLIENTE</label>
-				<select class="form-control" v-model="post.type">
-					<option v-for="item in selectOptions.types_clients" :value="item.id">{{ item.name }}</option>
-				</select>
+		<div class="card mb-3">
+			<div class="card-header">
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link>  
+				 Cuentas
 			</div>
-			<div class="form-group col-md-4">
-				<label for="add-content">TIPO DE IDENTIFICACION</label>
-				<select class="form-control" v-model="post.identification_type">
-					<option v-for="item in selectOptions.types_identifications" :value="item.id">{{ item.name }}</option>
-				</select>
+			<div class="card-body">				
+				<form v-on:submit="createClient" class="row">
+					<div class="form-group col-md-4">
+						<label for="add-content">TIPO DE CLIENTE</label>
+						<select class="form-control search-select2-basic-single-null" v-model="post.type">
+							<option v-for="item in selectOptions.types_clients" :value="item.id">{{ item.name }}</option>
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="add-content">TIPO DE IDENTIFICACION</label>
+						<select class="form-control search-select2-basic-single-null" v-model="post.identification_type">
+							<option v-for="item in selectOptions.types_identifications" :value="item.id">{{ item.name }}</option>
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="add-content"># DE IDENTIFICACION</label>
+						<input class="form-control" type="text" v-model="post.identification_number" />
+					</div>
+					<div class="form-group col-md-4">
+						<label for="add-content">RASON SOCIAL</label>
+						<input class="form-control" type="text" v-model="post.social_reason" />
+					</div>
+					<div class="form-group col-md-4">
+						<label for="add-content">NOMBRE COMERCIAL</label>
+						<input class="form-control" type="text" v-model="post.tradename" />
+					</div>
+					<div class="form-group col-md-4">
+						<label for="add-content">TIPO DE SOCIEDAD</label>
+						<select class="form-control search-select2-basic-single-null" v-model="post.society_type">
+							<option v-for="item in selectOptions.types_societys" :value="item.id">{{ item.name }}</option>
+						</select>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="add-content">DEPARTAMENTO</label>
+						<select class="form-control search-select2-basic-single-null" v-model="post.department" @change="loadCitys">
+							<option v-for="item in selectOptions.geo_departments" :value="item.id">{{ item.name }}</option>
+						</select>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="add-content">CIUDAD</label>
+						<select class="form-control search-select2-basic-single-null" v-model="post.city">
+							<option v-for="item in selectOptions.geo_citys" :value="item.id">{{ item.name }}</option>
+						</select>
+					</div>
+					<div class="form-group col-md-8">
+						<label for="add-content">DIRECCION DETALLADA</label>
+						<input class="form-control" type="text" v-model="post.address" />
+					</div>
+					<div class="form-group col-md-4">
+						<label for="add-content">DIRECCION NORMALIZADA</label>
+						<input class="form-control" type="text" v-model="post.geo_address" />
+					</div>
+					<div class="form-group col-md-4">
+						<label for="add-content">REPRESENTANTE LEGAL</label>
+						<select class="form-control search-select2-basic-single-null" v-model="post.legal_representative">
+							<option v-for="item in selectOptions.contacts" :value="item.id">{{ item.identification_number }} - {{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }} </option>
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="add-content">CONTACTO PRINCIPAL</label>
+						<select class="form-control search-select2-basic-single-null" v-model="post.contact_principal">
+							<option v-for="item in selectOptions.contacts" :value="item.id">{{ item.identification_number }} - {{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }} </option>
+						</select>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="add-content">HABILITAR INTERVENTORIA</label>
+						<select class="form-control search-select2-basic-single-null" v-model="post.enable_audit">
+							<option value="0">NO HABILITADA</option>
+							<option value="1">HABILITADA</option>
+						</select>
+					</div>
+					<button type="submit" class="btn btn-primary">Crear</button>
+				</form>
+
 			</div>
-			<div class="form-group col-md-4">
-				<label for="add-content"># DE IDENTIFICACION</label>
-				<input class="form-control" type="text" v-model="post.identification_number" />
-			</div>
-			<div class="form-group col-md-4">
-				<label for="add-content">RASON SOCIAL</label>
-				<input class="form-control" type="text" v-model="post.social_reason" />
-			</div>
-			<div class="form-group col-md-4">
-				<label for="add-content">NOMBRE COMERCIAL</label>
-				<input class="form-control" type="text" v-model="post.tradename" />
-			</div>
-			<div class="form-group col-md-4">
-				<label for="add-content">TIPO DE SOCIEDAD</label>
-				<select class="form-control" v-model="post.society_type">
-					<option v-for="item in selectOptions.types_societys" :value="item.id">{{ item.name }}</option>
-				</select>
-			</div>
-			<div class="form-group col-md-6">
-				<label for="add-content">DEPARTAMENTO</label>
-				<select class="form-control" v-model="post.department" @change="loadCitys">
-					<option v-for="item in selectOptions.geo_departments" :value="item.id">{{ item.name }}</option>
-				</select>
-			</div>
-			<div class="form-group col-md-6">
-				<label for="add-content">CIUDAD</label>
-				<select class="form-control" v-model="post.city">
-					<option v-for="item in selectOptions.geo_citys" :value="item.id">{{ item.name }}</option>
-				</select>
-			</div>
-			<div class="form-group col-md-8">
-				<label for="add-content">DIRECCION DETALLADA</label>
-				<input class="form-control" type="text" v-model="post.address" />
-			</div>
-			<div class="form-group col-md-4">
-				<label for="add-content">DIRECCION NORMALIZADA</label>
-				<input class="form-control" type="text" v-model="post.geo_address" />
-			</div>
-			<div class="form-group col-md-4">
-				<label for="add-content">REPRESENTANTE LEGAL</label>
-				<select class="form-control" v-model="post.legal_representative">
-					<option v-for="item in selectOptions.contacts" :value="item.id">{{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }} </option>
-				</select>
-			</div>
-			<div class="form-group col-md-4">
-				<label for="add-content">CONTACTO PRINCIPAL</label>
-				<select class="form-control" v-model="post.contact_principal">
-					<option v-for="item in selectOptions.contacts" :value="item.id">{{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }} </option>
-				</select>
-			</div>
-			<div class="form-group col-md-4">
-				<label for="add-content">HABILITAR INTERVENTORIA</label>
-				<select class="form-control" v-model="post.enable_audit">
-					<option value="0">NO HABILITADA</option>
-					<option value="1">HABILITADA</option>
-				</select>
-			</div>
-			<button type="submit" class="btn btn-primary">Crear</button>
-			<router-link class="btn btn-primary" v-bind:to="{ name: 'Clients-List' }">Regresar</router-link>
-		</form>
+			<div class="card-footer small text-muted"></div>
+		</div>
 	</div>
 </template>
 
@@ -155,7 +167,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -185,6 +197,11 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contratos
 					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Usuarios
+					</router-link>  
 				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
@@ -195,13 +212,13 @@
 				<form v-on:submit="updateClient" class="row">
 					<div class="form-group col-sm-4">
 						<label for="add-content">TIPO DE CLIENTE</label>
-						<select class="form-control" v-model="post.type">
+						<select class="form-control search-select2-basic-single-null" v-model="post.type">
 							<option v-for="item in selectOptions.types_clients" :value="item.id">{{ item.name }}</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-4">
 						<label for="add-content">TIPO DE IDENTIFICACION</label>
-						<select class="form-control" v-model="post.identification_type">
+						<select class="form-control search-select2-basic-single-null" v-model="post.identification_type">
 							<option v-for="item in selectOptions.types_identifications" :value="item.id">{{ item.name }}</option>
 						</select>
 					</div>
@@ -219,19 +236,19 @@
 					</div>
 					<div class="form-group col-sm-4">
 						<label for="add-content">TIPO DE SOCIEDAD</label>
-						<select class="form-control" v-model="post.society_type">
+						<select class="form-control search-select2-basic-single-null" v-model="post.society_type">
 							<option v-for="item in selectOptions.types_societys" :value="item.id">{{ item.name }}</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-6">
 						<label for="add-content">DEPARTAMENTO</label>
-						<select class="form-control" v-model="post.department" @change="loadCitys">
+						<select class="form-control search-select2-basic-single-null" v-model="post.department" @change="loadCitys">
 							<option v-for="item in selectOptions.geo_departments" :value="item.id">{{ item.name }}</option>
 						</select>
 					</div>
 					<div class="form-group col-sm-6">
 						<label for="add-content">CIUDAD</label>
-						<select class="form-control" v-model="post.city">
+						<select class="form-control search-select2-basic-single-null" v-model="post.city">
 							<option v-for="item in selectOptions.geo_citys" :value="item.id">{{ item.name }}</option>
 						</select>
 					</div>
@@ -245,19 +262,19 @@
 					</div>
 					<div class="form-group col-sm-4">
 						<label for="add-content">REPRESENTANTE LEGAL</label>
-						<select class="form-control" v-model="post.legal_representative">
+						<select class="form-control search-select2-basic-single-null" v-model="post.legal_representative">
 							<option v-for="item in selectOptions.contacts" :value="item.id">{{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }} </option>
 						</select>
 					</div>
 					<div class="form-group col-sm-4">
 						<label for="add-content">CONTACTO PRINCIPAL</label>
-						<select class="form-control" v-model="post.contact_principal">
+						<select class="form-control search-select2-basic-single-null" v-model="post.contact_principal">
 							<option v-for="item in selectOptions.contacts" :value="item.id">{{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }} </option>
 						</select>
 					</div>
 					<div class="form-group col-sm-4">
 						<label for="add-content">HABILITAR INTERVENTORIA</label>
-						<select class="form-control" v-model="post.enable_audit">
+						<select class="form-control search-select2-basic-single-null" v-model="post.enable_audit">
 							<option value="0">NO HABILITADA</option>
 							<option value="1">HABILITADA</option>
 						</select>
@@ -285,7 +302,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -315,6 +332,11 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contratos
 					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Usuarios
+					</router-link>  
 				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
@@ -322,8 +344,8 @@
 				</router-link> 
 			</div>
 			<div class="card-body">
-				<table class="table  table-responsive">
 					<thead>
+				<table class="table table-bordered">
 						<tr>
 							<td>ID</td>
 							<td>Nombre Completo</td>
@@ -346,7 +368,27 @@
 				</table>
 			</div>
 			<div class="card-footer small text-muted">
-				<div class="form-group col-sm-12 text-right">
+				<div >
+					<hr>
+				</div>
+				<div class="card-body" id="includeContactClient-Fast">
+					<form v-on:submit="includeContactClient" class="row"> 
+						<div class="form-group col-md-6">
+							<label for="add-content">CONTACTO</label>
+							<select class="form-control search-select2-basic-single-null" v-model="post_crew_clients.contact">
+								<option v-for="item in selectOptions.contacts" :value="item.id">{{ item.identification_number }} - {{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }} </option>
+							</select>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="edit-content">PARENTESCO</label>
+							<select class="form-control search-select2-basic-single-null" v-model="post_crew_clients.type_contact">
+								<option v-for="item in selectOptions.types_contacts" :value="item.id">{{ item.name }}</option>
+							</select>
+						</div>
+						<button type="submit" class="btn btn-primary col-md-12">Agregar</button>
+					</form>
+				</div>
+				<div class="text-right">
 					<div class="actions">
 						<button class="btn btn-primary" onclick="javascript: $('#includeContactClient-Fast').show();">
 							<span class="fa fa-plus"></span>
@@ -354,30 +396,12 @@
 						</button>
 					</div>
 				</div>
-				<div class="col-md-12" id="includeContactClient-Fast">
-					<form class="row" v-on:submit="includeContactClient"> 
-						<div class="form-group col-md-6">
-							<label for="add-content">CONTACTO</label>
-							<select class="form-control" v-model="post_crew_clients.contact">
-								<option v-for="item in selectOptions.contacts" :value="item.id">{{ item.identification_number }} - {{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }}</option>
-							</select>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="edit-content">PARENTESCO</label>
-							<select class="form-control" v-model="post_crew_clients.type_contact">
-								<option v-for="item in selectOptions.types_contacts" :value="item.id">{{ item.name }}</option>
-							</select>
-						</div>
-						<button type="submit" class="btn btn-primary col-md-12">Agregar</button>
-					</form>
-					<hr>
-				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
-<template id="edit-Clients-Contracts">
+<template id="edit-Clients-Redicateds">
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
@@ -392,7 +416,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -422,6 +446,11 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contratos
 					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Usuarios
+					</router-link>  
 				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
@@ -429,7 +458,7 @@
 				</router-link> 
 			</div>
 			<div class="card-body">
-				<table class="table  table-responsive">
+				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
 							<th>ID</th>
@@ -524,7 +553,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -554,6 +583,11 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contratos
 					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Usuarios
+					</router-link>  
 				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
@@ -561,7 +595,7 @@
 				</router-link> 
 			</div>
 			<div class="card-body">
-				<table class="table  table-responsive">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<td>ID</td>
@@ -596,7 +630,7 @@
 					<form class="row" v-on:submit="includeAuditorClient"> 
 						<div class="form-group col-md-12">
 							<label for="add-content">CONTACTO</label>
-							<select class="form-control" v-model="post_auditors_clients.contact">
+							<select class="form-control search-select2-basic-single-null" v-model="post_auditors_clients.contact">
 								<option v-for="item in selectOptions.contacts" :value="item.id">{{ item.identification_number }} - {{ item.first_name }} {{ item.second_name }} {{ item.surname }} {{ item.second_surname }}</option>
 							</select>
 						</div>
@@ -624,7 +658,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -654,6 +688,11 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contratos
 					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Usuarios
+					</router-link>  
 				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
 					<span class="fa fa-window-close"></span>
 					<!-- <span class="badge badge-default">Cerrar </span> -->
@@ -682,7 +721,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -711,6 +750,11 @@
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contratos
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Usuarios
 					</router-link>  
 				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
 					<span class="fa fa-window-close"></span>
@@ -769,7 +813,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -798,6 +842,11 @@
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contratos
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Usuarios
 					</router-link>  
 				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
 					<span class="fa fa-window-close"></span>
@@ -883,6 +932,101 @@
 						</td> -->
 					</tr>
 				</table>
+			</div>
+			<div class="card-footer small text-muted"></div>
+		</div>
+	</div>
+</template>
+
+<template id="edit-Clients-Users">
+	<div>
+		<div class="card mb-3">
+			<div class="card-header">
+				Cuentas
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Infomacion Basica
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contactos
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Radicados
+					</router-link>  
+					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Interventores
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Solicitudes
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Facturas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Propuestas Aprobadas
+					</router-link>  
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Contratos
+					</router-link>  
+					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
+						<i class="fas fa-user-circle"></i>
+						<!-- <span class="badge badge-default">Cerrar </span> -->
+						Usuarios
+					</router-link>  
+				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
+					<span class="fa fa-window-close"></span>
+					<!-- <span class="badge badge-default">Cerrar </span> -->
+					Cerrar
+				</router-link> 
+			</div>
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>USUARIO</th>
+								<th>NOMBRES Y APELLIDOS</th>
+								<th>PERFIL</th>
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr v-if="posts===null">
+								<td colspan="4">Loading...</td>
+							</tr>
+							<tr v-else v-for="post in filteredposts">
+								<td>{{ post.id }}</td>
+								<td>{{ post.user.username }}</td>
+								<td>{{ post.user.names }} {{ post.user.surname }} {{ post.user.second_surname }}</td>
+								<td>{{ post.permissions.name }}</td>
+								<td>
+									<!-- 
+									{{ post }}
+									<router-link class="btn btn-info btn-md" v-bind:to="{name: 'Clients-View', params: { client_id: post.id }}"><i class="fas fa-eye"></i> </router-link>
+									<router-link class="btn btn-warning btn-md" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}"><i class="fas fa-pencil-alt"></i> </router-link>
+									<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'Clients-Delete', params: { client_id: post.id }}"><i class="fa fa-trash"></i> </router-link>
+									-->
+								</td> 
+								
+							</tr>
+						</tbody>
+					</table>
 			</div>
 			<div class="card-footer small text-muted"></div>
 		</div>
@@ -1029,9 +1173,7 @@
 		</div>
 	</div>
 </template>
-<!-- // ------------ CLIENTES - FIN -------------------------------------  -->
-
-<!-- // ------------ SERVICIO CLIENTE - INICIO ------------ // -->		
+	
 <template id="add-AttributesServicesClients">
 	<div>
 		<div class="card mb-3">
@@ -1046,7 +1188,7 @@
 				<form v-on:submit="createAttributesServicesClients">
 					<div class="form-group">
 						<label for="add-content">ATRIBUTO</label>
-						<select class="form-control" v-model="post.attribute">
+						<select class="form-control search-select2-basic-single-null" v-model="post.attribute">
 							<option v-for="item in selectOptions.attributes" :value="item.id">{{ item.id }} - {{ item.name }} - {{ formatMoney(item.price) }} </option>
 						</select>
 					</div>
@@ -1080,7 +1222,7 @@
 				<form v-on:submit="createServicesClients">
 					<div class="form-group">
 						<label for="add-content">SERVICIO</label>
-						<select class="form-control" v-model="post.service">
+						<select class="form-control search-select2-basic-single-null" v-model="post.service">
 							<option v-for="item in selectOptions.services" :value="item.id">{{ item.type_medition.code }} - {{ item.name }} - {{ formatMoney(item.price) }} </option>
 						</select>
 					</div>
@@ -1090,7 +1232,7 @@
 					</div>
 					<div class="form-group">
 						<label for="add-content">FRECUENCIA</label>
-						<select class="form-control" v-model="post.repeat">
+						<select class="form-control search-select2-basic-single-null" v-model="post.repeat">
 							<option v-for="item in selectOptions.types_repeats_services_clients" :value="item.id">{{ item.code }} - {{ item.name }} </option>
 						</select>
 					</div>
@@ -1109,7 +1251,6 @@
 		</div>
 	</div>
 </template>
-<!-- // ------------ SERVICIO CLIENTE - FIN ------------ // -->
 
 <template id="view-Clients">
 	<div>
@@ -1153,7 +1294,7 @@
 				</router-link> 
 			</div>
 			<div class="card-body">
-				<table class="table  table-responsive">
+				<table class="table table-bordered">
 					<tr>
 						<td>ID INTERNO</td>
 						<td>{{ post.id }}</td>
@@ -1161,7 +1302,7 @@
 					<tr>
 						<td>TIPO DE CLIENTE</td>
 						<td>
-							<table class="table  table-responsive">
+							<table class="table table-bordered">
 								<tr>
 									<td>ID INTERNO</td>
 									<td>{{ post.type.id }}</td>
@@ -1176,7 +1317,7 @@
 					<tr>
 						<td>TIPO DE IDENTIFICACION</td>
 						<td>
-							<table class="table  table-responsive">
+							<table class="table table-bordered">
 								<tr>
 									<td>ID INTERNO</td>
 									<td>{{ post.identification_type.id }}</td>
@@ -1203,7 +1344,7 @@
 					<tr>
 						<td>TIPO DE SOCIEDAD</td>
 						<td>
-							<table class="table  table-responsive">
+							<table class="table table-bordered">
 								<tr>
 									<td>ID INTERNO</td>
 									<td>{{ post.society_type.id }}</td>
@@ -1218,7 +1359,7 @@
 					<tr>
 						<td>DEPARTAMENTO</td>
 						<td>
-							<table class="table  table-responsive">
+							<table class="table table-bordered">
 								<tr>
 									<td>ID INTERNO</td>
 									<td>{{ post.department.id }}</td>
@@ -1233,7 +1374,7 @@
 					<tr>
 						<td>CIUDAD</td>
 						<td>
-							<table class="table  table-responsive">
+							<table class="table table-bordered">
 								<tr>
 									<td>ID INTERNO</td>
 									<td>{{ post.city.id }}</td>
@@ -1256,7 +1397,7 @@
 					<tr>
 						<td>REPRESENTANTE LEGAL</td>
 						<td>
-							<table class="table  table-responsive">
+							<table class="table table-bordered">
 								<tr>
 									<td>NOMBRE COMPLETO</td>
 									<td>{{ post.legal_representative.first_name }} {{ post.legal_representative.second_name }} {{ post.legal_representative.surname }} {{ post.legal_representative.second_surname }}</td>
@@ -1279,7 +1420,7 @@
 					<tr>
 						<td>CONTACTO PRINCIPAL</td>
 						<td>
-							<table class="table  table-responsive">
+							<table class="table table-bordered">
 								<tr>
 									<td>NOMBRE COMPLETO</td>
 									<td>{{ post.contact_principal.first_name }} {{ post.contact_principal.second_name }} {{ post.contact_principal.surname }} {{ post.contact_principal.second_surname }}</td>
@@ -1353,7 +1494,7 @@
 				</router-link> 
 			</div>
 			<div class="card-body">
-				<table class="table  table-responsive">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<td>ID</td>
@@ -1417,7 +1558,7 @@
 				</router-link> 
 			</div>
 			<div class="card-body">
-				<table class="table  table-responsive">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<td>ID</td>
@@ -1485,7 +1626,7 @@
 				</router-link> 
 			</div>
 			<div class="card-body">
-				<table class="table  table-responsive">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<td>ID</td>
@@ -1553,7 +1694,7 @@
 				</router-link> 
 			</div>
 			<div class="card-body">
-				<table class="table  table-responsive">
+				<table class="table table-bordered">
 					<thead>
 						<tr>
 							<td>ID</td>
@@ -1574,7 +1715,7 @@
 							<td>{{ item.date_start }}</td>
 							<td>{{ item.date_end }}</td>
 							<td>
-								<table class="table  table-responsive">
+								<table class="table table-bordered">
 									<tr>
 										<td>ID</td>
 										<td>ATRIBUTO</td>
@@ -1646,7 +1787,6 @@
 	</div>		  
 </template>
 
-
 <template id="edit-Clients-Accounts">
 	<div>
 		<div class="card mb-3">
@@ -1662,7 +1802,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -1754,7 +1894,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -1833,7 +1973,7 @@
 										</div>
 										<div class="form-group col-md-6">
 											<label for="add-content">PERSONA DE CONTACTO</label>
-											<select class="form-control" v-model="account.contact">
+											<select class="form-control search-select2-basic-single-null" v-model="account.contact">
 												<option v-for="item in selectOptions.crew_clients" :value="item.contact.id">{{ item.contact.identification_number }} - {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.type_contact.name }}</option>
 											</select>
 										</div>
@@ -1880,7 +2020,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -2054,7 +2194,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -2226,7 +2366,7 @@
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Contactos
 					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contracts-Edit', params: { client_id: post.id }}">
+					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
 						<i class="fas fa-user-circle"></i>
 						<!-- <span class="badge badge-default">Cerrar </span> -->
 						Radicados
@@ -2279,7 +2419,7 @@
 							</div>
 							<div class="form-group col-md-6">
 								<label for="add-content">PERSONA DE CONTACTO</label>
-								<select class="form-control" v-model="post_account.contact">
+								<select class="form-control search-select2-basic-single-null" v-model="post_account.contact">
 									<option v-for="item in selectOptions.crew_clients" :value="item.contact.id">{{ item.contact.identification_number }} - {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.type_contact.name }}</option>
 								</select>
 							</div>

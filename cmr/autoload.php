@@ -11,8 +11,99 @@ $site = $session->Route;
 if($site->module == 'media' && $site->section == 'images' && isset($site->id))
 {
 	$site->id = (int) $site->id;
-	$picture = new Picture($site);
+	$picture = new Picture();
+	$picture->load_by_id($site->id);
+
+	$picture->data = $picture->data;
+	$pictureData = @explode('data:', $picture->data);
 	
+	$Base64Img = '';
+	if(isset($pictureData[1])){
+		$Base64Img = new stdClass();
+		$Base64Img->type = "image\/none";
+		$Base64Img->data = "";
+		
+		$Base64ImgTemp = @explode(';base64,', $pictureData[1]);
+		
+		if(isset($Base64ImgTemp[0]) && isset($Base64ImgTemp[1]))
+		{
+			$Base64Img->type = ($Base64ImgTemp[0]);
+			$Base64Img->data = ($Base64ImgTemp[1]);
+			
+			# echo json_encode($Base64Img);
+			#echo "<img src=\"{$picture->data}\" style=\"/* height: calc(100vh); */ width: calc(100vw);\" />";
+			
+			$data = $Base64Img->data;
+			$data = base64_decode($data);
+			$im = imagecreatefromstring($data);
+			if ($im !== false) {
+				header('Content-Type: image/png');
+				imagepng($im);
+				imagedestroy($im);
+			}
+			else {
+				echo 'Ocurrió un error.';
+			}
+			
+			/*
+			
+			$imageData = ((base64_decode($Base64Img->data)));
+			$source = imagecreatefromstring($imageData);
+			
+			switch($Base64Img->type)
+			{
+				case 'gif':
+					echo 'gif';
+					break;
+				case 'png':
+					echo 'png';
+					break;
+				case 'jpg' || 'jpeg':
+						header("Content-type: image/jpeg");
+						#echo 'jpg';
+						
+						$source = imagecreatefromjpeg("data://image/jpeg;base64,".$Base64Img->data);
+						#imagedestroy($source);
+						#$source2 = imagejpeg(base64_decode($source));
+						#imagedestroy($source2);
+					break;
+				default:
+					break;
+			}*/
+			
+			
+			
+			
+			/*
+			if($Base64Img->type == 'gif'){
+				header("Content-type: image/gif");
+				//$source = imagecreatefromgif("data://image/gif;base64,".$Base64Img);
+				$source = imagegif($source);
+			}
+			else if($Base64Img->type == 'png'){
+				header("Content-type: image/png");
+				$source = imagecreatefrompng("data://image/".$TypeImg.";base64,".$Base64Img);
+				
+				imageAlphaBlending($source, true);
+				imageSaveAlpha($source, true);
+				$source = imagepng($source);
+			}
+			else if($Base64Img->type == 'jpg' || $Base64Img->type == 'jpeg'){
+				#$source = imagecreatefromjpeg("data://image/jpeg;base64:".$Base64Img);
+				header("Content-type: image/jpeg");
+			}
+			*/
+		}
+		else
+		{
+			exit('_docs/images/sorry-image-not-available.jpg');
+		}
+	}
+		
+		
+	
+	
+	exit('');
 	if($picture->id > 0)
 	{
 		$Base64Img = $picture->data;
@@ -30,7 +121,7 @@ if($site->module == 'media' && $site->section == 'images' && isset($site->id))
 		if(!isset($data['out_type'])){ $data['out_type'] = $TypeImg; }
 		elseif(isset($data['out_type']) && $data['out_type'] !== $TypeImg){ $data['out_type'] = $TypeImg; };
 		
-		$imageData = base64_decode($Base64Img);
+		$imageData = (base64_decode(utf8_decode($Base64Img)));
 		$source = imagecreatefromstring($imageData);
 		
 		if($data['out_type'] == 'gif'){

@@ -36,5 +36,8 @@ if(file_exists($pageActiveScripts)){
 <script src="<?php echo path_home; ?>js/notify.min.js"></script>
 
 
+<link href="<?php echo path_home; ?>cmr/includes/libs/select2/css/select2.min.css" rel="stylesheet" />
+<script src="<?php echo path_home; ?>cmr/includes/libs/select2/js/select2.min.js"></script>
 <script>
+// $(document).ready(function() { $('.search-select2-basic-single').select2(); });
 </script>
