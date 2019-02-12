@@ -35,11 +35,26 @@ if($site->module == 'media' && $site->section == 'images' && isset($site->id))
 			
 			$data = $Base64Img->data;
 			$data = base64_decode($data);
-			$im = imagecreatefromstring($data);
+			$im = ImageCreateFromString($data);
 			if ($im !== false) {
 				header('Content-Type: image/png');
-				imagepng($im);
-				imagedestroy($im);
+				
+				if(isset($site->fields['w']) && $site->fields['w'] == 'original'){
+					imagepng($im);
+					imagedestroy($im);
+				} else if(!isset($site->fields['thumb']) || $site->fields['thumb'] == false){
+					$height = true;
+					$width = 150;
+					if(isset($site->fields['w']) && $site->fields['w'] > 0){ $width = (int) $site->fields['w']; }
+					$height = $height === true ? (ImageSY($im) * $width / ImageSX($im)) : $height;
+					$output = ImageCreateTrueColor($width, $height);
+					ImageCopyResampled($output, $im, 0, 0, 0, 0, $width, $height, ImageSX($im), ImageSY($im));
+					ImageJPEG($output, $picture->name, 95);
+					imagepng($output);
+				} else{
+					imagepng($im);
+					imagedestroy($im);
+				}
 			}
 			else {
 				echo 'Ocurrió un error.';

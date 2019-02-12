@@ -142,6 +142,15 @@ $userInfo->load_by_username($username);
 												<p><?php echo "{$userInfo->mobile}"; ?></p>
 											</div>
 										</div>
+										
+										<div class="row">
+											<div class="col-md-2">
+												<label>Mis Empresas</label>
+											</div>
+											<div class="col-md-6">
+												<p><?php echo json_encode($userInfo->myBusiness); ?></p>
+											</div>
+										</div>
 									</div>
 									<div role="tabpanel" class="tab-pane fade" id="buzz">
 										<div class="row">

@@ -1,5 +1,8 @@
 <?php global $site; ?>
 <?php global $session; ?>
+<?php 
+	$site->id = base64_decode($site->id);
+?>
 <div id="home" class="banner" data-blast="bgColor">
 	<nav class="navbar fixed-top navbar-expand-lg navbar-light navbar-fixed-top">
 		<div class="container">
@@ -41,6 +44,9 @@
 	}
 		?>
 </div>
+<br>
+<br>
+<br>
 <?php
 if(isset($site->module) && $site->module == 'login' && isset($site->section) && $site->section == 'index' && $session->id == 0)
 {}

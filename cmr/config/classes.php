@@ -345,10 +345,16 @@ class Session extends User
 				FROM `users` 
 				LEFT JOIN `permissions` ON `permissions`.`id` = `users`.`permissions`
 				WHERE `users`.`username`=? AND `users`.`hash`=?');
+								
 				$stmt->execute([$this->Route->fields['inputNickLogin'],$this->Route->fields['inputPasswordLogin']]);
 				$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
 				if(isset($result[0])){
 					$resultOne = (object) $result[0];
+					
+					$myBusiness = $this->loadMyBusiness_by_userid($resultOne->id);
+					$resultOne->myBusiness = ($myBusiness->myBusiness);
+					$resultOne->myBusinessTotal = ($myBusiness->myBusinessTotal);
+					
 					$this->setData($resultOne);
 					$this->saveSession();
 				}
@@ -360,7 +366,6 @@ class Session extends User
 		$tempServ = new LogRoutes();
 		$this->server = $tempServ;
 	}
-	
 	
 	function getUserIP()
 	{
@@ -615,8 +620,8 @@ class User
 	   return "{$this->names} {$this->surname} {$this->second_surname}";
    }
 
-   function load_by_id($id)
-   {
+	function load_by_id($id)
+	{
 		$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
 		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		$stmt = $pdo->prepare('SELECT `users`.*, `permissions`.`data` as `permissions`, `pictures`.`data` as `avatar_data`
@@ -628,9 +633,31 @@ class User
 		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
 		if(isset($result[0])){
 			$resultOne = (object) $result[0];
+		
+				$myBusiness = $this->loadMyBusiness_by_userid($resultOne->id);
+				$resultOne->myBusiness = ($myBusiness->myBusiness);
+				$resultOne->myBusinessTotal = ($myBusiness->myBusinessTotal);
+
 			$this->setData($resultOne);
 		}
-   }
+	}
+	
+	function loadMyBusiness_by_userid($userid)
+	{
+			$pdo2 = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
+			$pdo2->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			#$pdo2->exec("SET CHARACTER SET utf8; SET COLLATION SET utf8_unicode_ci");
+			$stmt = $pdo2->prepare("SELECT `clients`.*, `permissions`.`name` as `permissions_name`, `permissions`.`data` as `permissions`
+				FROM `users_clients` 
+				LEFT JOIN `clients` ON `clients`.`id` = `users_clients`.`client`
+				LEFT JOIN `permissions` ON `permissions`.`id` = `users_clients`.`permissions`
+				WHERE `users_clients`.`user` IN ('{$userid}') LIMIT 1000");
+			$stmt->execute();
+			$r = new stdClass();
+			$r->myBusiness = ($stmt->fetchAll(PDO::FETCH_OBJ));
+			$r->myBusinessTotal = count($r->myBusiness);
+		return $r;
+	}
 
    function load_by_username($username)
    {
@@ -645,6 +672,10 @@ class User
 		$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
 		if(isset($result[0])){
 			$resultOne = (object) $result[0];
+		
+				$myBusiness = $this->loadMyBusiness_by_userid($resultOne->id);
+				$resultOne->myBusiness = ($myBusiness->myBusiness);
+				$resultOne->myBusinessTotal = ($myBusiness->myBusinessTotal);
 			$this->setData($resultOne);
 		}
    }
@@ -653,6 +684,15 @@ class User
    {
 		if(isset($data->permissions)){
 			$data->permissions = json_decode($data->permissions);
+		}else if(isset($data->myBusiness)){
+			$i=0;
+			foreach($data->myBusiness As $k=>$v)
+			{
+				if($k == 'permissions'){
+					$data->myBusiness[$i]->{$k} = json_decode($v);
+				}
+				$i++;
+			}
 		}
 		foreach($data as $k=>$v)
 		{
@@ -797,7 +837,6 @@ class Picture extends BaseClass
    }
 }
 
-
 # ----------------- PERMISSIONS -----------------
 class Permission extends BaseClass
 {
@@ -928,7 +967,6 @@ class Modules
 		return $retval;
 	}*/
 }
-
 
 # ----------------- ROUTES -----------------
 class Route_S extends BaseClass
@@ -1323,8 +1361,6 @@ class Settings
 	}
 	
 }
-
-
 
 
 # PASAR -----------------------

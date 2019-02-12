@@ -1,0 +1,12 @@
+RewriteEngine on
+
+# OPTION 1 COMPLETE
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+
+# OPTION 2 NOT /records/*
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/records/$1 [L,QSA]

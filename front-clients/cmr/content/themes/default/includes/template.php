@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+		<?php $site->getHeadGlobal(); ?>
 		<?php $session->getHeadTheme(); ?>
 </head>
 

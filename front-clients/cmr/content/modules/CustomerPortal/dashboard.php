@@ -1,184 +1,107 @@
 <?php global $site, $session; ?>
-<br>
-<br>
-<br>
-    <section class="wthree-row  w3-contact">
-        <div class="row  no-gutters align-items-center abbot-main">
-            <div class="col-lg-6 about-grid-agileits py-5" data-blast="bgColor">
-                <div class="about-grid">
-                    <div class="container">
-                        <div class="d-flex">
-                            <div class="mx-auto">
-                                <div class="title-section py-lg-5 pb-4">
-                                    <h4>Informacion</h4>
-                                    <h3 class="w3ls-title text-uppercase text-white">Básica</h3>
-                                </div>
-								<!-- 
-									<div class="wthree-list-grid d-flex flex-wrap">
-										<div class="wthree-list-icon">
-											<span class="fa fa-user-circle" aria-hidden="true"></span>
-										</div>
-										<div class="wthree-list-desc">
-											<h5>Nombres</h5>
-											<p>Consectetur adipiscing elit estibulum nibh urna.</p>
-										</div>
-									</div>
-									<div class="wthree-list-grid d-flex flex-wrap">
-										<div class="wthree-list-icon">
-											<span class="fa fa-money" aria-hidden="true"></span>
-										</div>
-										<div class="wthree-list-desc">
-											<h5>affordable</h5>
-											<p>Elit consectetur adipiscing estibulum nibh urna.</p>
-										</div>
-									</div>
-									<div class="wthree-list-grid d-flex flex-wrap">
-										<div class="wthree-list-icon">
-											<span class="fa fa-picture-o" aria-hidden="true"></span>
-										</div>
-										<div class="wthree-list-desc">
-											<h5>quality</h5>
-											<p>Consectetur adipiscing elit estibulum nibh urna.</p>
-										</div>
-									</div>
-								-->
-								
-								<div class="wthree-list-grid d-flex flex-wrap">
-									<div class="wthree-list-icon">
-										<span class="fa fa-user-circle" aria-hidden="true"></span>
-									</div>
-									<div class="wthree-list-desc">
-										<h5>IP Actual de Conexion</h5>
-										<p><?php echo ($session->user_ip); ?></p>
-									</div>
+<section class="wthree-row  w3-contact">
+	<div class="row  no-gutters align-items-center abbot-main">
+		<div class="col-lg-6 about-grid-agileits py-5" data-blast="bgColor">
+			<div class="about-grid">
+				<div class="container">
+					<div class="d-flex">
+						<div class="mx-auto">
+							<div class="title-section py-lg-5 pb-4">
+								<h4>Informacion</h4>
+								<h3 class="w3ls-title text-uppercase text-white">Básica</h3>
+							</div>
+							
+							<div class="wthree-list-grid d-flex flex-wrap">
+								<div class="wthree-list-icon">
+									<span class="fa fa-user-circle" aria-hidden="true"></span>
 								</div>
-								
-								<div class="wthree-list-grid d-flex flex-wrap">
-									<div class="wthree-list-icon">
-										<span class="fa fa-user-circle" aria-hidden="true"></span>
-									</div>
-									<div class="wthree-list-desc">
-										<h5>Usuario</h5>
-										<p><?php echo ($session->username); ?></p>
-									</div>
+								<div class="wthree-list-desc">
+									<h5>IP Actual de Conexion</h5>
+									<p><?php echo ($session->user_ip); ?></p>
 								</div>
-								
-								<div class="wthree-list-grid d-flex flex-wrap">
-									<div class="wthree-list-icon">
-										<span class="fa fa-user-circle" aria-hidden="true"></span>
-									</div>
-									<div class="wthree-list-desc">
-										<h5>Nombres y Apeliidos</h5>
-										<p>
-											<?php echo ($session->names); ?> <?php echo ($session->surname); ?> <?php echo ($session->second_surname); ?>
-										</p>
-									</div>
+							</div>
+							
+							<div class="wthree-list-grid d-flex flex-wrap">
+								<div class="wthree-list-icon">
+									<span class="fa fa-user-circle" aria-hidden="true"></span>
 								</div>
-								
-								<div class="wthree-list-grid d-flex flex-wrap">
-									<div class="wthree-list-icon">
-										<span class="fa fa-user-circle" aria-hidden="true"></span>
-									</div>
-									<div class="wthree-list-desc">
-										<h5>Correo Electronico</h5>
-										<p><?php echo ($session->mail); ?></p>
-									</div>
+								<div class="wthree-list-desc">
+									<h5>Usuario</h5>
+									<p><?php echo ($session->username); ?></p>
 								</div>
-								
-								<div class="wthree-list-grid d-flex flex-wrap">
-									<div class="wthree-list-icon">
-										<span class="fa fa-user-circle" aria-hidden="true"></span>
-									</div>
-									<div class="wthree-list-desc">
-										<h5>Teléfono</h5>
-										<p><?php echo ($session->phone); ?></p>
-									</div>
+							</div>
+							
+							<div class="wthree-list-grid d-flex flex-wrap">
+								<div class="wthree-list-icon">
+									<span class="fa fa-user-circle" aria-hidden="true"></span>
 								</div>
-								
-								<div class="wthree-list-grid d-flex flex-wrap">
-									<div class="wthree-list-icon">
-										<span class="fa fa-user-circle" aria-hidden="true"></span>
-									</div>
-									<div class="wthree-list-desc">
-										<h5>Móvil</h5>
-										<p><?php echo ($session->mobile); ?></p>
-									</div>
+								<div class="wthree-list-desc">
+									<h5>Nombres y Apeliidos</h5>
+									<p>
+										<?php echo ($session->names); ?> <?php echo ($session->surname); ?> <?php echo ($session->second_surname); ?>
+									</p>
 								</div>
-								
-								<div class="wthree-list-grid d-flex flex-wrap">
-									<div class="wthree-list-icon">
-										<span class="fa fa-user-circle" aria-hidden="true"></span>
-									</div>
-									<div class="wthree-list-desc">
-										<h5>Avatar</h5>
-										<p>
-											<br><img class="img-thumbnail" width="250px" src="/media/images/<?php echo ($session->avatar); ?>" />
-										</p>
-									</div>
+							</div>
+							
+							<div class="wthree-list-grid d-flex flex-wrap">
+								<div class="wthree-list-icon">
+									<span class="fa fa-user-circle" aria-hidden="true"></span>
 								</div>
-								
-								
-								<?php 									
-								/*
-								foreach($session As $UserItemK=>$UserItemV)
-									{
-										if($UserItemK !== 'server' || $UserItemK !== 'route' || $UserItemK !== 'routes2' || $UserItemK !== 'permissions' || $UserItemK !== 'hash'){	
-											?>
-											<div class="wthree-list-grid d-flex flex-wrap">
-												<div class="wthree-list-icon">
-													<span class="fa fa-phone" aria-hidden="true"></span>
-												</div>
-												<div class="wthree-list-desc">
-													<h5><?php echo "{$UserItemK}"; ?></h5>
-													<p>
-														<?php echo json_encode($UserItemV); ?>
-													</p>
-												</div>
-											</div>
-											<?php 
-										}
-									}
-								$mySession = new User($session);
-
-								foreach($mySession As $UserItemK=>$UserItemV)
-									{
-										if($UserItemK !== 'server' || $UserItemK !== 'route' || $UserItemK !== 'routes2' || $UserItemK !== 'permissions' || $UserItemK !== 'hash'){	
-											?>
-											<div class="wthree-list-grid d-flex flex-wrap">
-												<div class="wthree-list-icon">
-													<span class="fa fa-phone" aria-hidden="true"></span>
-												</div>
-												<div class="wthree-list-desc">
-													<h5><?php echo "{$UserItemK}"; ?></h5>
-													<p>
-														<?php echo json_encode($UserItemV); ?>
-													</p>
-												</div>
-											</div>
-											<?php 
-										}
-									}
-									
-								*/
-								?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6  py-5">
-                <div class="rgrid-agileits">
-                    <h4>Informacion <br> Usuario <br> 
-						<?php 
-							echo "# ".$session->id;
-						?>
-					</h4>
-                    <span class="about-line" data-blast="bgColor"></span>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- //about -->
+								<div class="wthree-list-desc">
+									<h5>Correo Electronico</h5>
+									<p><?php echo ($session->mail); ?></p>
+								</div>
+							</div>
+							
+							<div class="wthree-list-grid d-flex flex-wrap">
+								<div class="wthree-list-icon">
+									<span class="fa fa-user-circle" aria-hidden="true"></span>
+								</div>
+								<div class="wthree-list-desc">
+									<h5>Teléfono</h5>
+									<p><?php echo ($session->phone); ?></p>
+								</div>
+							</div>
+							
+							<div class="wthree-list-grid d-flex flex-wrap">
+								<div class="wthree-list-icon">
+									<span class="fa fa-user-circle" aria-hidden="true"></span>
+								</div>
+								<div class="wthree-list-desc">
+									<h5>Móvil</h5>
+									<p><?php echo ($session->mobile); ?></p>
+								</div>
+							</div>
+							
+							<div class="wthree-list-grid d-flex flex-wrap">
+								<div class="wthree-list-icon">
+									<span class="fa fa-user-circle" aria-hidden="true"></span>
+								</div>
+								<div class="wthree-list-desc">
+									<h5>Avatar</h5>
+									<p>
+										<br><img class="img-thumbnail" width="50px" src="/media/images/<?php echo ($session->avatar); ?>?w=50" />
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6  py-5">
+			<div class="rgrid-agileits">
+				<h4>Informacion <br> Usuario <br> 
+					<?php 
+						echo "# ".$session->id;
+					?>
+				</h4>
+				<span class="about-line" data-blast="bgColor"></span>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- //about -->
     
     <!-- services -->
     <div class="row  no-gutters align-items-center abbot-main flex-row-reverse" id="services">
@@ -189,22 +112,10 @@
                         <div class="mx-auto">
                             <div class="title-section py-lg-5 pb-4">
                                 <h4>Listado de: </h4>
-                                <h3 class="w3ls-title text-uppercase text-white">Empresas </h3>
+                                <h3 class="w3ls-title text-uppercase text-white">Empresas (<?php echo $session->myBusinessTotal; ?>) </h3>
                             </div>
 							<?php
-								$pdo = new PDO("mysql:host=".HOST_DB.";dbname=".NAME_DB, USER_DB, PASS_DB);
-								$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-								#$pdo->exec("SET CHARACTER SET utf8; SET COLLATION SET utf8_unicode_ci");
-								$stmt = $pdo->prepare("SELECT `clients`.*
-									FROM `users_clients` 
-									LEFT JOIN `clients` ON `clients`.`id` = `users_clients`.`client`
-									WHERE `users_clients`.`user` IN ('{$session->id}') LIMIT 1000");
-								$stmt->execute();
-								$result = ($stmt->fetchAll(PDO::FETCH_OBJ));
-								$resultTotal = count($result);
-								
-								
-								foreach($result As $item)
+								foreach($session->myBusiness As $item)
 								{
 									?>
 									<div class="wthree-list-grid d-flex flex-wrap">
@@ -215,11 +126,15 @@
 											<h5><?php echo $item->identification_number; ?> - <?php echo $item->social_reason; ?></h5>
 											<p></p>
 											<p><?php echo $item->tradename; ?></p>
+											<p>
+												<a class="btn btn-secondary" href="<?php echo path_homeClients; ?>/CustomerPortal/companies/#/<?php echo base64_encode($item->id); ?>">
+													Ingresar
+												</a>
+											</p>
 										</div>
 									</div>
 									<?php
 								}
-								
 							?>
                         </div>
                     </div>

@@ -1,18 +1,18 @@
 
     <!-- js -->
-    <script src="js/jquery-2.2.3.min.js"></script>
+    <script src="<?php echo path_homeClients; ?>js/jquery-2.2.3.min.js"></script>
     <!-- //js -->
     <!--  menu toggle -->
-    <script src="js/menu.js"></script>
+    <script src="<?php echo path_homeClients; ?>js/menu.js"></script>
     <!-- color switch -->
-    <script src="js/blast.min.js"></script>
+    <script src="<?php echo path_homeClients; ?>js/blast.min.js"></script>
     <!-- light box -->
-    <script src="js/lightbox-plus-jquery.min.js"></script>
+    <script src="<?php echo path_homeClients; ?>js/lightbox-plus-jquery.min.js"></script>
     <!-- Scrolling Nav JavaScript -->
-    <script src="js/scrolling-nav.js"></script>
+    <script src="<?php echo path_homeClients; ?>js/scrolling-nav.js"></script>
     <!-- start-smooth-scrolling -->
-    <script src="js/move-top.js"></script>
-    <script src="js/easing.js"></script>
+    <script src="<?php echo path_homeClients; ?>js/move-top.js"></script>
+    <script src="<?php echo path_homeClients; ?>js/easing.js"></script>
     <script>
         jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {
@@ -43,9 +43,24 @@
 
         });
     </script>
-    <script src="js/SmoothScroll.min.js"></script>
+    <script src="<?php echo path_homeClients; ?>js/SmoothScroll.min.js"></script>
     <!-- //smooth-scrolling-of-move-up -->
     <!-- Bootstrap core JavaScript
 ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/bootstrap.js"></script>
+    <script src="<?php echo path_homeClients; ?>js/bootstrap.js"></script>
+	
+	
+	
+<?php
+$site = new Route();
+$routes = $site->getRoutes();
+#echo json_encode($routes);
+
+$pageActiveScripts = "cmr/content/modules/{$site->module}/scripts/{$site->section}.php";
+if(file_exists($pageActiveScripts)){
+	include($pageActiveScripts);
+}else{
+	include("Scripts no encontrados");
+}
+?>
