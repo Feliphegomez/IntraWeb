@@ -21,5 +21,6 @@
 	<?php $session->getBodyTheme(); ?>
 	<?php require('cmr/content/themes/'.theme_active.'/includes/footer.php'); ?>
 	<?php $session->getModalsTheme(); ?>
+	<?php $site->getScriptsGlobal(); ?>
 	<?php $session->getScriptsTheme(); ?>
 	

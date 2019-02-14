@@ -1,6 +1,7 @@
 
     <!-- js -->
     <script src="<?php echo path_homeClients; ?>js/jquery-2.2.3.min.js"></script>
+	<script src="<?php echo path_home; ?>cmr/includes/libs/popper/popper.js"></script>
     <!-- //js -->
     <!--  menu toggle -->
     <script src="<?php echo path_homeClients; ?>js/menu.js"></script>
@@ -50,17 +51,13 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="<?php echo path_homeClients; ?>js/bootstrap.js"></script>
 	
-	
-	
-<?php
-$site = new Route();
-$routes = $site->getRoutes();
-#echo json_encode($routes);
 
-$pageActiveScripts = "cmr/content/modules/{$site->module}/scripts/{$site->section}.php";
-if(file_exists($pageActiveScripts)){
-	include($pageActiveScripts);
-}else{
-	include("Scripts no encontrados");
-}
-?>
+<script src="<?php echo path_home; ?>js/notify.min.js"></script>
+<script src="<?php echo path_home; ?>cmr/includes/libs/bootbox/bootbox.min.js"></script>
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip(); 
+});
+</script>
+
+	

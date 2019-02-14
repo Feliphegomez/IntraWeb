@@ -1,4 +1,3 @@
-
 <div>
     <section class="wthree-row" id="contact">
         <div class="container py-5">
@@ -11,25 +10,49 @@
 	</div>
 </div>
 
+<!-- // SIDEBAR -->
+<template id="Sidebar-Clients-Component">
+	<div>
+		<div class="list-group ">
+			<router-link class="list-group-item list-group-item-action" 
+			  v-bind:to="{name: 'Company-Info-View', params: { company_id: this.$route.params.company_id }}">
+				<i class="fa fa-home"></i> 
+				General
+			</router-link>
+			<router-link class="list-group-item list-group-item-action" 
+			  v-bind:to="{name: 'Company-Requests-List', params: { company_id: this.$route.params.company_id }}">
+				<i class="fa fa-home"></i> 
+				Solicitudes & Proyectos
+			</router-link>
+			<router-link class="list-group-item list-group-item-action" 
+			  v-bind:to="{name: 'Company-Invoices-List', params: { company_id: this.$route.params.company_id }}">
+				<i class="fa fa-home"></i> 
+				Facturas
+			</router-link>
+		 
+			<router-link v-if="$route.params.quotation_id != undefined" class="list-group-item list-group-item-action" 
+			  v-bind:to="{name: 'Company-Requests-View', params: { company_id: this.$route.params.company_id, request_id: this.$route.params.request_id }}">
+				<i class="fa fa-home"></i> 
+				Volver
+			</router-link>
+			
+			<a v-if="$route.params.quotation_id == undefined" href="<?php echo path_homeClients; ?>" class="list-group-item list-group-item-action">Volver</a>
+			
+		</div> 
+		<div class="container">
+			<h3>{{ company_id }}</h3>
+		</div>
+	</div>
+</template>
+<!-- SIDEBAR // -->
+
+<!-- INICIO -->
 <template id="page-Company-Info-View">
 	<div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3 ">
-					<div class="list-group ">
-						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Info-View', params: { company_id: this.$route.params.company_id }}">
-							<i class="fa fa-home"></i> 
-							Dashboard
-						</router-link>
-						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Requests-View', params: { company_id: this.$route.params.company_id }}">
-							<i class="fa fa-home"></i> 
-							Solicitudes & Proyectos
-						</router-link>
-					 
-						<a href="<?php echo path_homeClients; ?>" class="list-group-item list-group-item-action">Volver</a>
-					</div> 
+					<component-sidebar-clients></component-sidebar-clients>
 				</div>
 				<div class="col-md-9">
 					<div class="card">
@@ -120,29 +143,13 @@
 	</div>
 </template>
 	
-<template id="page-Company-Invoices-View">
+<template id="page-Company-Invoices-List">
 	<div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3 ">
 					<div class="list-group ">
-						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Info-View', params: { company_id: this.$route.params.company_id }}">
-							<i class="fa fa-home"></i> 
-							Dashboard
-						</router-link>
-						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Requests-View', params: { company_id: this.$route.params.company_id }}">
-							<i class="fa fa-home"></i> 
-							Solicitudes & Proyectos
-						</router-link>
-						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Invoices-View', params: { company_id: this.$route.params.company_id }}">
-							<i class="fa fa-home"></i> 
-							Facturas
-						</router-link>
-						
-						<a href="<?php echo path_homeClients; ?>" class="list-group-item list-group-item-action">Volver</a>
+						<component-sidebar-clients></component-sidebar-clients>
 					</div> 
 				</div>
 				<div class="col-md-9">
@@ -156,77 +163,9 @@
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<form>
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Tipo de Cliente</label>
-											<div class="col-8">
-												{{ post.type.name }}
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Tipo de Identificacion</label>
-											<div class="col-8">
-												{{ post.identification_type.name }}
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Numero de Identificacion</label>
-											<div class="col-8">
-												{{ post.identification_number }}
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Nombre Comercial</label>
-											<div class="col-8">
-												{{ post.social_reason }}
-											</div>
-										</div>										
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Nombre Comercial</label>
-											<div class="col-8">
-												{{ post.tradename }}
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Departamento</label>
-											<div class="col-8">
-												{{ post.department.name }}
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Ciudad</label>
-											<div class="col-8">
-												{{ post.city.name }}
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Direccion Principal</label>
-											<div class="col-8">
-												{{ post.address }}
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Representante Legal</label>
-											<div class="col-8">
-												Identificacion: {{ post.legal_representative.identification_number }}
-												<br>
-												Nombre Completo: {{ post.legal_representative.first_name }} {{ post.legal_representative.second_name }} {{ post.legal_representative.surname }}  {{ post.legal_representative.second_surname }} 
-											</div>
-										</div>
-										<div class="form-group row">
-											<label for="username" class="col-4 col-form-label">Contacto Principal</label>
-											<div class="col-8">
-												Identificacion: {{ post.contact_principal.identification_number }}
-												<br>
-												Nombre Completo: {{ post.contact_principal.first_name }} {{ post.contact_principal.second_name }} {{ post.contact_principal.surname }}  {{ post.contact_principal.second_surname }} 
-											</div>
-										</div>
-										
-										
-									</form>
+									
 								</div>
 							</div>
-							
 						</div>
 					</div>
 				</div>
@@ -234,30 +173,138 @@
 		</div>
 	</div>
 </template>
-	
-<template id="page-Company-Requests-View">
+
+<style scoped="page-Company-Requests-List">
+	* { margin: 0px; padding: 0px; }
+	body {
+		/* background: #ecf1f5; */
+		font:14px "Open Sans", sans-serif; 
+		text-align:center;
+	}
+
+	.tile{
+		width: 100%;
+		background:#fff;
+		border-radius:5px;
+		box-shadow:0px 2px 3px -1px rgba(151, 171, 187, 0.7);
+		float:left;
+		transform-style: preserve-3d;
+		margin: 10px 5px;
+
+	}
+
+	.header{
+		border-bottom:1px solid #ebeff2;
+		padding:19px 0;
+		text-align:center;
+		color:#59687f;
+		font-size:600;
+		font-size:19px;	
+		position:relative;
+	}
+
+	.banner-img {
+		padding: 5px 5px 0;
+	}
+
+	.banner-img img {
+		width: 100%;
+		border-radius: 5px;
+	}
+
+	.dates{
+		border:1px solid #ebeff2;
+		border-radius:5px;
+		padding:20px 0px;
+		margin:5px 5px;
+		font-size:16px;
+		color:#5aadef;
+		font-weight:600;	
+		overflow:auto;
+	}
+	.dates div{
+		float:left;
+		width:50%;
+		text-align:center;
+		position:relative;
+	}
+	.dates strong,
+	.stats strong{
+		display:block;
+		color:#adb8c2;
+		font-size:11px;
+		font-weight:700;
+	}
+	.dates span{
+		width:1px;
+		height:40px;
+		position:absolute;
+		right:0;
+		top:0;	
+		background:#ebeff2;
+	}
+	.stats{
+		border-top:1px solid #ebeff2;
+		background:#f7f8fa;
+		overflow:auto;
+		padding:15px 0;
+		font-size:16px;
+		color:#59687f;
+		font-weight:600;
+		border-radius: 0 0 5px 5px;
+	}
+	.stats div{
+		border-right:1px solid #ebeff2;
+		width: 33.33333%;
+		float:left;
+		text-align:center
+	}
+
+	.stats div:nth-of-type(3){border:none;}
+
+	div.footer {
+		text-align: right;
+		position: relative;
+		margin: 20px 5px;
+	}
+
+	div.footer a.Cbtn{
+		padding: 10px 25px;
+		background-color: #DADADA;
+		color: #666;
+		margin: 10px 2px;
+		text-transform: uppercase;
+		font-weight: bold;
+		text-decoration: none;
+		border-radius: 3px;
+	}
+
+	div.footer a.Cbtn-primary{
+		background-color: #5AADF2;
+		color: #FFF;
+	}
+
+	div.footer a.Cbtn-primary:hover{
+		background-color: #7dbef5;
+	}
+
+	div.footer a.Cbtn-danger{
+		background-color: #fc5a5a;
+		color: #FFF;
+	}
+
+	div.footer a.Cbtn-danger:hover{
+		background-color: #fd7676;
+	}
+</style>
+
+<template id="page-Company-Requests-List">
 	<div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3 ">
 					<div class="list-group ">
-						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Info-View', params: { company_id: this.$route.params.company_id }}">
-							<i class="fa fa-home"></i> 
-							Dashboard
-						</router-link>
-						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Requests-View', params: { company_id: this.$route.params.company_id }}">
-							<i class="fa fa-home"></i> 
-							Solicitudes & Proyectos
-						</router-link>
-						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Invoices-View', params: { company_id: this.$route.params.company_id }}">
-							<i class="fa fa-home"></i> 
-							Facturas
-						</router-link>
-						
-						<a href="<?php echo path_homeClients; ?>" class="list-group-item list-group-item-action">Volver</a>
+						<component-sidebar-clients></component-sidebar-clients>
 					</div> 
 				</div>
 				<div class="col-md-9">
@@ -271,127 +318,74 @@
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-										<li class="nav-item" v-for="item in posts">
-											<a class="nav-link" data-toggle="pill" v-bind:id="'#pills-' + item.id + '-tab'" v-bind:href="'#pills-' + item.id" role="tab" aria-controls="pills-profile" aria-selected="false">
-											{{ item.name }}
-											</a>
-										</li>
-									</ul>
-									<div class="tab-content" id="pills-tabContent">
-										<div class="tab-pane fade" v-for="item in posts" v-bind:id="'pills-' + item.id" role="tabpanel" v-bind:aria-labelledby="'#pills-' + item.id + '-tab'">
-											<div class="container">
-												<div class="title">
-												  <h3>{{ item.name }}</h3>
-												</div>
-												<div class="row">
-													<div class="col-md-12">
-														<h3><small>{{ item.id }}</small></h3>
-														<!-- Tabs with icons on Card -->
-														<div class="card card-nav-tabs">
-															<div class="card-header card-header-primary">
-																<!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" -->
-																<div class="nav-tabs-navigation">
-																	<div class="nav-tabs-wrapper">
-																		<ul class="nav nav-tabs" data-tabs="tabs">
-																			<li class="nav-item">
-																				<a class="nav-link active" href="#profile" data-toggle="tab">
-																					<i class="material-icons"></i>
-																					Info
-																				</a>
-																			</li>
-																			<li class="nav-item">
-																				<a class="nav-link" href="#messages" data-toggle="tab">
-																					<i class="material-icons"></i>
-																					Propuestas
-																				</a>
-																			</li>
-																			<li class="nav-item">
-																				<a class="nav-link" href="#settings" data-toggle="tab">
-																					<i class="material-icons"></i>
-																					Settings
-																				</a>
-											
-																			</li>
-																		</ul>
-																	</div>
-																</div>
+									<div class="container-fluid">
+										<div class="row">
+											<div style="box-shadow: 0px 0px 5px #666;" class="col-lg-6 col-md-6 col-sm-6 col-xs-12" v-for="(item, itemKey) in posts">
+												<div class="tile">
+													<div class="wrapper">
+														<div class="header">{{ item.name }}</div>
+														<!--<div class="banner-img">
+															<img src="http://via.placeholder.com/640x360" alt="Image 1">
+														</div>-->
+														<div class="dates">
+															<div class="start">
+																<strong>Creación</strong> {{ item.create }}
+																<span></span>
 															</div>
-															<div class="card-body ">
-																<div class="tab-content text-center">
-																	<div class="tab-pane active" id="profile">
-																		<p>
-																			<table class="table table-bordered">
-																				<thead>
-																				</thead>
-																				<tbody>
-																					<tr>
-																						<th>Nombre Proyecto/Solicitud</th>
-																						<td>{{ item.name }}</td>
-																					</tr>
-																					<tr>
-																						<th>Direccion</th>
-																						<td>{{ item.name }}</td>
-																					</tr>
-																					<tr>
-																						<th>More</th>
-																						<td>{{ item }}</td>
-																					</tr>
-																				</tbody>
-																			</table>
-																		</p>
-																	</div>
-																	<div class="tab-pane" id="messages">
-																		<p> PROPUESTAS</p>
-																	</div>
-																	<div class="tab-pane" id="settings">
-																		<p>I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. So when you get something that has the name Kanye West on it, it’s supposed to be pushing the furthest possibilities. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus.</p>
-																	</div>
-																</div>
+															<div class="ends">
+																<strong>Actualización</strong> {{ item.update }}
+																<span></span>
 															</div>
 														</div>
-														<!-- End Tabs with icons on Card -->
+														
+														<div class="dates">
+															<strong>PROPUESTAS RECIBIDAS</strong> {{ item.quotations_clients.length }}
+															<span></span>
+														</div>
+
+														<div class="stats">
+															<strong>CONTACTO PRINCIPAL</strong> {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.contact.identification_number }}
+														</div>
+														
+														<div class="stats">
+															<strong>CONTACTO PRINCIPAL</strong> {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.contact.identification_number }}
+														</div>
+														
+														<div class="stats">
+															<strong>DIRECCION</strong> 
+															{{ item.address }}
+														</div>
+														
+														<div class="stats">
+															<strong>DIRECCION DE FACTURACION</strong> 
+															{{ item.address_invoices }}
+														</div>
+														
+														<!--
+														<div class="stats">
+															<strong>OBSERVACIONES</strong> 
+															{{ item.observations }}
+														</div>
+														-->
+														
+														<div class="stats">
+															<div><strong>SERVICIOS PRINCIPALES</strong> {{ item.services_clients.length }}</div>
+															<div><strong>OTROS SERVICIOS</strong> {{ item.attributes_services_clients.length }}</div>
+															<div><strong>TOTAL</strong> {{ item.services_clients.length + item.attributes_services_clients.length }}</div>
+														</div>
+														
+														<div class="footer">
+															<router-link class="Cbtn Cbtn-primary" 
+															  v-bind:to="{ name: 'Company-Requests-View', params: { company_id: item.client, request_id: item.id } }">
+																<i class="fa fa-eye"></i> 
+																Visualizar
+															</router-link>
+															<!-- <a href="#" class="Cbtn Cbtn-danger">Delete</a> -->
+														</div>
 													</div>
-													<!--
-													<div class="col-md-12">
-														<h3><small>Tabs on Plain Card</small></h3>
-														<div class="card card-nav-tabs card-plain">
-															<div class="card-header card-header-danger">
-																<!-- colors: "header-primary", "header-info", "header-success", "header-warning", "header-danger" --
-																<div class="nav-tabs-navigation">
-																	<div class="nav-tabs-wrapper">
-																		<ul class="nav nav-tabs" data-tabs="tabs">
-																			<li class="nav-item">
-																				<a class="nav-link active" href="#home" data-toggle="tab">Home</a>
-																			</li>
-																			<li class="nav-item">
-																				<a class="nav-link" href="#updates" data-toggle="tab">Updates</a>
-																			</li>
-																			<li class="nav-item">
-																				<a class="nav-link" href="#history" data-toggle="tab">History</a>
-																			</li>
-																		</ul>
-																	</div>
-																</div>
-															</div><div class="card-body ">
-																<div class="tab-content text-center">
-																	<div class="tab-pane active" id="home">
-																		<p>I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. So when you get something that has the name Kanye West on it, it’s supposed to be pushing the furthest possibilities. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus.</p>
-																	</div>
-																	<div class="tab-pane" id="updates">
-																		<p> I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. </p>
-																	</div>
-																	<div class="tab-pane" id="history">
-																		<p> I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at. I will be the leader of a company that ends up being worth billions of dollars, because I got the answers. I understand culture. I am the nucleus. I think that’s a responsibility that I have, to push possibilities, to show people, this is the level that things could be at.</p>
-																	</div>
-																</div>
-															</div></div>
-													</div>-->
-												</div>
+												</div> 
 											</div>
 										</div>
-											
-										
 									</div>
 								</div>
 							</div>
@@ -402,174 +396,362 @@
 		</div>
 	</div>
 </template>
-	<style scoped="page-Company-Requests-View">
-		html *{
-			-webkit-font-smoothing: antialiased;
-		}
-		h3{
-			font-size: 25px !important;
-			margin-top: 20px;
-			margin-bottom: 10px;
-			line-height: 1.4em !important;
-		}
 
-		p {
-			font-size: 14px;
-			margin: 0 0 10px !important;
-			font-weight: 300;
-		} 
+<template id="page-Company-Requests-View">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 ">
+					<component-sidebar-clients></component-sidebar-clients>
+				</div>
+				<div class="col-md-9">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<h4>Estas viendo el proyecto {{ post.name }} - REF: {{ post.id }}</h4>
+									<hr>
+									<!-- <h4>{{ post}}</h4> -->
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="table table-responsive">
+										<table class="table table-bordered">
+											<tr>
+												<th>ID</th>
+												<td>{{ post.client }}</td>
+											</tr>
+											<tr>
+												<th>Nombre del Proyecto</th>
+												<td>{{ post.name }}</td>
+											</tr>
+											<tr>
+												<th>Contacto Principal</th>
+												<td>
+													<table class="table table-bordered">
+														<tr>
+															<th>ID</th>
+															<td>{{ post.contact.id }}</td>
+														</tr>
+														<tr>
+															<th>Tipo de Identificacion</th>
+															<td>{{ post.contact.identification_type.name }}</td>
+														</tr>
+														<tr>
+															<th># de Identificacion</th>
+															<td>{{ post.contact.identification_number }}</td>
+														</tr>
+														<tr>
+															<th>Nombres</th>
+															<td>{{ post.contact.first_name }} {{ post.contact.second_name }}</td>
+														</tr>
+														<tr>
+															<th>Apellidos</th>
+															<td>{{ post.contact.surname }} {{ post.contact.second_surname }}</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<th>Direccion del Proyecto</th>
+												<td>{{ post.address }}</td>
+											</tr>
+											<tr>
+												<th>Direccion de Facturacion</th>
+												<td>{{ post.address_invoices }}</td>
+											</tr>
+											<tr>
+												<th>Observaciones</th>
+												<td>{{ post.observations }}</td>
+											</tr>
+											<tr>
+												<th>Fecha de la Solicitud</th>
+												<td>{{ post.create }}</td>
+											</tr>
+											<tr>
+												<th>Última Actualización</th>
+												<td>{{ post.create }}</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</div>
+							
+							<!--
+							<div class="row">
+								<div class="col-md-12">
+									<h4>Servicios Actuales</h4>
+									<hr>
+									<div class="table table-responsive">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>REF</th>
+													<th>Servcio</th>
+													<th>Tipo de Medicion</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr v-for="item in post.services_clients">
+													<td>CSS-{{ item.service.id }}</td>
+													<td>{{ item.service.name }}</td>
+													<td>{{ item.service.type_medition.code }} ({{ item.service.type_medition.name }})</td>
+												</tr>
+												<tr v-for="item in post.attributes_services_clients">
+													<td>CAS-{{ item.attribute.id }}</td>
+													<td>{{ item.attribute.name }}</td>
+													<td>{{ item.attribute.type_medition.code }} ({{ item.attribute.type_medition.name }})</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							-->
+							
+							<div class="row">
+								<div class="col-md-12">
+									<h4>Propuestas</h4>
+									<hr>
+									<div class="table table-responsive">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>REF</th>
+													<th>Vigencia</th>
+													<th>Estado</th>
+													<th>Fecha de Solicitud</th>
+													<th>Última Actualización</th>
+													<th></th>
+												</tr>
+											</thead>
+											
+											<tbody>
+												<tr v-for="item in post.quotations_clients">
+													<td>{{ item.id }}</td>
+													<td>{{ item.validity }}</td>
+													<td>{{ item.status.name }}</td>
+													<td>{{ item.create }}</td>
+													<td>{{ item.update }}</td>
+													<td>
+														<router-link class="list-group-item list-group-item-action" 
+														  v-bind:to="{name: 'Company-Quotations-View', params: { company_id: $route.params.company_id, request_id: $route.params.request_id, quotation_id: item.id }}">
+															<i class="fa fa-eye"></i> 
+															Ver Propuesta
+														</router-link>
+														<!--
+														<button @click="changeStatusQuotations($route.params.company_id, $route.params.request_id, item.id, 1)" class="btn btn-xs btn-success" v-if="item.status.id == 0">
+															<i class="fa fa-check"></i>
+														</button>
+														
+														<table class="table table-bordered">
+															<tr>
+																<td>Nombre</td>
+																<td>description</td>
+																<td>type_medition</td>
+																<td>price</td>
+																<td>JSON</td>
+																<td>{{ item.iva }}</td>
+															</tr>
+															<tr v-for="subitem_i in item.values.services">
+																<td>{{ subitem_i.service.name }}</td>
+																<td>{{ subitem_i.service.description }}</td>
+																<td>{{ subitem_i.service.type_medition.name }}</td>
+																<td>{{ subitem_i.service.price }}</td>
+																<td>{{ subitem_i }}</td>
+															</tr>
+														</table>
+														-->
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+								
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
 
-		 small {
-			font-size: 75%;
-			color: #777;
-			font-weight: 400;
-		}
+<template id="page-Company-Quotations-View">
+	<div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3 ">
+					<component-sidebar-clients></component-sidebar-clients>
+				</div>
+				<div class="col-md-9">
+					<div class="card">
+						<div class="card-body">
+							<div class="row">
+								<div class="col-md-12">
+									<h4>Viendo Propuesta REF: {{ $parent.zfill(post.id, 11) }}</h4>
+									<hr>
+									<!-- <h4>{{ post}}</h4> -->
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<nav class="navbar navbar-light" style="background-color: #f8f9fa;">
+										<div class="navbar-brand" href="#"></div>
+										
+										<a title="PDF Propuesta" v-if="post.status.id == 0 || post.status.id == 1" v-bind:href="'/api/genQ.php?refQuotations=' + post.id + '&wellcome=false'" target="_new" @click="'Accounts'" class="navbar-toggler btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top">
+											<i class="fas fa-file-pdf"></i>
+										</a>
+										
+										<button title="Ver Programacion" v-if="post.status.id == 2" href="#" class="navbar-toggler btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top">
+											<i class="fa fa-calendar"></i>
+										</button>
+									</nav>
+									<hr>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="table table-responsive">
+										<table class="table table-bordered">
+											<tr>
+												<th>ID</th>
+												<td>{{ post.id }}</td>
+											</tr>
+											<tr>
+												<th>Nombre del Proyecto</th>
+												<td>{{ post.account.name }}</td>
+											</tr>
+											<tr>
+												<th>Estado de la Solicitud</th>
+												<td>
+													{{ post.status.name }}
+												</td>
+											</tr>
+											<tr>
+												<th>Contacto Directo</th>
+												<td>{{ post.account.contact.first_name }} {{ post.account.contact.second_name }} {{ post.account.contact.surname }} {{ post.account.contact.second_surname }}</td>
+											</tr>
+											<tr>
+												<th>Direccion</th>
+												<td>{{ post.account.address }}</td>
+											</tr>
+											<tr>
+												<th>Direccion de Facturacion</th>
+												<td>{{ post.account.address_invoices }}</td>
+											</tr>
+											<tr>
+												<th>Fecha de Creacion</th>
+												<td>{{ post.account.create }}</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<h4>Gastos</h4><hr>
+									<div class="table table-responsive">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Nombre</th>
+													<th>Cantidad</th>
+													<th>Precio</th>
+													<th>Tipo de Medicion</th>
+													<th>IVA</th>
+													<th>Total</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr v-for="item in post.values.services">
+													<td>{{ item.service.id }}</td>
+													<td>{{ item.service.name }}</td>
+													<td>{{ item.quantity }}</td>
+													<td>{{ $parent.formatMoney(item.service.price) }}</td>
+													<td>{{ (item.service.type_medition.name) }}</td>
+													<td>{{ item.iva }}</td>
+													<td>{{ $parent.formatMoney((((item.quantity * item.service.price) / 100 ) * item.iva) + (item.quantity * item.service.price)) }}</td>
+												</tr>
+												<tr v-for="item in post.values.attributes">
+													<td>{{ item.attribute.id }}</td>
+													<td>{{ item.attribute.name }}</td>
+													<td>{{ item.quantity }}</td>
+													<td>{{ $parent.formatMoney(item.attribute.price) }}</td>
+													<td>{{ (item.attribute.type_medition.name) }}</td>
+													<td>{{ item.iva }}</td>
+													<td>{{ $parent.formatMoney((((item.quantity * item.attribute.price) / 100 ) * item.iva) + (item.quantity * item.attribute.price)) }}</td>
+												</tr>
+											</tbody>
+											<tfoot>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+								
+								<div class="col-md-12" v-if="post.status.id == 1">
+									<h4>Contratos</h4>
+									<hr>
+										<button title="Aprobar Contrato" @click="changeStatusQuotations($route.params.company_id, $route.params.request_id, post.id, 2)" class="btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top">
+											<i class="fas fa-check"></i>
+										</button>
+									<hr>
+									<div class="table table-responsive">
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>ID</th>
+													<th>Nombre</th>
+													<th>Cantidad</th>
+													<th>Precio</th>
+													<th>Tipo de Medicion</th>
+													<th>IVA</th>
+													<th>Total</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr v-for="item in post.values.services">
+													<td>{{ item.service.id }}</td>
+													<td>{{ item.service.name }}</td>
+													<td>{{ item.quantity }}</td>
+													<td>{{ $parent.formatMoney(item.service.price) }}</td>
+													<td>{{ (item.service.type_medition.name) }}</td>
+													<td>{{ item.iva }}</td>
+													<td>{{ $parent.formatMoney((((item.quantity * item.service.price) / 100 ) * item.iva) + (item.quantity * item.service.price)) }}</td>
+												</tr>
+												<tr v-for="item in post.values.attributes">
+													<td>{{ item.attribute.id }}</td>
+													<td>{{ item.attribute.name }}</td>
+													<td>{{ item.quantity }}</td>
+													<td>{{ $parent.formatMoney(item.attribute.price) }}</td>
+													<td>{{ (item.attribute.type_medition.name) }}</td>
+													<td>{{ item.iva }}</td>
+													<td>{{ $parent.formatMoney((((item.quantity * item.attribute.price) / 100 ) * item.iva) + (item.quantity * item.attribute.price)) }}</td>
+												</tr>
+											</tbody>
+											<tfoot>
+										
+										<a title="PDF Contrato" v-if="post.status.id == 1" v-bind:href="'/api/genQ.php?refQuotations=' + post.id + '&wellcome=false'" target="_new" @click="'Accounts'" class="navbar-toggler btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top">
+											<i class="fas fa-file-pdf"></i>
+										</a>
+										
+										<button title="Aprobar Propuesta" v-if="post.status.id == 0" @click="changeStatusQuotations($route.params.company_id, $route.params.request_id, post.id, 1)" class="navbar-toggler btn btn-sm btn-secondary" data-toggle="tooltip" data-placement="top">
+											<i class="fas fa-check"></i>
+										</button>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
 
-		.container .title{
-			color: #3c4858;
-			text-decoration: none;
-			margin-top: 30px;
-			margin-bottom: 25px;
-			min-height: 32px;
-		}
-
-		.container .title h3{
-			font-size: 25px;
-			font-weight: 300;
-		}
-
-		div.card {
-			border: 0;
-			margin-bottom: 30px;
-			margin-top: 30px;
-			border-radius: 6px;
-			color: rgba(0,0,0,.87);
-			background: #fff;
-			width: 100%;
-			box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
-		}
-
-		div.card.card-plain {
-			background: transparent;
-			box-shadow: none;
-		}
-		div.card .card-header {
-			border-radius: 3px;
-			padding: 1rem 15px;
-			margin-left: 15px;
-			margin-right: 15px;
-			margin-top: -30px;
-			border: 0;
-			background: linear-gradient(60deg,#eee,#bdbdbd);
-		}
-
-		.card-plain .card-header:not(.card-avatar) {
-			margin-left: 0;
-			margin-right: 0;
-		}
-
-		.div.card .card-body{
-			padding: 15px 30px;
-		}
-
-		div.card .card-header-primary {
-			background: linear-gradient(60deg,#ab47bc,#7b1fa2);
-			box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(156,39,176,.6);
-		}
-
-		div.card .card-header-danger {
-			background: linear-gradient(60deg,#ef5350,#d32f2f);
-			box-shadow: 0 5px 20px 0 rgba(0,0,0,.2), 0 13px 24px -11px rgba(244,67,54,.6);
-		}
-
-
-		.card-nav-tabs .card-header {
-			margin-top: -30px!important;
-		}
-
-		.card .card-header .nav-tabs {
-			padding: 0;
-		}
-
-		.nav-tabs {
-			border: 0;
-			border-radius: 3px;
-			padding: 0 15px;
-		}
-
-		.nav {
-			display: flex;
-			flex-wrap: wrap;
-			padding-left: 0;
-			margin-bottom: 0;
-			list-style: none;
-		}
-
-		.nav-tabs .nav-item {
-			margin-bottom: -1px;
-		}
-
-		.nav-tabs .nav-item .nav-link.active {
-			background-color: hsla(0,0%,100%,.2);
-			transition: background-color .3s .2s;
-		}
-
-		.nav-tabs .nav-item .nav-link{
-			border: 0!important;
-			color: #fff!important;
-			font-weight: 500;
-		}
-
-		.nav-tabs .nav-item .nav-link {
-			color: #fff;
-			border: 0;
-			margin: 0;
-			border-radius: 3px;
-			line-height: 24px;
-			text-transform: uppercase;
-			font-size: 12px;
-			padding: 10px 15px;
-			background-color: transparent;
-			transition: background-color .3s 0s;
-		}
-
-		.nav-link{
-			display: block;
-		}
-
-		.nav-tabs .nav-item .material-icons {
-			margin: -1px 5px 0 0;
-			vertical-align: middle;
-		}
-
-		.nav .nav-item {
-			position: relative;
-		}
-		footer{
-			margin-top:100px;
-			color: #555;
-			background: #fff;
-			padding: 25px;
-			font-weight: 300;
-			
-		}
-		.footer p{
-			margin-bottom: 0;
-			font-size: 14px;
-			margin: 0 0 10px;
-			font-weight: 300;
-		}
-		footer p a{
-			color: #555;
-			font-weight: 400;
-		}
-
-		footer p a:hover {
-			color: #9f26aa;
-			text-decoration: none;
-		}
-	</style>
-	
 <template id="page-Company-Info-Edit">
 	<div>
 		<div class="container">
@@ -582,12 +764,12 @@
 							Dashboard
 						</router-link>
 						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Requests-View', params: { company_id: this.$route.params.company_id }}">
+						  v-bind:to="{name: 'Company-Requests-List', params: { company_id: this.$route.params.company_id }}">
 							<i class="fa fa-home"></i> 
 							Solicitudes & Proyectos
 						</router-link>
 						<router-link class="list-group-item list-group-item-action" 
-						  v-bind:to="{name: 'Company-Invoices-View', params: { company_id: this.$route.params.company_id }}">
+						  v-bind:to="{name: 'Company-Invoices-List', params: { company_id: this.$route.params.company_id }}">
 							<i class="fa fa-home"></i> 
 							Facturas
 						</router-link>

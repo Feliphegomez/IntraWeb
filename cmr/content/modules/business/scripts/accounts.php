@@ -44,6 +44,19 @@
 	} */
 </style>
 <script>
+	var Navbar_Top_Clients_Component = Vue.component('component-navbar-top-clients-edit', {
+		template: '#Navbar-Top-Clients-Edit-Component',
+		props: [
+			'client_id',
+		],
+		methods: {
+			getClassEditClients: function(){
+				var self = this;
+				return 'btn btn-secondary';				
+			}
+		}
+	});
+	
 	// ------------ CLIENTES - INICIO ------------------------------------- 
 	var Clients_List = Vue.extend({
 	  template: '#page-Clients',
@@ -192,7 +205,7 @@
 				});
 				router.push('/');
 			}
-		}
+		},
 	});
 
 	var Clients_Info_Edit = Vue.extend({
@@ -1750,7 +1763,7 @@
 			}
 		}
 	});
-
+ 
 	var Clients_Services_Add = Vue.extend({
 		template: '#add-ServicesClients',
 		data: function () {
@@ -3162,7 +3175,10 @@
 					contact: 0,
 					address: '',
 					address_invoices: '',
+					geo_address: '',
+					geo_address_invoices: '',
 				},
+				urlMapSearchNewIframe: '',
 			};
 		},
 		mounted: function () {
@@ -3420,6 +3436,122 @@
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
+			},
+			searchAddressGEO(){
+				var self = this;
+				
+				// DETECTAR MAPA
+				// https://nominatim.openstreetmap.org/search?format=jsonv2&accept-language=es&q=Glorieta%20Pilsen&country=co&polygon=1
+				
+				aPiMap.get('/search', {
+					params: {
+						'q': self.post_account.address,
+						'format': 'jsonv2',
+						'accept-language': 'es',
+						'country': 'co',
+						'polygon': 1,
+						'limit': 1,
+					}
+				}).then(function (r) {
+					console.log(r);
+					if(r.data[0] != undefined)
+					{
+						var temp = r.data[0];
+						var coord = {
+							lon: temp.lon,
+							lat: temp.lat
+						};
+						
+						console.log(coord);
+						
+						var cord1 = coord.lat + ',' + coord.lon;
+						var cord2 = coord.lon + ',' + coord.lat;
+						
+						self.post_account.geo_address = cord1;
+					
+						var url = 'https://www.openstreetmap.org/export/embed.html?bbox=' + cord2 + ',' + cord2 + '&marker=' + cord1;
+						
+						console.log(url);
+						
+						self.urlMapSearchNewIframe = url;
+					}
+					else
+					{
+						alert('La direccion no fue encontrada');
+					}
+					
+					// https://www.openstreetmap.org/export/embed.html?bbox=-72.0000000,4.0000000
+					
+					// https://www.openstreetmap.org/export
+					// /embed.html?bbox=79.84933018684386,6.90329331805479,79.85746264457703,6.908917042549519&marker=6.906105188659279,79.85339641571045
+					/*
+					map = new OpenLayers.Map("mapdiv");
+					map.addLayer(new OpenLayers.Layer.OSM());
+
+					var lonLat = new OpenLayers.LonLat( -0.1279688 ,51.5077286 )
+						  .transform(
+							new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+							map.getProjectionObject() // to Spherical Mercator Projection
+						  );
+						  
+					var zoom=16;
+
+					var markers = new OpenLayers.Layer.Markers( "Markers" );
+					map.addLayer(markers);
+					
+					markers.addMarker(new OpenLayers.Marker(lonLat));
+					
+					map.setCenter (lonLat, zoom);
+					*/
+				}).catch(function (er) {
+					console.log(er);
+					//$.notify(error.response.data.code + error.response.data.message, "error");
+				});
+				
+			},
+			searchAddressInvoicesGEO(){
+				var self = this;
+				
+				aPiMap.get('/search', {
+					params: {
+						'q': self.post_account.address_invoices,
+						'format': 'jsonv2',
+						'accept-language': 'es',
+						'country': 'co',
+						'polygon': 1,
+						'limit': 1,
+					}
+				}).then(function (r) {
+					console.log(r);
+					if(r.data[0] != undefined)
+					{
+						var temp = r.data[0];
+						var coord = {
+							lon: temp.lon,
+							lat: temp.lat
+						};
+						
+						console.log(coord);
+						
+						var cord1 = coord.lat + ',' + coord.lon;
+						var cord2 = coord.lon + ',' + coord.lat;
+						
+						self.post_account.geo_address_invoices = cord1;
+					
+						var url = 'https://www.openstreetmap.org/export/embed.html?bbox=' + cord2 + ',' + cord2 + '&marker=' + cord1;
+						
+						console.log(url);
+						
+						self.urlMapSearchNewIframe = url;
+					}
+					else
+					{
+						alert('La direccion no fue encontrada');
+					}
+				}).catch(function (er) {
+					console.log(er);
+				});
+				
 			},
 		}
 	});
@@ -4174,11 +4306,14 @@
 							'attributes_services_clients,attributes',
 							'services_clients,types_repeats_services_clients',
 							'quotations_clients',
+							'quotations_clients,status_quotations',
 						],
 					}
 				}).then(function (response) {
 					self.accounts_clients = response.data.records;
 					//self.sumarTodo();
+					// 'status_quotations',
+					console.log("OK");
 				}).catch(function (error) {
 					$.notify(error.response.data.code + error.response.data.message, "error");
 				});
@@ -4254,6 +4389,7 @@
 		}
 	});
 
+	
 	var Clients_Accounts_Edit_Users = Vue.extend({
 		template: '#edit-Clients-Users',
 		data: function () {
@@ -4461,20 +4597,24 @@
 		{ path: '/Edit/:client_id/Invoices', component: Clients_Invoices_Edit, name: 'Clients-Invoices-Edit'},
 		{ path: '/Edit/:client_id/Quotations', component: Clients_Quotations_Edit, name: 'Clients-Quotations-Edit'},
 		{ path: '/Edit/:client_id/ContractsServices', component: Clients_ContractsServices_Edit, name: 'Clients-ContractsServices-Edit'},
-		{ path: '/Delete/:client_id/delete', component: Clients_Delete, name: 'Clients-Delete'},
-		{ path: '/Delete/:client_id/Contact/:client_contact_id', component: Clients_Contacts_Delete, name: 'ClientsContacts-Delete'},
-		{ path: '/Delete/:client_id/Redicated/:redicated_client_id', component: Clients_Redicated_Delete, name: 'RedicatedClients-Delete'},
-		{ path: '/Delete/:client_id/Auditors/:auditor_client_id', component: Clients_Auditors_Delete, name: 'ClientsAuditors-Delete'},
-		{ path: '/Delete/:client_id/Accounts/:account_client_id', component: Clients_Accounts_Delete, name: 'Clients-Accounts-Delete'},
 		
 		{ path: '/Edit/:client_id/Accounts/:account_client_id/Add/Services', component: Clients_Services_Add, name: 'ServicesClients-Add'},
 		{ path: '/Edit/:client_id/Accounts/:account_client_id/Attributes/add', component: Clients_Attributes_Services_Add, name: 'AttributesServicesClients-Add'},
 		{ path: '/Edit/:client_id/Accounts/:account_client_id/Attribute/:client_attribute_service_id', component: Clients_Attributes_Services_Delete, name: 'AttributesServicesClients-Delete'},
 		{ path: '/Edit/:client_id/Accounts/:account_client_id/Service/:client_service_id', component: Clients_Services_Delete, name: 'ServicesClients-Delete'},
 		
+		{ path: '/Delete/:client_id/delete', component: Clients_Delete, name: 'Clients-Delete'},
+		{ path: '/Delete/:client_id/Contact/:client_contact_id', component: Clients_Contacts_Delete, name: 'ClientsContacts-Delete'},
+		{ path: '/Delete/:client_id/Redicated/:redicated_client_id', component: Clients_Redicated_Delete, name: 'RedicatedClients-Delete'},
+		{ path: '/Delete/:client_id/Auditors/:auditor_client_id', component: Clients_Auditors_Delete, name: 'ClientsAuditors-Delete'},
+		{ path: '/Delete/:client_id/Accounts/:account_client_id', component: Clients_Accounts_Delete, name: 'Clients-Accounts-Delete'},
+		
 	]});
 
 	var appRender = new Vue({
+		components: {
+			'component-navbar-top-clients-edit': Navbar_Top_Clients_Component
+		},
 		data: function () {
 			return {
 				selectOptions: {

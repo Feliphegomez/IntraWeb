@@ -1,14 +1,10 @@
-
 <!-- Scroll to Top Button-->
-<a class="scroll-to-top rounded" href="#page-top">
-  <i class="fas fa-angle-up"></i>
-</a>
+<a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
 
 <!-- Bootstrap core JavaScript-->
 <script src="<?php echo path_home; ?>vendor/jquery/jquery.min.js"></script>
 <script src="<?php echo path_home; ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-	  
 <!-- Core plugin JavaScript-->
 <script src="<?php echo path_home; ?>vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -17,6 +13,8 @@
 <script src="<?php echo path_home; ?>vendor/datatables/jquery.dataTables.js"></script>
 <script src="<?php echo path_home; ?>vendor/datatables/dataTables.bootstrap4.js"></script>
 
+
+<!-- <script src="https://unpkg.com/popper.js@1.14.7/dist/umd/popper.js"></script> -->
 <?php
 $site = new Route();
 $routes = $site->getRoutes();

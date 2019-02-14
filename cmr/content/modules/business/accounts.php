@@ -11,6 +11,64 @@
 	</div>
 </div>
 
+<!-- // NAVBAR TOP CLIENTS -->
+<template id="Navbar-Top-Clients-Edit-Component">
+	<div> btn btn-secondary
+		Cuentas
+			<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: client_id }}">
+				<i class="fas fa-user-circle"></i>
+				<!-- <span class="badge badge-default">Cerrar </span> -->
+				Infomacion Basica
+			</router-link>  
+			<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: client_id }}">
+				<i class="fas fa-user-circle"></i>
+				<!-- <span class="badge badge-default">Cerrar </span> -->
+				Contactos
+			</router-link>  
+			<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: client_id }}">
+				<i class="fas fa-user-circle"></i>
+				<!-- <span class="badge badge-default">Cerrar </span> -->
+				Radicados
+			</router-link>  
+			<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: client_id }}">
+				<i class="fas fa-user-circle"></i>
+				<!-- <span class="badge badge-default">Cerrar </span> -->
+				Interventores
+			</router-link>  
+			<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: client_id }}">
+				<i class="fas fa-user-circle"></i>
+				<!-- <span class="badge badge-default">Cerrar </span> -->
+				Solicitudes
+			</router-link>  
+			<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: client_id }}">
+				<i class="fas fa-user-circle"></i>
+				<!-- <span class="badge badge-default">Cerrar </span> -->
+				Facturas
+			</router-link>  
+			<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: client_id }}">
+				<i class="fas fa-user-circle"></i>
+				<!-- <span class="badge badge-default">Cerrar </span> -->
+				Propuestas Aprobadas
+			</router-link>  
+			<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: client_id }}">
+				<i class="fas fa-user-circle"></i>
+				<!-- <span class="badge badge-default">Cerrar </span> -->
+				Contratos
+			</router-link>  
+			<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: client_id }}">
+				<i class="fas fa-user-circle"></i>
+				<!-- <span class="badge badge-default">Cerrar </span> -->
+				Usuarios
+			</router-link>  
+		<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
+			<span class="fa fa-window-close"></span>
+			<!-- <span class="badge badge-default">Cerrar </span> -->
+			Cerrar
+		</router-link> 
+	</div>
+</template>
+<!-- SIDEBAR // -->
+
 <template id="page-Clients">
 	<div>
 		<div class="card mb-3">
@@ -145,7 +203,6 @@
 					</div>
 					<button type="submit" class="btn btn-primary">Crear</button>
 				</form>
-
 			</div>
 			<div class="card-footer small text-muted"></div>
 		</div>
@@ -156,57 +213,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Usuarios
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<form v-on:submit="updateClient" class="row">
@@ -291,57 +298,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Usuarios
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 					<thead>
@@ -405,57 +362,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Usuarios
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -542,57 +449,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-primary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Usuarios
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<table class="table table-bordered">
@@ -601,7 +458,6 @@
 							<td>ID</td>
 							<td># IDENTIFICACION</td>
 							<td>NOMBRE COMPLETO</td>
-							<td></td>
 						</tr>
 					</thead>
 					<tbody>
@@ -609,10 +465,6 @@
 							<td>{{ item.id }}</td>
 							<td>{{ item.contact.identification_number }}</td>
 							<td>{{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }}</td>
-							<td>
-								<router-link class="btn btn-success btn-md" target="_new" v-bind:to="{name: 'Contacts-View', params: { contact_id: item.contact.id }}"><i class="fa fa-eye"></i> </router-link>
-								<router-link class="btn btn-danger btn-md" v-bind:to="{name: 'ClientsAuditors-Delete', params: { client_id: post.id, auditor_client_id: item.id }}"><i class="fa fa-trash"></i> </router-link>
-							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -647,57 +499,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Usuarios
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 			</div>
@@ -710,57 +512,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Usuarios
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<table class="table table-responsive">
@@ -802,57 +554,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Usuarios
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<table class="table table-responsive">
@@ -942,57 +644,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Users-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Usuarios
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
@@ -1791,52 +1443,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<div class="card mb-3">
@@ -1883,52 +1490,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<div class="card mb-3">
@@ -2009,52 +1571,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<div class="card mb-3">
@@ -2183,52 +1700,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<div class="card mb-3">
@@ -2263,25 +1735,26 @@
 											Generar Propuesta
 											<span class="caret"></span>
 										</button>
+										<hr>
 										<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-											<li>
+											<li class="dropdown-item" style="cursor:pointer;">
 												<a @click="generateQuotation(account, 30)">
 													<i class="fa fa-plus"></i>
 													30 Días
 												</a>
 											</li>
-											<li>
+											<li class="dropdown-item" style="cursor:pointer;">
 												<a @click="generateQuotation(account, 60)">
 													<i class="fa fa-plus"></i>
 													60 Días
 												</a>
 											</li>
-											<li>
+											<li class="dropdown-item" style="cursor:pointer;">
 												<a @click="generateQuotation(account, 90)">
 													<i class="fa fa-plus"></i>
 													90 Días
 												</a>
-											</li>
+											</li class="dropdown-item" style="cursor:pointer;">
 											<li role="separator" class="divider"></li>
 											<!-- <li><a href="#">Separated link</a></li> -->
 										</ul>
@@ -2301,9 +1774,7 @@
 											<td>{{ zfill(quotation.id, 11) }}</td>
 											<td>{{ quotation.create }}</td>
 											<td>
-												 <span v-if="quotation.status == 0">Pdte. por Aprobación</span>
-												 <span v-if="quotation.status == 1">Rechazada</span>
-												 <span v-if="quotation.status == 2">Aprobada</span>
+												{{ quotation.status.name }}
 											</td>
 											<td>{{ quotation.validity }}</td>
 											<td>														
@@ -2313,14 +1784,14 @@
 														<span class="caret"></span>
 													</button>
 													<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-														<li>
+														<li class="dropdown-item" style="cursor:pointer;">
 															<a target="_new" v-bind:href="'/api/genQ.php?refQuotations=' + zfill(quotation.id, 11) + '&wellcome=false'">
 																<i class="fa fa-eye"></i>
 																Solo Propuesta
 															</a>
 														</li>
 														<li role="separator" class="divider"></li>
-														<li>
+														<li class="dropdown-item" style="cursor:pointer;">
 															<a target="_new" v-bind:href="'/api/genQ.php?refQuotations=' + zfill(quotation.id, 11)">
 																<i class="fa fa-eye"></i>
 																Completa
@@ -2355,52 +1826,7 @@
 	<div>
 		<div class="card mb-3">
 			<div class="card-header">
-				Cuentas
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Info', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Infomacion Basica
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Contacts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contactos
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Redicateds-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Radicados
-					</router-link>  
-					<router-link v-if="post.enable_audit == 1" class="btn btn-secondary" v-bind:to="{name: 'Clients-Auditors-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Interventores
-					</router-link>  
-					<router-link class="btn btn-primary" v-bind:to="{name: 'Clients-Accounts-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Solicitudes
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Invoices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Facturas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-Quotations-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Propuestas Aprobadas
-					</router-link>  
-					<router-link class="btn btn-secondary" v-bind:to="{name: 'Clients-ContractsServices-Edit', params: { client_id: post.id }}">
-						<i class="fas fa-user-circle"></i>
-						<!-- <span class="badge badge-default">Cerrar </span> -->
-						Contratos
-					</router-link>  
-				<router-link class="btn btn-secondary" v-bind:to="{ name: 'Clients-List' }">
-					<span class="fa fa-window-close"></span>
-					<!-- <span class="badge badge-default">Cerrar </span> -->
-					Cerrar
-				</router-link> 
+				<component-navbar-top-clients-edit v-bind:client_id="$route.params.client_id"></component-navbar-top-clients-edit>
 			</div>
 			<div class="card-body">
 				<div class="card mb-3">
@@ -2412,36 +1838,54 @@
 						</router-link> 
 					</div>
 					<div class="card-body">
-						<form class="row " v-on:submit="createNewAccount"> 
-							<div class="form-group col-md-6">
-								<label for="add-content">NOMBRE DEL PROYECTO</label>
-								<input class="form-control" type="text" v-model="post_account.name" />
+						<div class="row">
+							<div class="col-md-6">
+								<iframe v-if="urlMapSearchNewIframe != ''" style="width: 90%;height: 500px;left: 5%;position: relative;" v-bind:src="urlMapSearchNewIframe"></iframe>
 							</div>
-							<div class="form-group col-md-6">
-								<label for="add-content">PERSONA DE CONTACTO</label>
-								<select class="form-control search-select2-basic-single-null" v-model="post_account.contact">
-									<option v-for="item in selectOptions.crew_clients" :value="item.contact.id">{{ item.contact.identification_number }} - {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.type_contact.name }}</option>
-								</select>
+							<div class="col-md-6">
+								<form class="row " v-on:submit="createNewAccount"> 
+									<div class="form-group col-md-6">
+										<label for="add-content">NOMBRE DEL PROYECTO</label>
+										<input class="form-control" type="text" v-model="post_account.name" />
+									</div>
+									<div class="form-group col-md-6">
+										<label for="add-content">PERSONA DE CONTACTO</label>
+										<select class="form-control search-select2-basic-single-null" v-model="post_account.contact">
+											<option v-for="item in selectOptions.crew_clients" :value="item.contact.id">{{ item.contact.identification_number }} - {{ item.contact.first_name }} {{ item.contact.second_name }} {{ item.contact.surname }} {{ item.contact.second_surname }} - {{ item.type_contact.name }}</option>
+										</select>
+									</div>
+									<div class="form-group col-md-6">
+										<label for="add-content">UBICACION DEL PROYECTO</label>
+										<input class="form-control" type="text" v-model="post_account.address" @change="searchAddressGEO" />
+									</div>
+									<div class="form-group col-md-6">
+										<label for="add-content">UBICACION DEL PROYECTO - GEO</label>
+										<input class="form-control" type="text" v-model="post_account.geo_address" readonly="" />
+									</div>
+									<div class="form-group col-md-6">
+										<label for="add-content">DIRECCION DE FACTURACION</label>
+										<input class="form-control" type="text" v-model="post_account.address_invoices" @change="searchAddressInvoicesGEO" />
+									</div>
+									<div class="form-group col-md-6">
+										<label for="add-content">UBICACION DE FACTURACION - GEO</label>
+										<input class="form-control" type="text" v-model="post_account.geo_address_invoices" readonly="" />
+									</div>
+									<div class="form-group col-md-12">
+										<label for="add-content">OBSERVACIONES</label>
+										<textarea class="form-control" v-model="post_account.observations"></textarea>
+									</div>
+									<button type="submit" class="btn btn-primary col-md-12">Agregar</button>
+								</form>
 							</div>
-							<div class="form-group col-md-6">
-								<label for="add-content">UBICACION DEL PROYECTO</label>
-								<input class="form-control" type="text" v-model="post_account.address" />
-							</div>
-							<div class="form-group col-md-6">
-								<label for="add-content">DIRECCION DE FACTURACION</label>
-								<input class="form-control" type="text" v-model="post_account.address_invoices" />
-							</div>
-							<div class="form-group col-md-12">
-								<label for="add-content">OBSERVACIONES</label>
-								<textarea class="form-control" v-model="post_account.observations"></textarea>
-							</div>
-							<button type="submit" class="btn btn-primary col-md-12">Agregar</button>
-						</form>
+						</div>
 					</div>
-					<div class="card-footer small text-muted"></div>
+					<div class="card-footer small text-muted">
+						
+					</div>
 				</div>		
 			</div>
 			<div class="card-footer small text-muted">
+				
 			</div>
 		</div>
 	</div>

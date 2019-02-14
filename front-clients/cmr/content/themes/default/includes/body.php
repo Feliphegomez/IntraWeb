@@ -29,20 +29,19 @@
 			</div>
 		</div>
 	</nav>
-	
 	<?php
-	if(isset($site->module) && $site->module == 'login' && isset($site->section) && $site->section == 'index' && $session->id == 0)
-	{
-			$pageActive = "cmr/content/modules/{$site->module}/{$site->section}.php";
-			# Validar si existe la pagina en el modulo.
-			if(file_exists($pageActive)){
-				include($pageActive);
-			}else{
-				# Informar error de archivo no encontrado.
-				include("cmr/includes/errors/404.php");
-			}
-	}
-		?>
+		if(isset($site->module) && $site->module == 'login' && isset($site->section) && $site->section == 'index' && $session->id == 0)
+		{
+				$pageActive = "cmr/content/modules/{$site->module}/{$site->section}.php";
+				# Validar si existe la pagina en el modulo.
+				if(file_exists($pageActive)){
+					include($pageActive);
+				}else{
+					# Informar error de archivo no encontrado.
+					include("cmr/includes/errors/404.php");
+				}
+		}
+	?>
 </div>
 <br>
 <br>

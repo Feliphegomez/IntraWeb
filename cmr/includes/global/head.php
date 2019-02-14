@@ -8,7 +8,8 @@
 <meta name="author" content="FelipheGomez">
 <title><?php echo "{$site->page_tite} - " . title_lg; ?></title>
 <link href="<?php echo path_home; ?>vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="<?php echo path_home; ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- <link href="<?php echo path_home; ?>vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css"> -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 <link href="<?php echo path_home; ?>vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
 
 <!-- Vue And Axios -->
@@ -33,4 +34,9 @@
 	});
 	
 	var apiMV = apiIW;
+	
+	var aPiMap = axios.create({
+		baseURL: 'https://nominatim.openstreetmap.org',
+	});
 </script>
+<script src="//www.openlayers.org/api/OpenLayers.js"></script>
